@@ -1,0 +1,8 @@
+.ct_position_top_id{
+    position: absolute;
+    top: 5px;
+    left: 15px;
+}
+.ct_outline_box {
+    padding-block: 30px;
+}

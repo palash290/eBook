@@ -1,0 +1,8 @@
+.ct_right_menu_items ul .ct_custom_dropdown.show {
+    display: block;
+    background-color: #fff;
+    box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.09);
+    padding: 15px;
+    position: absolute;
+    margin-top: 16px !important;
+  }

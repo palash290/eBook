@@ -1,0 +1,22 @@
+.ct_product_img_cart_img_60{
+    max-width: 60px !important;
+}
+.ct_product_img_cart_img_60 img{
+    max-width: 60px !important;
+    height: 60px !important;
+    
+}
+
+.ct_product_info_cart {
+    display: grid
+;
+    grid-template-columns: 60px auto;
+    gap: 15px;
+    align-items: center;
+}
+
+.ct_cart_summary_card li + li{
+    border-top: 1px solid #e6e6e6;
+    padding-top: 20px;
+    margin-top: 20px;
+}

@@ -1,0 +1,29 @@
+<div #loginModal class="modal fade modal-lg" data-easein="slideDownBigIn" id="ct_login_modal" tabindex="-1"
+      aria-labelledby="ct_login_modalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered opacity-animate3">
+            <div class="modal-content ct_py_37 ">
+                  <div class="modal-header border-0 py-0">
+                        <button type="button" class="btn-close ct_login_close" data-bs-dismiss="modal"
+                              aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                        <div class="ct_login_spalsh">
+                              <img src="assets/img/login_hand.png" alt="">
+                              <div class="text-center">
+                                    <h4 class="ct_fs_20 ct_fw_400">How would you like to continue?</h4>
+                                    <p class="ct_text_676767">Select your role to personalize your experience on E Book
+                                          Ink</p>
+                              </div>
+                              <div class="ct_btn_group ct_mt_32 justify-content-center">
+                                    <a routerLink="/reader-login" class="ct_purple_btn" data-bs-dismiss="modal"
+                                          aria-label="Close"> Continue as a Reader</a>
+                                    <a (click)="saveuserRole()" routerLink="/auther-login" class="ct_purple_outline_btn" data-bs-dismiss="modal"
+                                          aria-label="Close"> Continue as an
+                                          Author</a>
+                              </div>
+                        </div>
+                  </div>
+
+            </div>
+      </div>
+</div>

@@ -1,0 +1,181 @@
+<header>
+      <div class="container-fluid">
+            <div class="row">
+                  <div class="col-md-12">
+                        <nav class="ct_navbar">
+                              <div class="ct_logo">
+                                    <a routerLink="/">
+                                          <img src="assets/img/logo.svg" alt="">
+                                    </a>
+                              </div>
+                              <div class="ct_nav_menu_list">
+                                    <div class="ct_close_menu">
+                                          <i class="fa-solid fa-xmark"></i>
+                                    </div>
+                                    <ul>
+                                          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                                                <a routerLink="/">Home</a>
+                                          </li>
+                                          <li routerLinkActive="active">
+                                                <a routerLink="/explore-books">Explore Books</a>
+                                          </li>
+                                          <li routerLinkActive="active">
+                                                <a routerLink="/authors-and-publishers">Authors and Publishers</a>
+                                          </li>
+                                          <li routerLinkActive="active">
+                                                <a routerLink="/community">Community</a>
+                                          </li>
+                                          <li routerLinkActive="active">
+                                                <a routerLink="/purchased-books">Library</a>
+                                          </li>
+                                          <li class="d-xl-none text-white">
+                                                <a (click)="openLoginModal()">
+                                                      Login/Signup
+                                                </a>
+                                          </li>
+
+                                    </ul>
+                              </div>
+                              <div class="ct_right_menu_items">
+                                    <ul>
+                                          <li class="ct_wishlist_icon">
+                                                <a routerLink="/wishlist">
+                                                      <svg width="24" height="24" viewBox="0 0 18 18" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M9 15.1875C9 15.1875 1.96875 11.25 1.96875 6.46876C1.96889 5.62369 2.26171 4.80476 2.79741 4.1512C3.33312 3.49763 4.07865 3.04977 4.90724 2.88376C5.73584 2.71775 6.59636 2.84384 7.34249 3.24059C8.08863 3.63734 8.67432 4.28026 9.00001 5.06004L8.99999 5.06005C9.32567 4.28027 9.91137 3.63734 10.6575 3.24059C11.4036 2.84384 12.2642 2.71775 13.0928 2.88376C13.9214 3.04977 14.6669 3.49763 15.2026 4.1512C15.7383 4.80476 16.0311 5.62369 16.0312 6.46876C16.0312 11.25 9 15.1875 9 15.1875Z"
+                                                                  stroke="#1D2026" stroke-width="1.125"
+                                                                  stroke-linecap="round" stroke-linejoin="round" />
+                                                      </svg>
+                                                </a>
+                                          </li>
+                                          <li>
+                                                <a routerLink="/my-cart">
+                                                      <div class="position-relative">
+                                                            <svg width="24" height="24" viewBox="0 0 18 18" fill="none"
+                                                                  xmlns="http://www.w3.org/2000/svg">
+                                                                  <path d="M6.1875 15.1875C6.1875 15.4982 5.93566 15.75 5.625 15.75C5.31434 15.75 5.0625 15.4982 5.0625 15.1875C5.0625 14.8768 5.31434 14.625 5.625 14.625C5.93566 14.625 6.1875 14.8768 6.1875 15.1875Z"
+                                                                        fill="#1D2026" stroke="#1D2026"
+                                                                        stroke-width="1.125" />
+                                                                  <path d="M12.9375 16.3125C13.5588 16.3125 14.0625 15.8088 14.0625 15.1875C14.0625 14.5662 13.5588 14.0625 12.9375 14.0625C12.3162 14.0625 11.8125 14.5662 11.8125 15.1875C11.8125 15.8088 12.3162 16.3125 12.9375 16.3125Z"
+                                                                        fill="#1D2026" />
+                                                                  <path d="M2.97322 5.0625H15.5893L13.7331 11.5591C13.666 11.7941 13.5241 12.0009 13.3289 12.1481C13.1337 12.2954 12.8959 12.375 12.6514 12.375H5.91109C5.66661 12.375 5.42879 12.2954 5.23362 12.1481C5.03844 12.0009 4.89654 11.7941 4.82937 11.5591L2.28621 2.65797C2.25262 2.54044 2.18167 2.43704 2.08408 2.36343C1.9865 2.28982 1.86759 2.25 1.74535 2.25H0.5625"
+                                                                        stroke="#1D2026" stroke-width="1.125"
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round" />
+                                                            </svg>
+
+                                                            <div class="ct_count_icon">
+                                                                  <h5 class="mb-0">02</h5>
+                                                            </div>
+
+                                                      </div>
+                                                </a>
+                                          </li>
+
+                                          <!-- <li class="dropdown">
+                                                <a href="javascript:void(0)" id="dropdownMenuButton1"
+                                                      data-bs-toggle="dropdown" aria-expanded="false">
+                                                      <img src="assets/img/user.jpg" alt="" class="ct_img_36"
+                                                            style="cursor: pointer;">
+                                                </a>
+                                                <ul class="dropdown-menu ct_custom_dropdown"
+                                                      aria-labelledby="dropdownMenuButton1">
+
+                                                      
+
+                                                      <li routerLink="/edit-reader"><a class="dropdown-item">
+                                                        
+                                                                  Edit Profile</a></li>
+
+                                                                  <li routerLink="/reader-order-history"><a class="dropdown-item">
+                                                                     
+                                                                  Order History</a></li>
+
+                                                                
+
+                                                                  <li routerLink="/purchased-books"><a class="dropdown-item">
+                                                                     
+                                                                  Purchased Books</a></li>
+                                                                  
+                                                      <li routerLink="/"><a class="dropdown-item"
+                                                                  href="javascript:void(0)" data-bs-toggle="modal"
+                                                                  data-bs-target="#ct_logout_modal">
+                                                                
+                                                                  Logout</a></li>
+                                                </ul>
+                                          </li> -->
+                                          <!-- @if(eBookToken){ -->
+                                          <li class="dropdown">
+                                                <a href="javascript:void(0)" id="dropdownMenuButton1"
+                                                      data-bs-toggle="dropdown" aria-expanded="false">
+                                                      <img src="assets/img/user.jpg" alt="" class="ct_img_36">
+                                                </a>
+                                                <ul class="dropdown-menu ct_custom_dropdown"
+                                                      aria-labelledby="dropdownMenuButton1">
+                                                      <li>
+                                                            <h5 class="ct_fs_16 ct_fw_600 mb-0">Hello John Wick</h5>
+                                                            <p class="mb-0 ct_text_676767 ct_fs_12">Johnwi**gmail.com</p>
+                                                      </li>
+
+                                                      <!-- <li>
+                                                            <a class="dropdown-item" routerLink="/favourite-books">
+                                                                  Favourite Books</a>
+                                                      </li> -->
+                                                      <li>
+                                                            <a class="dropdown-item" routerLink="/followed-authors">
+                                                                  Followed Authors </a>
+                                                      </li>
+                                                      <li>
+                                                            <a class="dropdown-item" routerLink="/reader-change-password">
+                                                                  Change Password </a>
+                                                      </li>
+                                                      <!-- <li>
+                                                            <a class="dropdown-item" routerLink="/purchased-books">
+                                                                  Purchased Books </a>
+                                                      </li> -->
+                                                      <!-- <li>
+                                                            <a class="dropdown-item" routerLink="/reader-order-history">
+                                                                  Order History</a>
+                                                      </li> -->
+                                                      <!-- <li>
+                                                            <a class="dropdown-item">
+                                                                  Downloaded Books</a>
+                                                      </li> -->
+                                                      <li>
+                                                            <a class="dropdown-item" routerLink="/edit-reader">
+                                                                  Edit Profile</a>
+                                                      </li>
+
+                                                      <li>
+                                                            <a (click)="logout()" class="dropdown-item"
+                                                                  href="javascript:void(0)" data-bs-toggle="modal"
+                                                                  data-bs-target="#ct_logout_modal">
+                                                                  Logout</a>
+                                                      </li>
+                                                </ul>
+                                          </li>
+                                          <!-- } @else { -->
+                                          <li class="d-xl-block d-none ">
+                                                <a (click)="openLoginModal()">
+                                                      Login/Signup
+                                                </a>
+                                          </li>
+                                          <!-- } -->
+
+
+
+
+
+                                          <li class="ct_open_menu">
+                                                <i class="fa-solid fa-bars"></i>
+                                          </li>
+                                    </ul>
+
+                              </div>
+                        </nav>
+                  </div>
+
+            </div>
+
+      </div>
+</header>

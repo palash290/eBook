@@ -1,0 +1,28 @@
+<div class="ct_side_bar">
+    <div class="ct_close_sidebar">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+    <div class="ct_admin_logo">
+        <img src="assets/img/logo.svg" alt="">
+    </div>
+    <ul>
+        <li routerLink="/author/auther-dashboard" style="cursor: pointer;">
+            <a [ngClass]="{ 'active': isActive('/author/auther-dashboard')}">Dashboard</a>
+        </li>
+        <li routerLink="/author/book-management" style="cursor: pointer;">
+            <a [ngClass]="{ 'active': isActive('/author/book-management')}">Book Management</a>
+        </li>
+        <li routerLink="/author/profile-customization" style="cursor: pointer;">
+            <a [ngClass]="{ 'active': isActive('/author/profile-customization')}">Storefront
+                Customization</a>
+        </li>
+        <li routerLink="/author/manage-chatrooms" style="cursor: pointer;">
+            <a [ngClass]="{ 'active': isActive('/author/manage-chatrooms')}">Manage Chatrooms</a>
+        </li>
+        <li routerLink="/author/sales-earnings" style="cursor: pointer;">
+            <a [ngClass]="{ 'active': isActive('/author/sales-earnings')}">Sales & Earnings</a>
+        </li>
+
+    </ul>
+
+</div>

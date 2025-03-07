@@ -1,0 +1,94 @@
+<header class="ct_dash_head">
+    <div class="d-flex align-items-center gap-2">
+        <i class="fa-solid fa-bars me-3 ct_fs_18 ct_menu_bar"></i>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+        <div class="ct_notification_main">
+            <div class="position-relative ct_notification_click">
+                <svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M10.0277 0C7.73472 0 5.80843 1.72411 5.55522 4.00306L4.5 13.5H1.5C0.671573 13.5 0 14.1716 0 15V16.5C0 17.3284 0.671573 18 1.5 18H22.5C23.3284 18 24 17.3284 24 16.5V15C24 14.1716 23.3284 13.5 22.5 13.5H19.5L18.4448 4.00306C18.1916 1.72411 16.2653 0 13.9723 0H10.0277Z"
+                        fill="#9747FF" />
+                    <rect opacity="0.3" x="9" y="19.5" width="6" height="6" rx="2.25" fill="#FF0000" />
+                </svg>
+                <div class="ct_notification_alert">
+                    <span>6</span>
+                </div>
+            </div>
+
+            <div class="ct_notification_custom_dropdown">
+                <ul>
+                    <li>
+                        <span class="ct_notify_user_icon">M</span>
+                        <div>
+                            <p class="mb-0">
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                            </p>
+                            <small class="ct_fw_500">9:00 am</small>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="assets/img/user.jpg" class="ct_notify_user_img_icon" />
+                        <div>
+                            <p class="mb-0">
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                            </p>
+                            <small class="ct_fw_500">9:00 am</small>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="ct_right_dropdown dropdown">
+            <button id="dropdownMenuButton" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="assets/img/user.jpg" alt="">
+                    <div class="text-start">
+                        <p class="mb-0 ct_fw_500">John Doe</p>
+                        <small>Author</small>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-down ms-auto"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" routerLink="/author/profile-customization">My Profile</a></li>
+                <li><a class="dropdown-item" routerLink="/author/change-password">Change Password</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal"
+                        data-bs-target="#ct_logout_modal_post">Log Out</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<div class="modal fade" id="ct_logout_modal_post" tabindex="-1" aria-labelledby="ct_delete_postLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header py-0 border-0">
+                <button type="button" class="btn-close ct_close" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="ct_delete_post_modal">
+                    <figure>
+                        <div class="ct_delete_post_icon">
+                            <i class="fa-solid fa-power-off"></i>
+                        </div>
+                        <figcaption class="mt-4">
+                            <h4 class="ct_fs_18 ct_fw_600">Log Out</h4>
+                            <p class="mb-0">Are you sure you want to logout? once you logout you need to login
+                                again.</p>
+                        </figcaption>
+                    </figure>
+                    <div class="modal-footer justify-content-center border-0 ct_modal_footer">
+                        <button type="button" class="ct_purple_btn ct_outline_blue w-100 ct_fw_600"
+                            data-bs-dismiss="modal">Cancele</button>
+                        <button (click)="logout()" type="button"
+                            class="ct_purple_btn ct_btn_red w-100 ct_fw_600">Log Out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
