@@ -25,7 +25,7 @@ export class PdfComponent {
 
   pdfUrl!: SafeResourceUrl;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl('assets/img/sample.pdf');
