@@ -27,7 +27,7 @@
                                                 <option value="">Genre</option>
                                                 <option value="">Genre</option>
                                           </select> -->
-                                          <nz-select class="form-control ct_input_text" nzMode="tags"
+                                          <nz-select class="form-control et_genre_multiselect_1" nzMode="tags"
                                                 nzPlaceHolder="Select" [(ngModel)]="selectedCategories"
                                                 (ngModelChange)="getBooks()" [nzNotFoundContent]="'No Data Found'">
                                                 @for (option of categories; track option) {
@@ -72,7 +72,7 @@
             <div class="ct_mt_32">
                   <h4 class="ct_fs_16 ct_fw_600 pb-2">NEW PRODUCTS</h4>
                   <hr class="my-0 ct_hr_line_1">
-                  <ul class="ct_new_products_list">
+                  <ul class="ct_new_products_list ct_new_products_list_scroll">
                         @for (item of allBooks.slice(0, 5); track $index) {
                         <li>
                               <div class="ct_new_product_img">
@@ -103,7 +103,8 @@
                                                       {{item.author?.fullName}}
                                                 </h5>
                                                 <p><span class="ct_fw_500">{{item.price | currency:'USD'}} </span><span
-                                                            class="ct_text_676767 ms-2"><del>{{item.costPrice | currency:'USD' }}
+                                                            class="ct_text_676767 ms-2"><del>{{item.costPrice |
+                                                                  currency:'USD' }}
                                                             </del></span></p>
                                           </div>
                                     </a>
@@ -127,7 +128,7 @@
                                                       </svg>
                                                 </div>
                                                 <div class="mt-5">
-                                                      <h4 class="ct_fs_36 ct_fw_600 mb-4">Oops! No Books Found</h4>
+                                                      <h4 class="ct_fs_24 ct_fw_600 mb-4">Oops! No Books Found</h4>
                                                 </div>
                                           </div>
                                     </div>

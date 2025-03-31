@@ -41,7 +41,7 @@
                                                 <option value="">Genre</option>
                                                 <option value="">Genre</option>
                                           </select> -->
-                                          <nz-select class="form-control ct_input_text" nzMode="tags"
+                                          <nz-select class="form-control et_genre_multiselect_1" nzMode="tags"
                                                 nzPlaceHolder="Select" [(ngModel)]="selectedCategories"
                                                 (ngModelChange)="getAuthors()" [nzNotFoundContent]="'No Data Found'">
                                                 @for (option of categories; track option) {
@@ -84,13 +84,15 @@
                                                       </h4>
                                                       @if(item.tagline != 'null' && item.tagline != null){
                                                       <p class="ct_text_636363 mb-0">
-                                                            {{(item.tagline | slice:0:40) + (item.tagline.length > 40 ? '...' : '')}}
+                                                            {{(item.tagline | slice:0:40) + (item.tagline.length > 40 ?
+                                                            '...' : '')}}
                                                       </p>
                                                       }
                                                 </div>
                                           </div>
                                           <button class="ct_purple_outline_btn  ct_grey_outline_btn"
-                                                (click)="isFollowing(item) ? unfollowAuthor(item.id) : followAuthor(item.id)">{{isFollowing(item) ? 'Following' : 'Follow'}}</button>
+                                                (click)="isFollowing(item) ? unfollowAuthor(item.id) : followAuthor(item.id)">{{isFollowing(item)
+                                                ? 'Following' : 'Follow'}}</button>
                                     </div>
 
                                     <div class="ct_mt_32 pb-5">
@@ -104,7 +106,8 @@
                                                             {{item.books[0].title}}
                                                       </h4>
                                                       <p class="ct_fs_14 ct_text_636363 mb-1">
-                                                            {{(item.books[0].description | slice:0:100) + (item.books[0].description.length > 100 ? '...' : '')}}.
+                                                            {{(item.books[0].description | slice:0:100) +
+                                                            (item.books[0].description.length > 100 ? '...' : '')}}.
                                                       </p>
                                                       <h5 class="ct_fs_18 ct_fw_600 mt-2 mb-0">
                                                             {{item.books[0].price | currency:'USD'}}

@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 
 .error-message {
   color: red;
@@ -21,7 +21,10 @@ cr-icon-button #download {
   z-index: 7 !important;
 }
 
-.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+.ant-select-focused:not(.ant-select-disabled).ant-select:not(
+    .ant-select-customize-input
+  )
+  .ant-select-selector {
   flex-wrap: nowrap;
   overflow: hidden;
 }
@@ -33,4 +36,20 @@ cr-icon-button #download {
 
 .ant-modal {
   top: 35% !important;
+}
+
+.et_genre_multiselect_1 .ant-select-selector {
+  padding-block: 9px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+.ct_user_chat_right h6 {
+  color: #fff;
+  font-size: 16px;
+}
+.sender p,
+.repaly p {
+  word-break: break-word;
 }

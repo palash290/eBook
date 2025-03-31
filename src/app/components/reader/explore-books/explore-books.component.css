@@ -1,16 +1,21 @@
 .ct_new_product_card_12 h5 {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow-x: hidden;
-      width: 180px;
-      display: block;
-
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  width: 180px;
+  display: block;
 }
 
 .ct_new_product_card_12 h5:hover {
-      color: var(--purple_light);
+  color: var(--purple_light);
 }
 
 .ct_new_product_card_12 a:hover {
-      color: #000;
+  color: #000;
+}
+
+.ct_new_products_list_scroll {
+  height: auto;
+  max-height: 500px;
+  overflow-y: auto;
 }

@@ -5,7 +5,8 @@
                 <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap mb-4">
                     <h4 class="ct_fs_26 ct_fw_700 mb-0 ct_nunito_font">Book Management</h4>
                     <button (click)="onSubmit()"
-                        class="ct_purple_btn d-flex align-items-center justify-content-center">{{bookId ? 'Update Book' : 'Save & Publish'}}</button>
+                        class="ct_purple_btn d-flex align-items-center justify-content-center">{{bookId ? 'Update Book'
+                        : 'Save & Publish'}}</button>
                 </div>
             </div>
         </div>
@@ -31,7 +32,7 @@
                                                 <option value="">Select Book Category</option>
                                                 <option value="">Select Book Category</option>
                                             </select> -->
-                                            <nz-select class="form-control ct_input" nzMode="tags"
+                                            <nz-select class="form-control et_genre_multiselect_1" nzMode="tags"
                                                 nzPlaceHolder="Select Genere" [(ngModel)]="selectedCategories"
                                                 [nzNotFoundContent]="'No Data Found'" formControlName="categoryIds">
                                                 @for (option of categories; track option) {
@@ -239,7 +240,7 @@
                         <div class="ct_full_height">
                             <div class="ct_edit_profile_bg position-relative">
                                 @if(coverImagePreview){
-                                <img [src]="coverImagePreview" alt="Cover Image" class="preview">
+                                <img [src]="coverImagePreview" alt="Cover Image" class="preview et_big_preview">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 36 36"
                                     class="remove" (click)="removeCoverImage()">
                                     <path fill="#e40000"
@@ -299,7 +300,8 @@
                                     <h5 class="ct_fs_16 ct_fw_500 mb-4">Additional Images</h5>
                                     <div class="col-md-6 mb-3 position-relative">
                                         @if(bookMediaPreviews.length >= 1){
-                                        <img [src]="bookMediaPreviews[0]" alt="Cover Image" class="h-auto w-100">
+                                        <img [src]="bookMediaPreviews[0]" alt="Cover Image"
+                                            class=" w-100 et_img_preview_146">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 36 36" class="remove" (click)="removeBookMedia(0)">
                                             <path fill="#e40000"
@@ -349,7 +351,8 @@
                                     </div>
                                     <div class="col-md-6 mb-3 position-relative">
                                         @if(bookMediaPreviews.length >= 2){
-                                        <img [src]="bookMediaPreviews[1]" alt="Cover Image" class="h-auto w-100">
+                                        <img [src]="bookMediaPreviews[1]" alt="Cover Image"
+                                            class="et_img_preview_146 w-100">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 36 36" class="remove" (click)="removeBookMedia(1)">
                                             <path fill="#e40000"
@@ -399,7 +402,8 @@
                                     </div>
                                     <div class="col-md-6 mb-3 position-relative">
                                         @if(bookMediaPreviews.length >= 3){
-                                        <img [src]=" bookMediaPreviews[2]" alt="Cover Image" class="h-auto w-100">
+                                        <img [src]=" bookMediaPreviews[2]" alt="Cover Image"
+                                            class="et_img_preview_146 w-100">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 36 36" class="remove" (click)="removeBookMedia(2)">
                                             <path fill="#e40000"
@@ -449,7 +453,8 @@
                                     </div>
                                     <div class="col-md-6 mb-3 position-relative">
                                         @if(bookMediaPreviews.length >= 4){
-                                        <img [src]="bookMediaPreviews[3]" alt="Cover Image" class="h-auto w-100">
+                                        <img [src]="bookMediaPreviews[3]" alt="Cover Image"
+                                            class="et_img_preview_146 w-100">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 36 36" class="remove" (click)="removeBookMedia(3)">
                                             <path fill="#e40000"
