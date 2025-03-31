@@ -77,17 +77,24 @@
                               </p>
 
                               <h3 class="ct_fs_28">{{bookData.price | currency:'USD'}}</h3>
-
+                              <div class="ct_mt_32">
+                                    <p class="mb-2 ct_text_636363">Genre:</p>
+                                    <p class="mb-0 ct_dark_purple_text">
+                                          {{categoryNames}}
+                                    </p>
+                              </div>
                               <div class="ct_mt_32">
                                     <p class="mb-3 ct_text_636363">Quantity:</p>
                                     <div class="position-relative ct_countity_count">
                                           <button class="ct_minus" (click)="decreaseValue()"><i
                                                       class="fa-solid fa-minus "></i></button>
-                                          <input type="number" class="form-control bg-white" [value]="quantity" />
+                                          <input type="number" class="form-control bg-white" [value]="quantity"
+                                                readonly />
                                           <button class="ct_plus" (click)="increaseValue()"><i
                                                       class="fa-solid fa-plus "></i></button>
                                     </div>
                               </div>
+
                               <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6  mb-3 mt-3 mb-sm-0">
                                     <h5 class="mb-0 ct_purple_text ct_fs_18"><i
                                                 class=" fa-regular fa-heart me-2 "></i>Add To

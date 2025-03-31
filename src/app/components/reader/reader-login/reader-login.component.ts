@@ -52,7 +52,7 @@ export class ReaderLoginComponent {
       this.srevice.postAPI('users/login', formURlData.toString()).subscribe({
         next: (resp: any) => {
           if (resp.success == true) {
-            this.srevice.setToken(resp.token);
+            this.srevice.setToken(resp.token, 'user');
             this.toster.success(resp.message)
             this.router.navigateByUrl('/');
             localStorage.setItem('userRole', 'reader')

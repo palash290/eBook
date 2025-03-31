@@ -11,7 +11,10 @@ export class HttpInterceptorService implements HttpInterceptor {
   constructor(private toastr: NzMessageService, private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authToken = localStorage.getItem('eBookToken');
+    const userRole = localStorage.getItem('userRole');
+    const effectiveRole = userRole === 'reader' ? 'user' : userRole;
+    const authToken = localStorage.getItem(`eBookToken_${effectiveRole}`);
+
     let modifiedRequest: HttpRequest<any>;
     if (req.body instanceof FormData) {
       modifiedRequest = req.clone({
@@ -19,12 +22,14 @@ export class HttpInterceptorService implements HttpInterceptor {
           Authorization: `Bearer ${authToken}`
         }
       });
+
     } else if (typeof req.body === 'object' && req.body !== null) {
       modifiedRequest = req.clone({
         setHeaders: {
           Authorization: `Bearer ${authToken}`
         }
       });
+
     } else {
       modifiedRequest = req.clone({
         setHeaders: {

@@ -52,7 +52,7 @@ export class AutherLoginComponent {
       this.srevice.postAPI('author/login', formURlData.toString()).subscribe({
         next: (res: any) => {
           if (res.success == true) {
-            this.srevice.setToken(res.token);
+            this.srevice.setToken(res.token, 'author');
             this.toster.success(res.message)
             this.router.navigateByUrl('/author/auther-dashboard');
             localStorage.setItem('userRole', 'author')

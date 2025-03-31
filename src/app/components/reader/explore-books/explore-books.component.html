@@ -11,8 +11,7 @@
                                     <div class="form-group">
                                           <label for="" class="ct_fs_14 mb-2 ct_fw_500">Search:</label>
                                           <div class="position-relative">
-                                                <input type="text" name="" id=""
-                                                      placeholder="Search by book name or title"
+                                                <input type="text" name="" id="" placeholder="Search by book name"
                                                       class="form-control ct_input_text ct_text_indent_30"
                                                       [(ngModel)]="searchQuery" (ngModelChange)="getBooks()">
                                                 <i class="fa-solid fa-magnifying-glass ct_search_icon_left"></i>
@@ -61,7 +60,8 @@
                         <li *ngFor="let range of priceRanges">
                               <div class="mt-3">
                                     <label class="cl-checkbox ct_checkbox_w_h_15">
-                                          <input type="checkbox" (change)="updatePriceRange(range, $event)">
+                                          <input type="checkbox" [checked]="selectedPrices.includes(range)"
+                                                (change)="updatePriceRange(range, $event)">
                                           <span>{{ range.label }}</span>
                                     </label>
                               </div>
@@ -69,12 +69,19 @@
                   </ul>
             </div>
 
+            <p class="text-end ct_cursor_pointer" (click)="clearFilter()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                              d="M12.077 19q-2.931 0-4.966-2.033q-2.034-2.034-2.034-4.964t2.034-4.966T12.077 5q1.783 0 3.339.847q1.555.847 2.507 2.365V5h1v5.23h-5.23v-1h3.7q-.782-1.495-2.198-2.363T12.077 6q-2.5 0-4.25 1.75T6.077 12t1.75 4.25t4.25 1.75q1.925 0 3.475-1.1t2.175-2.9h1.062q-.662 2.246-2.514 3.623T12.077 19" />
+                  </svg>Clear Filter
+            </p>
+
             <div class="ct_mt_32">
                   <h4 class="ct_fs_16 ct_fw_600 pb-2">NEW PRODUCTS</h4>
                   <hr class="my-0 ct_hr_line_1">
                   <ul class="ct_new_products_list">
                         @for (item of allBooks.slice(0, 5); track $index) {
-                        <li>
+                        <li routerLink="/book-overview" [queryParams]="{id:item.id}">
                               <div class="ct_new_product_img">
                                     <img [src]="item.coverImage" alt="">
                               </div>

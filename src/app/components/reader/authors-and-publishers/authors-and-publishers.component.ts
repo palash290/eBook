@@ -27,6 +27,7 @@ export class AuthorsAndPublishersComponent {
 
 
   ngOnInit(): void {
+    this.loading = true
     this.getAuthors();
     this.getCategory();
     const data = localStorage.getItem('userInfo');
@@ -36,9 +37,9 @@ export class AuthorsAndPublishersComponent {
   }
 
   getAuthors() {
-    this.loading = true
+
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = `users/getAllAuthor?search=${this.searchQuery.trim()}&categories=${this.selectedCategories.join(',')}`
     } else {
       apiUrl = `users/getAllAnonymousAuthor?search=${this.searchQuery.trim()}&categories=${this.selectedCategories.join(',')}`
@@ -58,7 +59,7 @@ export class AuthorsAndPublishersComponent {
   }
   getCategory() {
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = 'users/getAllCategories'
     } else {
       apiUrl = 'users/getAllAnonymousCategories'
@@ -75,14 +76,18 @@ export class AuthorsAndPublishersComponent {
   }
 
   followAuthor(authoeId: Number) {
-    if (this.service.isLogedIn()) {
+
+    if (this.service.isLogedIn('user')) {
+      this.loading = true
       this.service.postAPI(`users/follow/${authoeId}`, {}).subscribe({
         next: (resp: any) => {
           this.getAuthors();
           this.toastr.success(resp.message);
+          this.loading = false
         },
         error: error => {
           this.toastr.error(error);
+          this.loading = false
         }
       });
     } else {
@@ -91,13 +96,16 @@ export class AuthorsAndPublishersComponent {
   }
 
   unfollowAuthor(authoeId: Number) {
+    this.loading = true
     this.service.postAPI(`users/unfollow/${authoeId}`, {}).subscribe({
       next: (resp: any) => {
         this.getAuthors();
         this.toastr.success(resp.message);
+        this.loading = true
       },
       error: error => {
         this.toastr.error(error);
+        this.loading = true
       }
     });
   }

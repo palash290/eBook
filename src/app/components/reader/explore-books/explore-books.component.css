@@ -14,3 +14,7 @@
 .ct_new_product_card_12 a:hover {
       color: #000;
 }
+
+p.ct_cursor_pointer:hover {
+      color: var(--purple_light);
+}

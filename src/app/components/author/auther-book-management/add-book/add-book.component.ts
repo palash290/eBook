@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { SharedService } from '../../../../services/shared.service';
@@ -37,15 +37,15 @@ export class AddBookComponent {
   epubViewer: any
   constructor(private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer, private service: SharedService, private toster: NzMessageService, private route: ActivatedRoute) {
     this.authorForm = this.fb.group({
-      title: ['', Validators.required],
-      type: ['', Validators.required],
-      categoryIds: [[], Validators.required],
+      title: ['', [Validators.required, NoWhitespaceDirective.validate]],
+      type: ['', [Validators.required, NoWhitespaceDirective.validate]],
+      categoryIds: [[], [Validators.required, NoWhitespaceDirective.validate]],
       price: ['', [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]],
       costPrice: ['', [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]],
-      stock: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      stock: ['', [Validators.required, Validators.min(1), Validators.pattern('^[0-9]+$')]],
       coverImage: [''],
       pdfUrl: [''],
-      description: [''],
+      description: ['', [Validators.required, NoWhitespaceDirective.validate]],
       bookMedia: [null],
       audioUrl: [null]
     });
@@ -277,3 +277,13 @@ export class AddBookComponent {
   }
 }
 
+export class NoWhitespaceDirective {
+  static validate(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value || (typeof value === 'string' && value.trim() === '')) {
+      return { required: true };
+    }
+    return null;
+  }
+}

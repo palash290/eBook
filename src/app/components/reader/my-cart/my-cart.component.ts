@@ -36,7 +36,7 @@ export class MyCartComponent {
       this.localCartData = JSON.parse(data)
       this.cartservice.cartItems.set(this.cartData)
     }
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       this.getCartData()
     }
   }
@@ -86,7 +86,7 @@ export class MyCartComponent {
   remove(id: number) {
     const existingItem = this.originalCartData.find((item: any) => item.bookId === id);
     if (existingItem) {
-      if (this.service.isLogedIn()) {
+      if (this.service.isLogedIn('user')) {
         this.service.delete(`users/deleteCart/${existingItem.id}`).subscribe({
           next: (resp: any) => {
             this.getCartData()
@@ -113,7 +113,7 @@ export class MyCartComponent {
   increaseQuantity(item: any) {
     if (item.stock > item.quantity) {
       item.quantity += 1;
-      if (this.service.isLogedIn()) {
+      if (this.service.isLogedIn('user')) {
         this.updateQuantity(item.cart_id, item.quantity)
       } else {
         this.cartservice.addToCart(item, 0, false)
@@ -129,7 +129,7 @@ export class MyCartComponent {
     if (item.quantity > 1) {
       item.quantity -= 1;
       this.disable = false
-      if (this.service.isLogedIn()) {
+      if (this.service.isLogedIn('user')) {
         this.updateQuantity(item.cart_id, item.quantity)
       } else {
         this.cartservice.addToCart(item, -0, false)

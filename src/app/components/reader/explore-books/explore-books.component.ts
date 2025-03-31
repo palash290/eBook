@@ -47,6 +47,7 @@ export class ExploreBooksComponent {
 
 
   ngOnInit(): void {
+    this.loading = true
     this.getAuthors();
     this.getBooks()
     this.getCategory()
@@ -55,7 +56,7 @@ export class ExploreBooksComponent {
 
   getAuthors() {
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = 'users/getAllAuthor'
     } else {
       apiUrl = 'users/getAllAnonymousAuthor'
@@ -72,9 +73,10 @@ export class ExploreBooksComponent {
   }
 
   getBooks() {
+    // this.loading = true
     // http://localhost:4005/api/users/getAllBooks?search=&price=&categories=
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = `users/getAllBooks?search=${this.searchQuery.trim()}&categories=${this.selectedCategories.join(',')}`;
       if (this.minPrice !== null && this.maxPrice !== null) {
         apiUrl += `&minPrice=${this.minPrice}&maxPrice=${this.maxPrice}`;
@@ -100,7 +102,7 @@ export class ExploreBooksComponent {
 
   getCategory() {
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = 'users/getAllCategories'
     } else {
       apiUrl = 'users/getAllAnonymousCategories'
@@ -120,7 +122,7 @@ export class ExploreBooksComponent {
   }
   getAllBooks() {
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = `users/getAllBooks`
     } else {
       apiUrl = `users/getAllAnonymousBook`
@@ -152,6 +154,15 @@ export class ExploreBooksComponent {
       this.minPrice = null;
       this.maxPrice = null;
     }
+    this.getBooks()
+  }
+
+  clearFilter() {
+    this.selectedCategories = []
+    this.selectedPrices = []
+    this.minPrice = null;
+    this.maxPrice = null;
+    this.searchQuery = ''
     this.getBooks()
   }
 }

@@ -105,7 +105,7 @@ export class AutherProfileCustomizationComponent {
       next: (res: any) => {
         if (res.success == true) {
           this.toastr.success(res.message);
-          this.service.getProfile('author/myProfile')
+          this.service.getProfile('author/myProfile', 'author')
           // this.router.navigate(['/author/auther-dashboard'])
         } else {
           this.loading = false;

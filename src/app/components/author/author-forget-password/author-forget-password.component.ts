@@ -45,7 +45,6 @@ export class AuthorForgetPasswordComponent {
       this.srevice.postAPI('author/forgetPassword', formURlData.toString()).subscribe({
         next: (res: any) => {
           if (res.success == true) {
-            this.srevice.setToken(res.token);
             this.loading = false;
             this.toster.success(res.message);
             sessionStorage.setItem('email', this.Form.value.email);

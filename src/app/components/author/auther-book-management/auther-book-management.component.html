@@ -24,11 +24,12 @@
                         <table class="table ct_custom_table">
                             <thead>
                                 <tr>
+                                    <th>S No.</th>
                                     <th>Book Details</th>
                                     <th>Genre</th>
                                     <th>Date Published</th>
                                     <th>Type</th>
-                                    <th>price</th>
+                                    <th>Discounted Price</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -36,14 +37,15 @@
                                 @if(books.length > 0) {
                                 @for (item of books; track $index) {
                                 <tr>
+                                    <td>{{$index + 1}}</td>
                                     <td>
                                         <div class="ct_img_w_52_grid">
                                             <img [src]="item.coverImage" alt="">
                                             <div>
                                                 <h4 class="mb-0 ct_fs_16">{{item.title}}</h4>
-                                                <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a text-capitalize">
+                                                <!-- <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a text-capitalize">
                                                     {{item.author?.fullName}}
-                                                </p>
+                                                </p> -->
                                             </div>
                                         </div>
                                     </td>

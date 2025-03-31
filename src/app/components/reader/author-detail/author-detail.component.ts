@@ -33,7 +33,7 @@ export class AuthorDetailComponent {
 
   getAuthors() {
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = `users/getAllAuthor/${this.authorId}`
     } else {
       apiUrl = `users/getAllAnonymousAuthor/${this.authorId}`
@@ -65,7 +65,7 @@ export class AuthorDetailComponent {
     })
   }
   followAuthor(authoeId: Number) {
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       this.service.postAPI(`users/follow/${authoeId}`, {}).subscribe({
         next: (resp: any) => {
           this.getAuthors();

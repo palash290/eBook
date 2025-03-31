@@ -105,7 +105,6 @@ export class AuthorOtpVerificationComponent {
       this.srevice.postAPI('author/forgetPassword', formURlData.toString()).subscribe({
         next: (res: any) => {
           if (res.success == true) {
-            this.srevice.setToken(res.token);
             this.loading = false;
             this.toster.success('OTP resent successfully.');
             this.startCountdown();

@@ -24,8 +24,8 @@ export class HeaderComponent {
   }
 
   ngOnInit(): void {
-    this.eBookToken = localStorage.getItem('eBookToken');
-    this.service.getProfile('users/myProfile')
+    this.eBookToken = localStorage.getItem('eBookToken_user');
+    this.service.getProfile('users/myProfile', 'user')
     this.service.profileData$.subscribe((data) => {
       if (data) {
         this.userInfo = data;

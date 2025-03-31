@@ -45,7 +45,7 @@ export class BookDetailsComponent {
 
   deleteBook(bookId: number) {
     this.modalService.confirm({
-      nzTitle: 'Are you sure delete this book?',
+      nzTitle: 'Are you sure want to delete this book?',
       nzContent: '<b style="color: red;">You will not be able to recover this book!</b>',
       nzOkText: 'Yes',
       nzOkType: 'primary',

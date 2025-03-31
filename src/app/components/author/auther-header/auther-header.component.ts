@@ -17,7 +17,7 @@ export class AutherHeaderComponent {
   constructor(private router: Router, private service: SharedService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.service.getProfile('author/myProfile')
+    this.service.getProfile('author/myProfile', 'author')
     this.service.profileData$.subscribe((data) => {
       if (data) {
         this.userInfo = data;

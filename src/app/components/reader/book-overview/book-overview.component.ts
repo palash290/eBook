@@ -21,6 +21,7 @@ export class BookOverviewComponent {
   bookId!: number
   loading: boolean = false
   quantity: number = 1
+  categoryNames: any
   constructor(private router: Router, private service: SharedService, private modalService: ModalService, private toastr: NzMessageService, private route: ActivatedRoute, private cartService: CartService) {
     this.route.queryParams.subscribe(params => {
       this.bookId = params['id'];
@@ -35,7 +36,7 @@ export class BookOverviewComponent {
   getBookById() {
     this.loading = true
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = `users/getAllBook/${this.bookId}`
     } else {
       apiUrl = `users/getAllAnonymousBook/${this.bookId}`
@@ -54,6 +55,14 @@ export class BookOverviewComponent {
               updatedAt: new Date().toISOString(),
             });
           }
+          if (this.bookData?.books?.length > 0) {
+            this.categoryNames = this.bookData.books
+              .map((c: any) => c.category?.name)
+              .filter(name => name)
+              .join(' | ');
+          } else {
+            this.categoryNames = 'No Categories';
+          }
         }
         let categories = this.bookData.books.map((e: any) => e.category.id);
         this.getBooks(categories)
@@ -69,7 +78,7 @@ export class BookOverviewComponent {
   getBooks(categories: any) {
     this.loading = true
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = `users/getAllBooks?categories=${categories.join(',')}`;
     } else {
       apiUrl = `users/getAllAnonymousBook?categories=${categories.join(',')}`
@@ -135,7 +144,7 @@ export class BookOverviewComponent {
   }
 
   addToCart(book: any) {
-    const isLoggedIn = this.service.isLogedIn();
+    const isLoggedIn = this.service.isLogedIn('user');
     let data = {
       id: book.id,
       title: book.title,

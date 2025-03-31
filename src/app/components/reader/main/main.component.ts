@@ -115,7 +115,7 @@ export class MainComponent {
 
   getAllBooks() {
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = `users/getAllBooks`
     } else {
       apiUrl = `users/getAllAnonymousBook`
@@ -135,7 +135,7 @@ export class MainComponent {
 
   getTopAuthors() {
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = 'users/getTopAuthor'
     } else {
       apiUrl = 'users/getAnonymousTopAuthor'
@@ -153,7 +153,7 @@ export class MainComponent {
 
   getCategory() {
     let apiUrl = ''
-    if (this.service.isLogedIn()) {
+    if (this.service.isLogedIn('user')) {
       apiUrl = 'users/getAllCategories'
     } else {
       apiUrl = 'users/getAllAnonymousCategories'

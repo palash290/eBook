@@ -72,7 +72,7 @@ export class EditReaderComponent {
       next: (res: any) => {
         if (res.success == true) {
           this.toastr.success(res.message);
-          this.service.getProfile('users/myProfile')
+          this.service.getProfile('users/myProfile', 'user')
           this.router.navigate(['/'])
         } else {
           this.loading = false;

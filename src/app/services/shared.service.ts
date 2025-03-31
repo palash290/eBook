@@ -29,20 +29,21 @@ export class SharedService {
     return this.http.delete<T>(this.baseUrl + url);
   };
 
-  setToken(token: string) {
-    localStorage.setItem('eBookToken', token)
+  setToken(token: string, role: 'user' | 'author') {
+    localStorage.setItem(`eBookToken_${role}`, token);
   }
 
-  getToken() {
-    return localStorage.getItem('eBookToken')
+  getToken(role: 'user' | 'author') {
+    return localStorage.getItem(`eBookToken_${role}`);
   }
 
-  isLogedIn() {
-    return !!this.getToken();
+  isLogedIn(role: 'user' | 'author') {
+    return !!this.getToken(role);
   }
 
   logout() {
-    localStorage.removeItem('eBookToken');
+    localStorage.removeItem('eBookToken_author');
+    localStorage.removeItem('eBookToken_user');
     localStorage.removeItem('userInfo');
     localStorage.removeItem('userRole');
     localStorage.removeItem('cart');
@@ -53,8 +54,8 @@ export class SharedService {
   private profileDataSubject = new BehaviorSubject<any>(null);
   profileData$ = this.profileDataSubject.asObservable();
 
-  getProfile(url: string) {
-    if (this.isLogedIn()) {
+  getProfile(url: string, role: 'user' | 'author') {
+    if (this.isLogedIn(role)) {
       this.http.get(this.baseUrl + url).subscribe((res: any) => {
         this.profileDataSubject.next(res.user);
       });
