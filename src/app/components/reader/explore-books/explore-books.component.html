@@ -1,45 +1,68 @@
-<section class="ct_main_explore_sec  gap-3 ct_mt_40 ct_pb_100">
+<section class="ps-3 ct_mt_40 pt-0">
+      <div class="container-fluid">
+            <div class="row">
+                  <div class="col-md-12">
+                        <h2 class="ct_fw_400 ct_fs_24 mb-4"><span class="ct_fw_600">{{categoryName ? categoryName : ''}}
+                                    Books</span>
+                              ({{books.length}})
+                        </h2>
+                        <div class="row">
+                              <div class="col-lg-7 col-md-6 mb-3 mb-md-0">
+                                    <div class="form-group">
+                                          <label for="" class="ct_fs_14 mb-2 ct_fw_500">Search:</label>
+                                          <div class="position-relative">
+                                                <input type="text" name="" id=""
+                                                      placeholder="Search by book name or title"
+                                                      class="form-control ct_input_text ct_text_indent_30"
+                                                      [(ngModel)]="searchQuery" (ngModelChange)="getBooks()">
+                                                <i class="fa-solid fa-magnifying-glass ct_search_icon_left"></i>
+                                          </div>
+                                    </div>
+                              </div>
+                              <div class="col-lg-5 col-md-6 mb-3 mb-md-0">
+                                    <div class="form-group">
+                                          <label for="" class="ct_fs_14 mb-2 ct_fw_500">Genre:</label>
+                                          <!-- <select class="form-control ct_input_text">
+                                                <option value="">All Genre</option>
+                                                <option value="">Genre</option>
+                                                <option value="">Genre</option>
+                                          </select> -->
+                                          <nz-select class="form-control ct_input_text" nzMode="tags"
+                                                nzPlaceHolder="Select" [(ngModel)]="selectedCategories"
+                                                (ngModelChange)="getBooks()" [nzNotFoundContent]="'No Data Found'">
+                                                @for (option of categories; track option) {
+                                                <nz-option [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+                                                }
+                                          </nz-select>
+                                    </div>
+                              </div>
+                              <!-- <div class="col-lg-2 col-md-3 mb-3 mb-md-0">
+                                    <div class="form-group">
+                                          <label for="" class="ct_fs_14 mb-2 ct_fw_500">Author:</label>
+                                          <nz-select class="form-control ct_input_text" nzMode="tags"
+                                                nzPlaceHolder="Select" [(ngModel)]="selectedAuthors"
+                                                [nzNotFoundContent]="'No Data Found'">
+                                                @for (option of authors; track option) {
+                                                <nz-option [nzLabel]="option.fullName" [nzValue]="option"></nz-option>
+                                                }
+                                          </nz-select>
+                                    </div>
+                              </div> -->
+                        </div>
+                  </div>
+            </div>
+      </div>
+</section>
+<section class="ct_main_explore_sec gap-3 ct_mt_40 ct_pb_100">
       <div class="ct_filter_side_bar">
             <div class="ct_price_box">
                   <h4 class="ct_fs_16 ct_fw_600">Price </h4>
                   <ul class="ct_mt_32">
-                        <li>
+                        <li *ngFor="let range of priceRanges">
                               <div class="mt-3">
                                     <label class="cl-checkbox ct_checkbox_w_h_15">
-                                          <input checked="" type="checkbox">
-                                          <span>Below $50</span>
-                                    </label>
-                              </div>
-                        </li>
-                        <li>
-                              <div class="mt-3">
-                                    <label class="cl-checkbox ct_checkbox_w_h_15">
-                                          <input type="checkbox">
-                                          <span>$51-$100</span>
-                                    </label>
-                              </div>
-                        </li>
-                        <li>
-                              <div class="mt-3">
-                                    <label class="cl-checkbox ct_checkbox_w_h_15">
-                                          <input type="checkbox">
-                                          <span>$101-$200</span>
-                                    </label>
-                              </div>
-                        </li>
-                        <li>
-                              <div class="mt-3">
-                                    <label class="cl-checkbox ct_checkbox_w_h_15">
-                                          <input type="checkbox">
-                                          <span>$201-$300</span>
-                                    </label>
-                              </div>
-                        </li>
-                        <li>
-                              <div class="mt-3">
-                                    <label class="cl-checkbox ct_checkbox_w_h_15">
-                                          <input type="checkbox">
-                                          <span>$301-$400</span>
+                                          <input type="checkbox" (change)="updatePriceRange(range, $event)">
+                                          <span>{{ range.label }}</span>
                                     </label>
                               </div>
                         </li>
@@ -50,159 +73,70 @@
                   <h4 class="ct_fs_16 ct_fw_600 pb-2">NEW PRODUCTS</h4>
                   <hr class="my-0 ct_hr_line_1">
                   <ul class="ct_new_products_list">
+                        @for (item of allBooks.slice(0, 5); track $index) {
                         <li>
                               <div class="ct_new_product_img">
-                                    <img src="assets/img/new_product_1.png" alt="">
+                                    <img [src]="item.coverImage" alt="">
                               </div>
                               <div class="ct_new_product_info">
-                                    <p class="ct_text_676767 mb-0">Kidnapped Robert Stevenson</p>
-                                    <h5 class="ct_fs_18 ct_fw_600 mb-0">$6.00</h5>
-
+                                    <p class="ct_text_676767 mb-0">{{item.title}}</p>
+                                    <h5 class="ct_fs_18 ct_fw_600 mb-0">{{item.price | currency:'USD' }}</h5>
                               </div>
                         </li>
-                        <li>
-                              <div class="ct_new_product_img">
-                                    <img src="assets/img/new_product_2.png" alt="">
-                              </div>
-                              <div class="ct_new_product_info">
-                                    <p class="ct_text_676767 mb-0">Moby-Dick eq Herman</p>
-                                    <h5 class="ct_fs_18 ct_fw_600 mb-0">$6.00</h5>
-
-                              </div>
-                        </li>
-                        <li>
-                              <div class="ct_new_product_img">
-                                    <img src="assets/img/new_product_3.png" alt="">
-                              </div>
-                              <div class="ct_new_product_info">
-                                    <p class="ct_text_676767 mb-0">David Copperfield Charles</p>
-                                    <h5 class="ct_fs_18 ct_fw_600 mb-0">$5.00</h5>
-
-                              </div>
-                        </li>
-                        <li>
-                              <div class="ct_new_product_img">
-                                    <img src="assets/img/new_product_4.png" alt="">
-                              </div>
-                              <div class="ct_new_product_info">
-                                    <p class="ct_text_676767 mb-0">Vanity Fair by William</p>
-                                    <h5 class="ct_fs_18 ct_fw_600 mb-0">$6.00</h5>
-
-                              </div>
-                        </li>
-                        <li>
-                              <div class="ct_new_product_img">
-                                    <img src="assets/img/new_product_5.png" alt="">
-                              </div>
-                              <div class="ct_new_product_info">
-                                    <p class="ct_text_676767 mb-0">Sybil by Benjamin Disraeli</p>
-                                    <h5 class="ct_fs_18 ct_fw_600 mb-0">$4.50</h5>
-
-                              </div>
-                        </li>
-                        <li>
-                              <div class="ct_new_product_img">
-                                    <img src="assets/img/new_product_6.png" alt="">
-                              </div>
-                              <div class="ct_new_product_info">
-                                    <p class="ct_text_676767 mb-0">Nightmare Abbey Thomas</p>
-                                    <h5 class="ct_fs_18 ct_fw_600 mb-0">$5.00</h5>
-
-                              </div>
-                        </li>
-
+                        }
                   </ul>
             </div>
-
       </div>
       <div class="ct_right_content_explore ">
             <div class="container-fluid">
+                  @if(books.length > 0) {
                   <div class="row">
+                        @for(item of books ; track $index) {
                         <div class="col-xl-3 col-lg-4 col-md-4 mb-4">
                               <div class="ct_new_product_card_12">
-                                    <a routerLink="/book-overview">
+                                    <a routerLink="/book-overview" [queryParams]="{id:item.id}">
                                           <div class="ct_new_product_img_34">
-                                                <img src="assets/img/new_product_7.png" alt="">
+                                                <img [src]="item.coverImage" alt="">
                                           </div>
                                           <div class="text-center">
-                                                <h5 class="mb-2 ct_fs_16 ct_fw_400">Tom Jones by Henry Fielding</h5>
-                                                <p><span class="ct_fw_500">$8.00 </span><span
-                                                            class="ct_text_676767 ms-2"><del>$9.00</del></span></p>
+                                                <h5 class="mb-2 ct_fs_16 ct_fw_400 text-capitalize">{{item.title}} by
+                                                      {{item.author?.fullName}}
+                                                </h5>
+                                                <p><span class="ct_fw_500">{{item.price | currency:'USD'}} </span><span
+                                                            class="ct_text_676767 ms-2"><del>{{item.costPrice | currency:'USD' }}
+                                                            </del></span></p>
                                           </div>
                                     </a>
                               </div>
                         </div>
-                        <div class="col-xl-3 col-lg-4 col-md-4 mb-4">
-                              <div class="ct_new_product_card_12">
-                                    <a routerLink="/book-overview">
-                                          <div class="ct_new_product_img_34">
-                                                <img src="assets/img/new_product_7.png" alt="">
-                                          </div>
-                                          <div class="text-center">
-                                                <h5 class="mb-2 ct_fs_16 ct_fw_400">Tom Jones by Henry Fielding</h5>
-                                                <p><span class="ct_fw_500">$8.00 </span><span
-                                                            class="ct_text_676767 ms-2"><del>$9.00</del></span></p>
-                                          </div>
-                                    </a>
-                              </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-4 mb-4">
-                              <div class="ct_new_product_card_12">
-                                    <a routerLink="/book-overview">
-                                          <div class="ct_new_product_img_34">
-                                                <img src="assets/img/new_product_7.png" alt="">
-                                          </div>
-                                          <div class="text-center">
-                                                <h5 class="mb-2 ct_fs_16 ct_fw_400">Tom Jones by Henry Fielding</h5>
-                                                <p><span class="ct_fw_500">$8.00 </span><span
-                                                            class="ct_text_676767 ms-2"><del>$9.00</del></span></p>
-                                          </div>
-                                    </a>
-                              </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-4 mb-4">
-                              <div class="ct_new_product_card_12">
-                                    <a routerLink="/book-overview">
-                                          <div class="ct_new_product_img_34">
-                                                <img src="assets/img/new_product_7.png" alt="">
-                                          </div>
-                                          <div class="text-center">
-                                                <h5 class="mb-2 ct_fs_16 ct_fw_400">Tom Jones by Henry Fielding</h5>
-                                                <p><span class="ct_fw_500">$8.00 </span><span
-                                                            class="ct_text_676767 ms-2"><del>$9.00</del></span></p>
-                                          </div>
-                                    </a>
-                              </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-4 mb-4">
-                              <div class="ct_new_product_card_12">
-                                    <a routerLink="/book-overview">
-                                          <div class="ct_new_product_img_34">
-                                                <img src="assets/img/new_product_7.png" alt="">
-                                          </div>
-                                          <div class="text-center">
-                                                <h5 class="mb-2 ct_fs_16 ct_fw_400">Tom Jones by Henry Fielding</h5>
-                                                <p><span class="ct_fw_500">$8.00 </span><span
-                                                            class="ct_text_676767 ms-2"><del>$9.00</del></span></p>
-                                          </div>
-                                    </a>
-                              </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-4 mb-4">
-                              <div class="ct_new_product_card_12">
-                                    <a routerLink="/book-overview">
-                                          <div class="ct_new_product_img_34">
-                                                <img src="assets/img/new_product_7.png" alt="">
-                                          </div>
-                                          <div class="text-center">
-                                                <h5 class="mb-2 ct_fs_16 ct_fw_400">Tom Jones by Henry Fielding</h5>
-                                                <p><span class="ct_fw_500">$8.00 </span><span
-                                                            class="ct_text_676767 ms-2"><del>$9.00</del></span></p>
-                                          </div>
-                                    </a>
-                              </div>
-                        </div>
+                        }
                   </div>
+                  }@else{
+                  <section class="ct_py_100 bg-white">
+                        <div class="container">
+                              <div class="row">
+                                    <div class="col-md-10 mx-auto">
+                                          <div class="ct_payment_succesfull_main text-center">
+                                                <div class="ct_check_icon_success">
+                                                      <svg xmlns="http://www.w3.org/2000/svg" width="208" height="208"
+                                                            viewBox="0 0 512 512">
+                                                            <path fill="none" stroke="currentColor"
+                                                                  stroke-linecap="round" stroke-linejoin="round"
+                                                                  stroke-width="32"
+                                                                  d="M256 160c16-63.16 76.43-95.41 208-96a15.94 15.94 0 0 1 16 16v288a16 16 0 0 1-16 16c-128 0-177.45 25.81-208 64c-30.37-38-80-64-208-64c-9.88 0-16-8.05-16-17.93V80a15.94 15.94 0 0 1 16-16c131.57.59 192 32.84 208 96m0 0v288" />
+                                                      </svg>
+                                                </div>
+                                                <div class="mt-5">
+                                                      <h4 class="ct_fs_36 ct_fw_600 mb-4">Oops! No Books Found</h4>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </section>
+                  }
             </div>
       </div>
 </section>
+
+<app-loader *ngIf="loading"></app-loader>

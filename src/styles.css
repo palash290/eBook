@@ -1,4 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 .error-message {
-    color: red;
-  }
+  color: red;
+}
+
+nz-select-top-control.ant-select-selector {
+  height: 100% !important;
+}
+
+.ct_cursor_pointer {
+  cursor: pointer;
+}
+
+cr-icon-button #download {
+  display: none !important;
+}
+
+.modal-backdrop {
+  z-index: 7 !important;
+}
+
+.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.ant-select-multiple .ant-select-selector {
+  flex-wrap: nowrap !important;
+  overflow: hidden !important;
+}
+
+.ant-modal {
+  top: 35% !important;
+}

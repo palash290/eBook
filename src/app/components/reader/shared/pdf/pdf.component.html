@@ -1,10 +1,36 @@
-<section class="ct_mt_40 ct_px_40 ct_pb_100 ct_mb_40">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- <h4 class="ct_fs_24 ct_fw_600 mb-4">Purchased Books</h4> -->
-                <iframe [src]="pdfUrl" width="100%" height="650"></iframe>
+<div class="container mx-auto p-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex align-items-center justify-content-between et_flex_direction_991">
+                <h4 class="ct_fs_24 ct_fw_600 text-capitalize "> {{title}}
+                </h4>
+                <div class="controls flex-wrap">
+                    <button [disabled]="page === 1" (click)="prevPage()"> <i class="fa-solid fa-angle-left"></i>
+                        Prev</button>
+                    <input type="number" [(ngModel)]="page" min="1" max="{{ totalPages }}"
+                        class="page-input form-control ct_input text-center" style="height: 38px;">
+                    <button (click)="nextPage()" [disabled]="page === totalPages">Next <i
+                            class="fa-solid fa-angle-right"></i></button>
+                    <button (click)="zoomIn()"><i class="fa-solid fa-plus"></i> Zoom In</button>
+                    <button (click)="zoomOut()"><i class="fa-solid fa-minus"></i> Zoom Out</button>
+                    <p class="m-0 ct_fs_18">{{ page }} / {{ totalPages }}</p>
+                </div>
             </div>
+
+            <!-- <nav *ngIf="isLoaded">
+                    <button (click)="prevPage()" [disabled]="page === 1" class="previous ct_purple_outline_btn_1">
+                        Prev
+                    </button>
+                    <input type="number" [(ngModel)]="page" min="1" max="{{ totalPages }}" class="page-input">
+                    <button (click)="nextPage()" [disabled]="page === totalPages" class="next ct_purple_outline_btn_1">
+                        Next
+                    </button>
+                    <p class="m-0">{{ page }} / {{ totalPages }}</p>
+                </nav> -->
         </div>
+        <!-- <h4 class="ct_fs_24 ct_fw_600 mb-4">Purchased Books</h4> -->
+        <pdf-viewer [src]="pdfUrl" [render-text]="true" class="pdf-viewer" [page]="page" [zoom]="zoom"
+            (after-load-complete)="afterLoadComplete($event)"></pdf-viewer>
     </div>
-</section>
+</div>
+<app-loader *ngIf="!isLoaded"></app-loader>

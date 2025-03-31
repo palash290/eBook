@@ -45,12 +45,12 @@
                                 formControlName="full_name">
                             <label for="ct_input-field" class="ct_input-label">Full Name</label>
                             <span class="ct_input-highlight"></span>
-                            <div *ngIf="signupForm.controls['full_name'].invalid && signupForm.controls['full_name'].touched"
-                                class="error-message">
-                                <div *ngIf="signupForm.controls['full_name'].errors?.['required']" class="ct_fs_14">Name
-                                    is
-                                    required.</div>
-                            </div>
+                        </div>
+                        <div *ngIf="signupForm.controls['full_name'].invalid && signupForm.controls['full_name'].touched"
+                            class="error-message">
+                            <div *ngIf="signupForm.controls['full_name'].errors?.['required']" class="ct_fs_14">Name
+                                is
+                                required.</div>
                         </div>
 
                         <div class="ct_input-container">
@@ -58,15 +58,15 @@
                                 formControlName="email">
                             <label for="ct_input-field" class="ct_input-label">Email Address</label>
                             <span class="ct_input-highlight"></span>
-                            <div *ngIf="signupForm.controls['email'].invalid && signupForm.controls['email'].touched"
-                                class="error-message">
-                                <div *ngIf="signupForm.controls['email'].errors?.['required']" class="ct_fs_14 mt-1">
-                                    Email is required.
-                                </div>
-                                <div *ngIf="signupForm.controls['email'].errors?.['email'] && !signupForm.controls['email'].errors?.['required']"
-                                    class="ct_fs_14 mt-1">
-                                    Invalid email format.</div>
+                        </div>
+                        <div *ngIf="signupForm.controls['email'].invalid && signupForm.controls['email'].touched"
+                            class="error-message">
+                            <div *ngIf="signupForm.controls['email'].errors?.['required']" class="ct_fs_14 mt-1">
+                                Email is required.
                             </div>
+                            <div *ngIf="signupForm.controls['email'].errors?.['email'] && !signupForm.controls['email'].errors?.['required']"
+                                class="ct_fs_14 mt-1">
+                                Invalid email format.</div>
                         </div>
 
                         <div class="ct_input-container position-relative">
@@ -77,15 +77,50 @@
 
                             <label for="ct_input-field" class="ct_input-label">Password</label>
                             <span class="ct_input-highlight"></span>
-
-                            <div *ngIf="signupForm.controls['password'].invalid && signupForm.controls['password'].touched"
-                                class="error-message">
-                                <div *ngIf="signupForm.controls['password'].errors?.['required']" class="ct_fs_14 mt-1">
-                                    Password is
-                                    required.</div>
-                            </div>
-
                         </div>
+                        <div *ngIf="signupForm.controls['password'].invalid && signupForm.controls['password'].touched"
+                            class="error-message">
+                            <div *ngIf="signupForm.controls['password'].errors?.['required']" class="ct_fs_14 mt-1">
+                                Password is
+                                required.
+                            </div>
+                            <div
+                                *ngIf="signupForm.controls['password'].errors?.['strongPassword'] && !signupForm.controls['password'].errors?.['required']">
+                                <div *ngIf="
+                                    !signupForm.controls['password'].errors?.['strongPassword'].isValidLength"
+                                    class="ct_fs_14 mt-1">
+                                    Password must be at least 8 characters long.
+                                </div>
+                                <div *ngIf="!signupForm.controls['password'].errors?.['strongPassword'].hasUpperCase &&
+                                        signupForm.controls['password'].errors?.['strongPassword'].isValidLength"
+                                    class="ct_fs_14 mt-1">
+                                    Password must contain at least one uppercase letter.
+                                </div>
+                                <div *ngIf="!signupForm.controls['password'].errors?.['strongPassword'].hasLowerCase &&
+                                        signupForm.controls['password'].errors?.['strongPassword'].hasUpperCase &&
+                                        signupForm.controls['password'].errors?.['strongPassword'].isValidLength"
+                                    class="ct_fs_14 mt-1">
+                                    Password must contain at least one lowercase letter.
+                                </div>
+                                <div *ngIf="!signupForm.controls['password'].errors?.['strongPassword'].hasNumeric &&
+                                        signupForm.controls['password'].errors?.['strongPassword'].hasLowerCase &&
+                                        signupForm.controls['password'].errors?.['strongPassword'].hasUpperCase &&
+                                        signupForm.controls['password'].errors?.['strongPassword'].isValidLength"
+                                    class="ct_fs_14 mt-1">
+                                    Password must contain at least one number.
+                                </div>
+                                <div *ngIf="!signupForm.controls['password'].errors?.['strongPassword'].hasSpecialCharacter &&
+                                        signupForm.controls['password'].errors?.['strongPassword'].hasNumeric &&
+                                        signupForm.controls['password'].errors?.['strongPassword'].hasLowerCase &&
+                                        signupForm.controls['password'].errors?.['strongPassword'].hasUpperCase &&
+                                        signupForm.controls['password'].errors?.['strongPassword'].isValidLength"
+                                    class="ct_fs_14 mt-1">
+                                    Password must contain at least one special character.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- {{signupForm.controls['password'].errors | json}} -->
+
 
                         <!-- <div class="ct_input-container position-relative">
 
@@ -102,39 +137,34 @@
                         <div class="mt-4">
                             <div>
                                 <label class="cl-checkbox">
-                                    <input checked="" type="checkbox">
+                                    <input type="checkbox" formControlName="terms">
                                     <span>I agree to the Terms & Conditions</span>
                                 </label>
                             </div>
                             <div class="mt-3">
                                 <label class="cl-checkbox">
-                                    <input checked="" type="checkbox">
+                                    <input type="checkbox">
                                     <span>Subscribe to Reader News & Updates</span>
                                 </label>
                             </div>
                         </div>
 
-                        <div class="mt-5">
+                        <div class="mt-4">
+                            <div *ngIf="signupForm.controls['terms'].invalid && signupForm.controls['terms'].touched"
+                                class="error-message mb-2">
+                                <div *ngIf="signupForm.controls['terms'].errors?.['required']" class="ct_fs_14">
+                                    Please
+                                    Check Terms & Conditions.</div>
+                            </div>
                             <a (click)="login()" type="button" class="ct_purple_btn w-100">Create Account</a>
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
-
     </div>
 </section>
-
-
-
-
-
 <app-footer />
-
-
-
-
 
 
 <!-- Loader S -->

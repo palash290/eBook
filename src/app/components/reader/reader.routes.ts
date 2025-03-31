@@ -68,8 +68,16 @@ export const readerRoutes: Routes = [
                         loadComponent: () => import('./shared/pdf/pdf.component').then(m => m.PdfComponent)
                   },
                   {
+                        path: 'epub-reader',
+                        loadComponent: () => import('./shared/epub-reader/epub-reader.component').then(m => m.EpubReaderComponent)
+                  },
+                  {
                         path: 'reader-change-password',
                         loadComponent: () => import('./reader-change-password/reader-change-password.component').then(m => m.ReaderChangePasswordComponent)
+                  },
+                  {
+                        path: 'author-detail',
+                        loadComponent: () => import('./author-detail/author-detail.component').then(m => m.AuthorDetailComponent)
                   },
             ]
       },

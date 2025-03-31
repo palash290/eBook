@@ -1,0 +1,159 @@
+<section class="ct_px_40 ct_mt_40">
+      <div class="container-fluid">
+            <div class="row">
+                  <div class="col-md-12">
+                        <div class="ct_authore_profile_card">
+                              <figure>
+                                    <div class="ct_authour_profile_img position-relative">
+                                          <img src="assets/img/author_detail_cover.png" alt="" class="backGround">
+                                          <div class="ct_profile_img_div">
+                                                <img [src]="authors.avatar_url ? authors.avatar_url : 'assets/img/profile_logo.jpg'"
+                                                      alt="" class="">
+                                          </div>
+                                          <div class="content_div">
+                                                <p class="author_name text-capitalize">
+                                                      {{authors.fullName}}
+                                                </p>
+                                                <p class="mb-0 ct_text_636363 author_title">Author</p>
+                                          </div>
+                                    </div>
+                                    <figcaption>
+                                          <div class="ct_profile_detail_flex">
+                                                <div class="ct_authore_profile_info">
+                                                      <img [src]="authors.avatar_url ? authors.avatar_url : 'assets/img/profile_logo.jpg'"
+                                                            alt="">
+                                                      <div>
+                                                            <h4 class="ct_fs_28 ct_fw_600 mb-0 text-capitalize">
+                                                                  {{authors.fullName}}
+                                                            </h4>
+                                                            @if(authors.tagline != 'null' && authors.tagline != null){
+                                                            <p class="mb-0 ct_text_636363">{{authors.tagline}}</p>
+                                                            }
+                                                      </div>
+                                                </div>
+
+                                                <div class="d-flex align-items-center gap-2">
+                                                      <button class="ct_purple_outline_btn"
+                                                            (click)="isFollowing(authors) ? unfollowAuthor(authors.id) : followAuthor(authors.id)">{{isFollowing(authors) ? 'Following' : 'Follow'}}</button>
+                                                      <a class="ct_purple_outline_btn">Message</a>
+                                                </div>
+                                          </div>
+                                    </figcaption>
+                              </figure>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</section>
+
+
+<section class="ct_main_explore_sec  gap-3 ct_mt_40 ct_px_40 ct_py_100 pt-0">
+      <div class="ct_filter_side_bar px-0">
+            <div class="ct_author_about_box">
+                  <h4 class="ct_fs_20 ct_mediam_purple_text ct_fw_700">About</h4>
+                  <ul>
+                        <li>
+                              <p class="mb-0 ct_dark_purple_text"><svg width="16" height="16" viewBox="0 0 16 16"
+                                          fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M8 8C10.21 8 12 6.21 12 4C12 1.79 10.21 0 8 0C5.79 0 4 1.79 4 4C4 6.21 5.79 8 8 8ZM8 10C5.33 10 0 11.34 0 14V16H16V14C16 11.34 10.67 10 8 10Z"
+                                                fill="#A303A0" />
+                                    </svg>
+                                    Followers - <span class="ct_fw_600">{{authors.following.length}}</span></p>
+                        </li>
+                        @if(authors.instagram != 'null'){
+                        <li>
+                              <p class="mb-0 ct_dark_purple_text">
+                                    <svg width="16" height="16" viewBox="0 0 48 48" fill="none"
+                                          xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M23.8321 0.215027H23.7239C10.6215 0.215027 0 10.8397 0 23.9459V24.0542C0 37.1604 10.6215 47.785 23.7239 47.785H23.8321C36.9345 47.785 47.556 37.1604 47.556 24.0542V23.9459C47.556 10.8397 36.9345 0.215027 23.8321 0.215027Z"
+                                                fill="url(#paint0_linear_1_18314)" />
+                                          <path d="M31.1356 9.89233H16.4204C12.3551 9.89233 9.04785 13.2006 9.04785 17.2671V30.7333C9.04785 34.7998 12.3551 38.108 16.4204 38.108H31.1356C35.2009 38.108 38.5081 34.7998 38.5081 30.7333V17.2671C38.5081 13.2006 35.2009 9.89233 31.1356 9.89233ZM11.6487 17.2671C11.6487 14.6355 13.7896 12.4939 16.4204 12.4939H31.1356C33.7664 12.4939 35.9073 14.6355 35.9073 17.2671V30.7333C35.9073 33.3648 33.7664 35.5064 31.1356 35.5064H16.4204C13.7896 35.5064 11.6487 33.3648 11.6487 30.7333V17.2671Z"
+                                                fill="white" />
+                                          <path d="M23.7796 30.8565C27.56 30.8565 30.6374 27.7799 30.6374 23.9967C30.6374 20.2135 27.5617 17.137 23.7796 17.137C19.9975 17.137 16.9219 20.2135 16.9219 23.9967C16.9219 27.7799 19.9975 30.8565 23.7796 30.8565ZM23.7796 19.7402C26.1272 19.7402 28.0366 21.6501 28.0366 23.9984C28.0366 26.3466 26.1272 28.2566 23.7796 28.2566C21.4321 28.2566 19.5227 26.3466 19.5227 23.9984C19.5227 21.6501 21.4321 19.7402 23.7796 19.7402Z"
+                                                fill="white" />
+                                          <path d="M31.2686 18.2457C32.2866 18.2457 33.1163 17.4174 33.1163 16.3974C33.1163 15.3774 32.2883 14.5491 31.2686 14.5491C30.249 14.5491 29.4209 15.3774 29.4209 16.3974C29.4209 17.4174 30.249 18.2457 31.2686 18.2457Z"
+                                                fill="white" />
+                                          <defs>
+                                                <linearGradient id="paint0_linear_1_18314" x1="6.94771" y1="40.8353"
+                                                      x2="40.6182" y2="7.17636" gradientUnits="userSpaceOnUse">
+                                                      <stop stop-color="#FAAD4F" />
+                                                      <stop offset="0.35" stop-color="#DD2A7B" />
+                                                      <stop offset="0.62" stop-color="#9537B0" />
+                                                      <stop offset="1" stop-color="#515BD4" />
+                                                </linearGradient>
+                                          </defs>
+                                    </svg>
+                                    Instagram - <a [href]="authors.instagram" target="_blank"
+                                          class="ct_fw_600 link">{{authors.instagram}}</a>
+                              </p>
+                        </li>
+                        }
+                        @if(authors.facebook != 'null'){
+                        <li>
+                              <p class="mb-0 ct_dark_purple_text">
+                                    <svg width="16" height="16" viewBox="0 0 47 48" fill="none"
+                                          xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M46.9862 24.0008C46.9862 35.8698 38.1908 45.6821 26.7648 47.2744C25.6965 47.4226 24.6034 47.5 23.4939 47.5C22.2132 47.5 20.9555 47.3979 19.7308 47.2003C8.54354 45.3989 0 35.6969 0 24.0008C0 11.022 10.5189 0.5 23.4923 0.5C36.4656 0.5 46.9862 11.022 46.9862 24.0008Z"
+                                                fill="#1877F2" />
+                                          <path d="M26.7645 19.3687V24.4881H33.0956L32.0931 31.3843H26.7645V47.2727C25.6962 47.4209 24.6031 47.4983 23.4936 47.4983C22.2129 47.4983 20.9552 47.3962 19.7305 47.1986V31.3843H13.8916V24.4881H19.7305V18.2243C19.7305 14.3382 22.8796 11.1866 26.7662 11.1866V11.1899C26.7777 11.1899 26.7876 11.1866 26.7991 11.1866H33.0973V17.1507H28.9819C27.7588 17.1507 26.7662 18.1436 26.7662 19.3671L26.7645 19.3687Z"
+                                                fill="white" />
+                                    </svg>
+
+                                    Facebook - <a [href]="authors.facebook" target="_blank"
+                                          class="ct_fw_600 link">{{authors.facebook}}</a>
+                              </p>
+                        </li>
+                        }
+                        <li>
+                              <p class="mb-0 ct_dark_purple_text">
+                                    {{categoryNames}}
+                              </p>
+                        </li>
+                  </ul>
+            </div>
+
+
+      </div>
+      <div class="ct_right_content_explore ">
+            <div class="container-fluid">
+                  <div class="ct_author_white_card px-3 border-0">
+                        <h4 class="ct_mediam_purple_text ct_fs_20 pb-3 ct_border_btm_1 mb-4">Books Published</h4>
+                        <div class="row">
+                              @if(authors.books.length > 0){
+                              @for (item of authors.books; track $index) {
+                              <div class="col-lg-4 col-md-4 mb-4">
+                                    <div class="ct_book_card ct_sell_book_card_bg">
+                                          <figure>
+                                                <div class="ct_book_img">
+                                                      <img [src]="item.coverImage" alt="">
+                                                </div>
+                                                <figcaption>
+                                                      <a routerLink="/book-overview" [queryParams]="{id: item.id}"
+                                                            class="ct_fs_14 ct_ff_Montserrat text-capitalize">{{item.title}}</a>
+                                                      <h4
+                                                            class="ct_fs_12 mb-0 ct_ff_Montserrat  ct_text_898989 ct_fw_400">
+                                                            {{item.publishedAt | date}}
+                                                      </h4>
+                                                      <div class="d-flex align-items-center gap-3 mt-4">
+                                                            <p class="mb-0 ct_fs_18">{{item.price | currency:'USD' }}
+                                                            </p>
+                                                            <p class="mb-0 ct_fs_16 ct_text_898989">
+                                                                  <del>{{item.costPrice | currency:'USD' }}</del>
+                                                            </p>
+
+                                                      </div>
+                                                </figcaption>
+                                          </figure>
+                                    </div>
+                              </div>
+                              }
+                              }@else {
+                              <div class="col-lg-12 col-md-12 mb-4">
+                                    <p class="text-center">No Books Published</p>
+                              </div>
+                              }
+                        </div>
+                  </div>
+            </div>
+      </div>
+</section>

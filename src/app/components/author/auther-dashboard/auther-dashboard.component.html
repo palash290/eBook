@@ -10,7 +10,7 @@
                                 Books
                                 Uploaded
                             </h6>
-                            <h4 class="mb-0  ct_fs_28 ct_fw_700">564</h4>
+                            <h4 class="mb-0  ct_fs_28 ct_fw_700">{{data?.books}}</h4>
                         </div>
                         <div class="ct_card_icon" style="  background-color: hsl(241deg 100% 75% / 21%);">
                             <div class="ct_card_icon" style="  background-color: rgb(255 243 214)">
@@ -39,7 +39,7 @@
                                 Views
                                 & Reads
                             </h6>
-                            <h4 class="mb-0  ct_fs_28 ct_fw_700">40,689</h4>
+                            <h4 class="mb-0  ct_fs_28 ct_fw_700">{{data?.totalViews}}</h4>
                         </div>
                         <div class="ct_card_icon" style="  background-color: hsl(241deg 100% 75% / 21%);">
                             <svg width="32" height="24" viewBox="0 0 32 24" fill="none"
@@ -57,7 +57,7 @@
 
                 </div>
             </div>
-          
+
 
             <div class=" col-xxl-3 col-lg-6 col-md-6 mb-4">
                 <div class="ct_dash_card">
@@ -67,7 +67,7 @@
                                 Earnings
                                 This Month
                             </h6>
-                            <h4 class="mb-0  ct_fs_28 ct_fw_700">$89,000</h4>
+                            <h4 class="mb-0  ct_fs_28 ct_fw_700">{{data?.totalEarning | currency:'USD'}}</h4>
                         </div>
                         <div class="ct_card_icon" style="  background-color: hsl(150deg 65% 57% / 21%)">
                             <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
@@ -96,7 +96,7 @@
                                 &
                                 Ratings
                             </h6>
-                            <h4 class="mb-0  ct_fs_28 ct_fw_700">2040</h4>
+                            <h4 class="mb-0  ct_fs_28 ct_fw_700">{{data?.review}}</h4>
                         </div>
                         <div class="ct_card_icon" style="  background-color: hsl(16deg 100% 70% / 21%)">
                             <svg width="28" height="31" viewBox="0 0 28 31" fill="none"
@@ -129,7 +129,7 @@
                     </div> -->
                     <img src="assets/img/Sales-graph.png" alt="" class="ct_graph_img">
                 </div>
-               
+
 
             </div>
 
@@ -285,7 +285,7 @@
                                         <span class="ct_view_order" data-bs-toggle="modal" data-bs-target="#view_user">
                                             View Order</span>
                                     </td>
-                                </tr>   
+                                </tr>
 
                             </tbody>
 

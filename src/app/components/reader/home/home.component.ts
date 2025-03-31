@@ -11,7 +11,11 @@ import { FooterComponent } from "../shared/footer/footer.component";
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  // constructor(private router: Router) { }
+  constructor(private router: Router) {
+    if (localStorage.getItem('userRole') == 'author') {
+      this.router.navigate(['/author/auther-dashboard']);
+    }
+  }
   // ngOnInit() {
   //   this.router.events.subscribe((event: any) => {
   //     if (event instanceof NavigationEnd) {

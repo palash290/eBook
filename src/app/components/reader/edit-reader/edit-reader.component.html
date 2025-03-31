@@ -10,62 +10,54 @@
                     <div class="row ct_mt_60">
                         <div class="col-xl-3 mb-4">
                             <div class="ct_upload_user_profile_img">
-                                <img src="../assets/img/user_5.png" alt="">
+                                <img [src]="profilePreview ? profilePreview : 'assets/img/profile_logo.jpg'" alt="">
                                 <label for="ct_upload_user_profile2" class="position-relative d-block">
-                                    <input type="file" class="d-none" id="ct_upload_user_profile2">
+                                    <input type="file" class="d-none" id="ct_upload_user_profile2"
+                                        (change)="onFileChange($event)">
                                     <div class="ct_authore_banner_upload_icon_12">
                                         <i class="fa-solid fa-pencil"></i>
                                     </div>
-
                                 </label>
-
                             </div>
-
                         </div>
                         <div class="col-xl-9 mb-4">
-                            <form action="">
+                            <form [formGroup]="editProfileForm">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group mb-4">
                                             <label for="" class="ct_fw_500 ct_nunito_font mb-2 d-block">Full
                                                 Name </label>
                                             <input type="text" class="form-control ct_input_text"
-                                                placeholder="Full Name ">
+                                                placeholder="Full Name" formControlName="fullName">
+                                            <div *ngIf="editProfileForm.get('fullName')?.hasError('required') && editProfileForm.get('fullName')?.touched"
+                                                class="text-danger">
+                                                <span>Author Name is required</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-4">
-                                            <label for=""
-                                                class="ct_fw_500 ct_nunito_font mb-2 d-block">Email</label>
-                                            <input type="email" class="form-control ct_input_text"
-                                                placeholder="Email">
+                                            <label for="" class="ct_fw_500 ct_nunito_font mb-2 d-block">Email</label>
+                                            <input type="email" class="form-control ct_input_text" placeholder="Email"
+                                                formControlName="email" readonly>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="form-group mb-4">
                                             <label for="" class="ct_fw_500 ct_nunito_font mb-2 d-block">Date
                                                 of Birth</label>
                                             <input type="date" class="form-control ct_input_text">
                                         </div>
-                                    </div>
-                                 
-
+                                    </div> -->
                                 </div>
                                 <div class="text-start mt-3">
-                                    <button type="button" class="ct_purple_btn">Save</button>
-
+                                    <button (click)="onSubmit()" type="button" class="ct_purple_btn">Save</button>
                                 </div>
                             </form>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
-
-
-
     </div>
-
 </section>

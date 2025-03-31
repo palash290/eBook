@@ -1,47 +1,49 @@
 <section class="ct_mt_40 ct_px_40">
       <div class="container-fluid">
             <div class="row">
+                  @if(bookData){
                   <div class="col-md-12">
                         <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
-                              <h6 class="mb-0 ct_fs_16 ct_fw_600">Tom Jones by Henry Fielding</h6>
+                              <h6 class="mb-0 ct_fs_16 ct_fw_600 text-capitalize">{{bookData.title}} by
+                                    {{bookData.author?.fullName}}
+                              </h6>
                               <ul class="d-flex align-items-center gap-2 ct_bread_crumb_list">
-                                    <li><a href="index.html" class="ct_fw_600">Home</a></li>
+                                    <li><a routerLink="/" class="ct_fw_600">Home</a></li>
                                     <li>/</li>
-                                    <li class="ct_text_636363 ct_fw_600"> Tom Jones by Henry Fielding</li>
+                                    <li class="ct_text_636363 ct_fw_600 text-capitalize "> {{bookData.title}} by
+                                          {{bookData.author?.fullName}}
+                                    </li>
                               </ul>
                         </div>
                   </div>
+                  }
             </div>
       </div>
 </section>
+
 <section class="ct_pt_60  ct_px_40">
       <div class="container-fluid">
             <div class="row">
                   <div class="col-lg-5 mb-4 mb-lg-0">
                         <div class="ct_left_side_product_img">
                               <div class="owl-carousel owl-theme ct_product_detail_slider">
-                                    <div class="item"><img src="assets/img/new_product_3.png" alt="Slide 1">
+                                    <!-- @if(bookData?.bookMedia){ -->
+                                    @for (item of bookData.bookMedia.slice(0, 5); track $index) {
+                                    <div class="item"><img [src]="item.mediaUrl" alt="Slide 1">
                                     </div>
-                                    <div class="item"><img src="assets/img/new_product_2.png" alt="Slide 2">
-                                    </div>
-                                    <div class="item"><img src="assets/img/new_product_1.png" alt="Slide 3">
-                                    </div>
-                                  
+                                    }
+                                    <!-- } -->
                               </div>
                               <ul class="ct_custom-dots">
-                                    <li class="ct_dot" data-slide="0">
-                                          <img src="assets/img/new_product_3.png" alt="Slide 1">
+                                    <!-- @if(bookData?.bookMedia){ -->
+                                    @for (item of bookData.bookMedia.slice(0, 5); track $index) {
+                                    <li class="ct_dot" [attr.data-slide]="$index">
+                                          <img [src]="item.mediaUrl" alt="Slide 1" (click)="slide($index)">
                                     </li>
-                                    <li class="ct_dot" data-slide="1">
-                                          <img src="assets/img/new_product_2.png" alt="Slide 1">
-                                    </li>
-                                    <li class="ct_dot" data-slide="2">
-                                          <img src="assets/img/new_product_1.png" alt="Slide 1">
-                                    </li>
+                                    }
+                                    <!-- } -->
                               </ul>
-
                         </div>
-
                   </div>
                   <div class="col-lg-7  mb-4 mb-lg-0">
                         <div class="ct_product_detail_right">
@@ -63,31 +65,44 @@
                                     </ul>
 
                               </div> -->
+                              @if(bookData){
+                              <h4 class="ct_fs_24 ct_fw_600 text-capitalize "> {{bookData.title}} by
+                                    {{bookData.author?.fullName}}
+                              </h4>
+                              <p class="ct_fs_14 ct_fw_500 mt-3"><span
+                                          class="ct_text_636363">{{bookData.costPrice | currency:'USD' }}</span>
+                                    <span class="ct_purple_text ms-2">-{{((bookData.costPrice -
+                                          bookData.price)/bookData.costPrice)*100 | number:'1.0-0'}}%
+                                          off</span>
+                              </p>
 
-                              <h4 class="ct_fs_24 ct_fw_600">Tom Jones by Henry Fielding</h4>
-                              <p class="ct_fs_14 ct_fw_500 mt-3"><span class="ct_text_636363">$9.00</span> <span
-                                          class="ct_purple_text ms-2">-11%
-                                          off</span></p>
-
-                              <h3 class="ct_fs_28">$8.00</h3>
+                              <h3 class="ct_fs_28">{{bookData.price | currency:'USD'}}</h3>
 
                               <div class="ct_mt_32">
                                     <p class="mb-3 ct_text_636363">Quantity:</p>
                                     <div class="position-relative ct_countity_count">
-                                          <button class="ct_minus"><i class="fa-solid fa-minus "></i></button>
-                                          <input type="number" class="form-control bg-white" value="0" />
-                                          <button class="ct_plus"><i class="fa-solid fa-plus "></i></button>
-
+                                          <button class="ct_minus" (click)="decreaseValue()"><i
+                                                      class="fa-solid fa-minus "></i></button>
+                                          <input type="number" class="form-control bg-white" [value]="quantity" />
+                                          <button class="ct_plus" (click)="increaseValue()"><i
+                                                      class="fa-solid fa-plus "></i></button>
                                     </div>
                               </div>
-
+                              <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6  mb-3 mt-3 mb-sm-0">
+                                    <h5 class="mb-0 ct_purple_text ct_fs_18"><i
+                                                class=" fa-regular fa-heart me-2 "></i>Add To
+                                          WishList</h5>
+                              </div>
                               <div class="ct_btn_group ct_mt_32  ct_flex_direction_row_res">
-                                    <button type="button" class="ct_purple_btn ct_border_corner_0">Add to cart</button>
-                                    <button type="button" class="ct_purple_outline_btn ct_border_corner_0">Read
+                                    <button type="button" class="ct_purple_btn ct_border_corner_0"
+                                          (click)="addToCart(bookData)">Add to cart</button>
+                                    <button type="button" class="ct_purple_outline_btn ct_border_corner_0"
+                                          (click)="read(bookData.pdfUrl, bookData.title)">Read
                                           now</button>
                               </div>
+                              }
 
-                              <div class="ct_mt_32">
+                              <!-- <div class="ct_mt_32">
                                     <h4 class="ct_fs_16 ct_fw_600 mb-2">Product Details</h4>
                                     <p class="ct_text_636363">
                                           Add an extra dose of style with this raw look henley t-shirt from the house of
@@ -95,7 +110,7 @@
                                           Team this T-shirt with distressed jeans and leather sandals for a relaxed
                                           and...
                                     </p>
-                              </div>
+                              </div> -->
                               <div class="ct_mt_32">
                                     <!-- <h4 class="ct_fs_16 ct_fw_600 mb-2">Share it</h4> -->
                                     <div class="row">
@@ -148,12 +163,6 @@
                                                 </ul>
 
                                           </div> -->
-
-                                          <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6  mb-4 mb-sm-0">
-                                                <h5 class="mb-0 ct_purple_text ct_fs_18"><i
-                                                            class=" fa-regular fa-heart me-2 "></i>Add To
-                                                      WishList</h5>
-                                          </div>
                                     </div>
                               </div>
                         </div>
@@ -165,8 +174,7 @@
       </div>
 </section>
 
-
-<section class="ct_pt_60 ct_px_40 ct_mt_40">
+<section class="ct_pt_60 ct_px_40">
       <div class=" container-fluid">
             <div class="row">
                   <div class="col-md-12">
@@ -176,45 +184,16 @@
                               </li>
                         </ul>
                         <div class="ct_description_tab_content">
+                              @if(bookData){
                               <p>
-                                    Add an extra dose of style with this raw look henley t-shirt from the house of
-                                    Tinted. Team
-                                    this T-shirt with distressed jeans and leather sandals for a relaxed and cool
-                                    look.Lorem
-                                    Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                                    been
-                                    the industry's standard dummy text ever since the 1500s.Lorem Ipsum has been the
-                                    industry's
-                                    standard dummy text ever since the 1500s, but also the leap into electronic
-                                    typesetting,
-                                    remaining essentially unchanged. It was popularised in the 1960s with the release,
-                                    and more
-                                    recently with desktop publishing software like Aldus PageMaker including versions of
-                                    Lorem
-                                    Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                    Lorem Ipsum
-                                    has been the industry's standard dummy text ever since the 1500s, when an unknown
-                                    printer
-                                    took a galley of type and scrambled it to make a type specimen book. It has survived
-                                    not
-                                    only five centuries, but also the leap into electronic typesetting, remaining
-                                    essentially
-                                    unchanged. It was popularised in the 1960s with the release of Letraset sheets
-                                    containing
-                                    Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
-                                    PageMaker including versions of Lorem Ipsum. [countdowntimer-date-start]
-                                    [countdowntimer-date-end]
+                                    {{bookData.description}}
                               </p>
-
+                              }
                         </div>
-
                   </div>
-
             </div>
       </div>
-
 </section>
-
 
 <section class="ct_pt_60 ct_px_40 ct_mt_40 ct_pb_80 mb-4">
       <div class="container-fluid">
@@ -226,49 +205,27 @@
 
             </div>
             <div class="row ct_mt_32 justify-content-center">
+                  @for (item of relatedBooks.slice(0, 5); track $index) {
                   <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 mb-4">
                         <div class="ct_new_product_card_12">
-                              <a routerLink="/book-overview">
+                              <a routerLink="/book-overview" [queryParams]="{id: item.id}" class="d-block">
                                     <div class="ct_new_product_img_34">
-                                          <img src="assets/img/new_product_7.png" alt="">
+                                          <img [src]="item.coverImage" alt="">
                                     </div>
                                     <div class="text-center">
-                                          <h5 class="mb-2 ct_fs_16 ct_fw_400">Tom Jones by Henry Fielding</h5>
-                                          <p><span class="ct_fw_500">$8.00 </span><span
-                                                      class="ct_text_676767 ms-2"><del>$9.00</del></span></p>
+                                          <h5 class="mb-2 ct_fs_12 ct_fw_400 text-capitalize">{{item.title}} by
+                                                {{item.author?.fullName}}
+                                          </h5>
+                                          <p><span class="ct_fw_500">{{item.price | currency:'USD'}}</span><span
+                                                      class="ct_text_676767 ms-2"><del>{{item.costPrice | currency:'USD'}}</del></span>
+                                          </p>
                                     </div>
                               </a>
                         </div>
                   </div>
-                  <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 mb-4">
-                        <div class="ct_new_product_card_12">
-                              <a routerLink="/book-overview">
-                                    <div class="ct_new_product_img_34">
-                                          <img src="assets/img/new_product_7.png" alt="">
-                                    </div>
-                                    <div class="text-center">
-                                          <h5 class="mb-2 ct_fs_16 ct_fw_400">Tom Jones by Henry Fielding</h5>
-                                          <p><span class="ct_fw_500">$8.00 </span><span
-                                                      class="ct_text_676767 ms-2"><del>$9.00</del></span></p>
-                                    </div>
-                              </a>
-                        </div>
-                  </div>
-                  <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 mb-4">
-                        <div class="ct_new_product_card_12">
-                              <a routerLink="/book-overview">
-                                    <div class="ct_new_product_img_34">
-                                          <img src="assets/img/new_product_7.png" alt="">
-                                    </div>
-                                    <div class="text-center">
-                                          <h5 class="mb-2 ct_fs_16 ct_fw_400">Tom Jones by Henry Fielding</h5>
-                                          <p><span class="ct_fw_500">$8.00 </span><span
-                                                      class="ct_text_676767 ms-2"><del>$9.00</del></span></p>
-                                    </div>
-                              </a>
-                        </div>
-                  </div>
+                  }
             </div>
-
       </div>
 </section>
+
+<app-loader *ngIf="loading"></app-loader>

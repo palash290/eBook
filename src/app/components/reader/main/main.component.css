@@ -1,0 +1,15 @@
+.ct_book_card figure a {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+      width: 202px;
+      display: block;
+}
+
+.ct_book_card figure figcaption span {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+      width: 139px;
+      display: block;
+}

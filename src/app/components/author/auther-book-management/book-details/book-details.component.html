@@ -5,17 +5,17 @@
                 <div class="d-flex align-items-center justify-content-between gap-3 ct_flex_wrap_575 mb-2">
                     <h4 class="ct_fs_26 ct_fw_700 mb-0 ct_nunito_font">Book Management</h4>
                     <div class="d-flex align-items-center gap-3">
-                        <a routerLink="/add-book"
+                        <a routerLink="/author/add-book" [queryParams]="{id:bookId}"
                             class="ct_purple_btn d-flex align-items-center justify-content-center">Edit
                             Book</a>
-                        <a
-                            class="ct_purple_btn ct_red_btn d-flex align-items-center justify-content-center">Unpublish</a>
+                        <button (click)="deleteBook(bookData.id)"
+                            class="ct_purple_btn ct_red_btn d-flex align-items-center justify-content-center">Delete</button>
                     </div>
                 </div>
                 <div class="mb-4 d-flex align-items-center gap-4 flex-wrap mt-4">
-                    <h4 class="ct_fs_20 ct_fw_600 mb-0">Shah Rukh Khan</h4>
-                    <p class="mb-0 ct_fw_500">Date Published - <span class="ct_text_clr_8a8a8a"> 25 Jan
-                            2025</span></p>
+                    <h4 class="ct_fs_20 ct_fw_600 mb-0 text-capitalize">{{bookData.title}}</h4>
+                    <p class="mb-0 ct_fw_500">Date Published - <span class="ct_text_clr_8a8a8a">
+                            {{bookData.publishedAt | date }}</span></p>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="col-xl-2 col-lg-6  col-md-6 mb-4 mb-xl-0">
                 <div class="ct_white_bg">
                     <div class="ct_book_contain">
-                        <img src="assets/img/sell_book_1.png" alt="">
+                        <img [src]="bookData.coverImage" alt="">
                     </div>
                 </div>
             </div>
@@ -34,18 +34,20 @@
                             2024</p>
                         <span class="ct_custom_badge py-2 ct_fw_500"
                             style="background-color: #32936F29; color: #519C66;">Published</span>
-
                     </div>
                     <div class="row mt-5">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
+                        <div class="col-sm-4 mb-3 mb-sm-0">
                             <p class="ct_fs_14 ct_text_clr_8a8a8a mb-2">Price</p>
-                            <h6 class="mb-0 ct_fs_18 ct_fw_600">$25,000.00</h6>
+                            <h6 class="mb-0 ct_fs_18 ct_fw_600">{{bookData.price | currency:'USD'}}</h6>
                         </div>
-                        <div class="col-sm-6 mb-3 mb-sm-0">
+                        <div class="col-sm-4 mb-3 mb-sm-0">
+                            <p class="ct_fs_14 ct_text_clr_8a8a8a mb-2">Actual Price</p>
+                            <h6 class="mb-0 ct_fs_18 ct_fw_600">{{bookData.costPrice | currency:'USD'}}</h6>
+                        </div>
+                        <div class="col-sm-4 mb-3 mb-sm-0">
                             <p class="ct_fs_14 ct_text_clr_8a8a8a mb-2">In-Stock</p>
-                            <h6 class="mb-0 ct_fs_18 ct_fw_600">20</h6>
+                            <h6 class="mb-0 ct_fs_18 ct_fw_600">{{bookData.stock}}</h6>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -63,9 +65,6 @@
                                 d="M7.84961 7.8084C7.84961 8.5334 8.10794 8.67507 8.53294 8.82507L9.37461 9.11673V6.7334H8.83294C8.29128 6.7334 7.84961 7.21673 7.84961 7.8084Z"
                                 fill="#9747FF" />
                         </svg>
-
-
-
                     </div>
                     <div class="mt-5">
                         <p class="ct_fs_14 ct_text_clr_8a8a8a mb-2">Total EARNING</p>
@@ -94,9 +93,6 @@
                                 </clipPath>
                             </defs>
                         </svg>
-
-
-
                     </div>
                     <div class="row mt-5">
                         <div class="col-sm-6 mb-3 mb-sm-0">
@@ -107,11 +103,9 @@
                             <p class="ct_fs_14 ct_text_clr_8a8a8a mb-2">Favourite</p>
                             <h6 class="mb-0 ct_fs_18 ct_fw_600">23</h6>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="ct_white_bg ct_p_30 mt-4">
@@ -155,14 +149,12 @@
                             </td>
                             <td>
                                 12 Aug 2022 - 12:25 am
-
                             </td>
                             <td>Downlaoded</td>
                             <td>$25,000.00</td>
                             <td>
                                 2
                             </td>
-
                             <td>
                                 $50,000.00
                             </td>
@@ -171,14 +163,10 @@
                                     style="background-color: #32936F29; color: #519C66;">Completed</span>
                             </td>
                         </tr>
-
                     </tbody>
-
                 </table>
             </div>
         </div>
-
-
     </div>
 </div>
 
@@ -213,3 +201,5 @@
         </div>
     </div>
 </div>
+
+<app-loader *ngIf="loading"></app-loader>

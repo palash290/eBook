@@ -1,106 +1,63 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
+  baseUrl = environment.baseUrl
+  //isAuthenticatedSignal = signal(false);;
 
-  apiUrl = environment.baseUrl
+  constructor(private http: HttpClient, private router: Router, private cartService: CartService) { }
 
-  constructor(private http: HttpClient, private route: Router) { }
+  get<T>(url: string): Observable<T> {
+    return this.http.get<T>(this.baseUrl + url);
+  };
+
+  postAPI<T, U>(url: string, data: U): Observable<T> {
+    return this.http.post<T>(this.baseUrl + url, data)
+  };
+  update<T, U>(url: string, data: U): Observable<T> {
+    return this.http.put<T>(this.baseUrl + url, data)
+  };
+
+  delete<T>(url: string): Observable<T> {
+    return this.http.delete<T>(this.baseUrl + url);
+  };
 
   setToken(token: string) {
     localStorage.setItem('eBookToken', token)
-  }
-
-  isLogedIn() {
-    return this.getToken() !== null;
   }
 
   getToken() {
     return localStorage.getItem('eBookToken')
   }
 
-  getRole() {
-    const jaonData: any = localStorage.getItem('fbRole');
-    const data = JSON.parse(jaonData)
-    return data
+  isLogedIn() {
+    return !!this.getToken();
   }
-
-  loginUser(url: any, params: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
-    return this.http.post<any>(this.apiUrl + url, params, { headers: headers });
-  }
-
-  resetPassword(url: any, params: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
-    return this.http.post<any>(this.apiUrl + url, params, { headers: headers });
-  }
-
-  getApi(url: any): Observable<any> {
-    const authToken = localStorage.getItem('eBookToken');
-    const headers = new HttpHeaders({
-
-      'Authorization': `Bearer ${authToken}`
-    });
-    return this.http.get(this.apiUrl + url, { headers: headers })
-  };
-
-  putApi(url: any, params: any): Observable<any> {
-    const authToken = localStorage.getItem('eBookToken');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${authToken}`
-    });
-    return this.http.put(this.apiUrl + url, params, { headers: headers })
-  };
-
-  postAPI(url: any, data: any): Observable<any> {
-    const authToken = localStorage.getItem('eBookToken');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Bearer ${authToken}`
-    });
-    return this.http.post(this.apiUrl + url, data, { headers: headers })
-  };
-
-  postAPIFormData(url: any, data: any): Observable<any> {
-    const authToken = localStorage.getItem('eBookToken');
-    const headers = new HttpHeaders({
-      //'Content-Type': 'multipart/form-data',
-      'Authorization': `Bearer ${authToken}`
-    });
-    return this.http.post(this.apiUrl + url, data, { headers: headers })
-  };
-
-  postAPIFormDataPatch(url: any, data: any): Observable<any> {
-    const authToken = localStorage.getItem('eBookToken');
-    const headers = new HttpHeaders({
-      //'Content-Type': 'multipart/form-data',
-      'Authorization': `Bearer ${authToken}`
-    });
-    return this.http.patch(this.apiUrl + url, data, { headers: headers })
-  };
-
- 
 
   logout() {
     localStorage.removeItem('eBookToken');
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('cart');
+    this.cartService.cartItems.set([]);
+    this.profileDataSubject.next(null);
   }
 
-  deleteAcc(url: any): Observable<any> {
-    const authToken = localStorage.getItem('eBookToken');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${authToken}`
-    });
-    return this.http.delete(this.apiUrl + url, { headers: headers })
-  };
- 
+  private profileDataSubject = new BehaviorSubject<any>(null);
+  profileData$ = this.profileDataSubject.asObservable();
+
+  getProfile(url: string) {
+    if (this.isLogedIn()) {
+      this.http.get(this.baseUrl + url).subscribe((res: any) => {
+        this.profileDataSubject.next(res.user);
+      });
+    }
+  }
 }

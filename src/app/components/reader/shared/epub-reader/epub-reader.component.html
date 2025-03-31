@@ -1,0 +1,29 @@
+<div class="container mx-auto p-3">
+      <!-- <div class="d-flex align-items-center justify-content-between">
+            <h4 class="ct_fs_24 ct_fw_600 text-capitalize "> {{title}}
+            </h4>
+            <div class="controls">
+                  <button (click)="prevPage()">⬅️ Prev</button>
+                  <button (click)="nextPage()">Next ➡️</button>
+                  <button (click)="zoomIn()">➕ Zoom In</button>
+                  <button (click)="zoomOut()">➖ Zoom Out</button>
+                  <button (click)="playAudio()">🎵 Play Audio</button>
+            </div>
+      </div> -->
+      <div class="d-flex align-items-center justify-content-between et_flex_direction_991">
+            <h4 class="ct_fs_24 ct_fw_600 text-capitalize "> {{title}}
+            </h4>
+            <div class="controls flex-wrap">
+                  <button (click)="prevPage()"> <i class="fa-solid fa-angle-left"></i>
+                        Prev</button>
+                  <button (click)="nextPage()">Next <i class="fa-solid fa-angle-right"></i></button>
+                  <button (click)="zoomIn()"><i class="fa-solid fa-plus"></i> Zoom In</button>
+                  <button (click)="zoomOut()"><i class="fa-solid fa-minus"></i> Zoom Out</button>
+                  <button (click)="playAudio()"><i class="fa-solid fa-music"></i> Play Audio</button>
+            </div>
+      </div>
+
+      <div #viewer class="epub-container"></div>
+</div>
+
+<!-- <img src="../../../../../assets/img/Around the World in 28 Languages.epub"> -->

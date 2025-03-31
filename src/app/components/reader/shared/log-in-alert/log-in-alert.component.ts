@@ -17,8 +17,4 @@ export class LogInAlertComponent {
   ngAfterViewInit() {
     this.modalService.setModal(this.loginModal.nativeElement);
   }
-
-  saveuserRole(){
-    localStorage.setItem('userRole', 'author');
-  }
 }

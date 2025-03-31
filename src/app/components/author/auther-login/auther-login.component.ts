@@ -5,11 +5,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../reader/shared/footer/footer.component';
+import { LoaderComponent } from "../../reader/shared/loader/loader.component";
 
 @Component({
   selector: 'app-auther-login',
   standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule, ReactiveFormsModule, FooterComponent],
+  imports: [RouterLink, CommonModule, FormsModule, ReactiveFormsModule, FooterComponent, LoaderComponent],
   templateUrl: './auther-login.component.html',
   styleUrl: './auther-login.component.css'
 })
@@ -20,7 +21,6 @@ export class AutherLoginComponent {
   loading: boolean = false;
 
   constructor(private router: Router, private srevice: SharedService, private toster: NzMessageService) { }
-
 
   logout() {
     localStorage.removeItem('userRole')
@@ -36,8 +36,9 @@ export class AutherLoginComponent {
 
   initForm() {
     this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
+      email: new FormControl(localStorage.getItem('AutherSavedEmail') || '', [Validators.required, Validators.email]),
+      password: new FormControl(localStorage.getItem('AutherSavedPassword') || '', Validators.required),
+      rememberMe: new FormControl(localStorage.getItem('AutherRememberMe') === 'true' || false)
     })
   }
 
@@ -48,26 +49,32 @@ export class AutherLoginComponent {
       const formURlData = new URLSearchParams();
       formURlData.set('email', this.loginForm.value.email);
       formURlData.set('password', this.loginForm.value.password);
-
-      this.srevice.loginUser('author/login', formURlData.toString()).subscribe({
-        next: (resp) => {
-          if (resp.success == true) {
-            this.srevice.setToken(resp.token);
-            this.loading = false;
+      this.srevice.postAPI('author/login', formURlData.toString()).subscribe({
+        next: (res: any) => {
+          if (res.success == true) {
+            this.srevice.setToken(res.token);
+            this.toster.success(res.message)
             this.router.navigateByUrl('/author/auther-dashboard');
-            localStorage.setItem('role', 'author')
+            localStorage.setItem('userRole', 'author')
+            localStorage.setItem('userInfo', JSON.stringify(res.authorData));
+            if (this.loginForm.value.rememberMe) {
+              localStorage.setItem('AutherSavedEmail', this.loginForm.value.email);
+              localStorage.setItem('AutherSavedPassword', this.loginForm.value.password);
+              localStorage.setItem('AutherRememberMe', 'true');
+            } else {
+              localStorage.removeItem('AutherSavedEmail');
+              localStorage.removeItem('AutherSavedPassword');
+              localStorage.removeItem('AutherRememberMe');
+            }
+            this.loading = false;
           } else {
             this.loading = false;
-            this.toster.warning(resp.message)
+            this.toster.warning(res.message)
           }
         },
         error: (error) => {
           this.loading = false;
-          if (error.error.message) {
-            this.toster.error(error.error.message);
-          } else {
-            this.toster.error('Something went wrong!');
-          }
+          this.toster.error(error);
         }
       });
     }
@@ -76,6 +83,4 @@ export class AutherLoginComponent {
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
-
-
 }

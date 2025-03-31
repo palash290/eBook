@@ -4,9 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: '',
-  //baseUrl: 'http://18.175.98.27:4000/',
-  baseUrl: 'http://192.168.1.9:4005/api/',
+  baseUrl: 'http://3.139.25.202:4000/api/',
+  // baseUrl: 'http://192.168.29.130:4005/api/',
   //baseUrl: 'https://www.fbcoach.com:4000/',
   firebaseConfig: {
     apiKey: "AIzaSyAeYMD4HLgcRUz4eIXTFNgu9ADJMkz5P_g",

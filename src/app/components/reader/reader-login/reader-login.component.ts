@@ -5,11 +5,12 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { SharedService } from '../../../services/shared.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { CommonModule } from '@angular/common';
+import { LoaderComponent } from "../shared/loader/loader.component";
 
 @Component({
   selector: 'app-reader-login',
   standalone: true,
-  imports: [FooterComponent, RouterLink, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [FooterComponent, RouterLink, CommonModule, FormsModule, ReactiveFormsModule, LoaderComponent],
   templateUrl: './reader-login.component.html',
   styleUrl: './reader-login.component.css'
 })
@@ -30,13 +31,14 @@ export class ReaderLoginComponent {
 
   ngOnInit(): void {
     this.initForm();
-    localStorage.setItem('userRole', 'author');
+    localStorage.setItem('userRole', 'reader');
   }
 
   initForm() {
     this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
+      email: new FormControl(localStorage.getItem('ReaderSavedEmail') || '', [Validators.required, Validators.email]),
+      password: new FormControl(localStorage.getItem('ReaderSavedPassword') || '', Validators.required),
+      rememberMe: new FormControl(localStorage.getItem('ReaderRememberMe') === 'true' || false)
     })
   }
 
@@ -47,13 +49,24 @@ export class ReaderLoginComponent {
       const formURlData = new URLSearchParams();
       formURlData.set('email', this.loginForm.value.email);
       formURlData.set('password', this.loginForm.value.password);
-      this.srevice.loginUser('users/login', formURlData.toString()).subscribe({
-        next: (resp) => {
+      this.srevice.postAPI('users/login', formURlData.toString()).subscribe({
+        next: (resp: any) => {
           if (resp.success == true) {
             this.srevice.setToken(resp.token);
-            this.loading = false;
+            this.toster.success(resp.message)
             this.router.navigateByUrl('/');
-            localStorage.setItem('role', 'reader')
+            localStorage.setItem('userRole', 'reader')
+            localStorage.setItem('userInfo', JSON.stringify(resp.user));
+            if (this.loginForm.value.rememberMe) {
+              localStorage.setItem('ReaderSavedEmail', this.loginForm.value.email);
+              localStorage.setItem('ReaderSavedPassword', this.loginForm.value.password);
+              localStorage.setItem('ReaderRememberMe', 'true');
+            } else {
+              localStorage.removeItem('ReaderSavedEmail');
+              localStorage.removeItem('ReaderSavedPassword');
+              localStorage.removeItem('ReaderRememberMe');
+            }
+            this.loading = false;
           } else {
             this.loading = false;
             this.toster.warning(resp.message)
@@ -61,11 +74,7 @@ export class ReaderLoginComponent {
         },
         error: (error) => {
           this.loading = false;
-          if (error.error.message) {
-            this.toster.error(error.error.message);
-          } else {
-            this.toster.error('Something went wrong!');
-          }
+          this.toster.error(error);
         }
       });
     }
@@ -74,6 +83,4 @@ export class ReaderLoginComponent {
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
-
-
 }

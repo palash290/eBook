@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { SharedService } from '../../../services/shared.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../reader/shared/footer/footer.component';
 
@@ -35,8 +35,9 @@ export class AutherSignupComponent {
   initForm() {
     this.signupForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      full_name: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
+      full_name: new FormControl('', [Validators.required, NoWhitespaceDirective.validate]),
+      password: new FormControl('', [Validators.required, strongPasswordValidator]),
+      terms: new FormControl(false, [Validators.requiredTrue]),
       // password: new FormControl('', Validators.required),
     })
   }
@@ -49,21 +50,21 @@ export class AutherSignupComponent {
       formURlData.set('email', this.signupForm.value.email);
       formURlData.set('fullName', this.signupForm.value.full_name);
       formURlData.set('password', this.signupForm.value.password);
-      this.srevice.loginUser('author/signupByEmail', formURlData.toString()).subscribe({
-        next: (resp) => {
-          if (resp.success == true) {
+      this.srevice.postAPI('author/signupByEmail', formURlData.toString()).subscribe({
+        next: (res: any) => {
+          if (res.success == true) {
             this.loading = false;
-            this.toster.success(resp.message);
+            this.toster.success(res.message);
             this.router.navigateByUrl(`/auther-login`);
           } else {
-            this.toster.warning(resp.message);
+            this.toster.warning(res.message);
             this.loading = false;
           }
         },
         error: (error) => {
           this.loading = false;
-          if (error.error.message) {
-            this.toster.error(error.error.message);
+          if (error) {
+            this.toster.error(error);
           } else {
             this.toster.error('Something went wrong!');
           }
@@ -80,6 +81,45 @@ export class AutherSignupComponent {
   togglePasswordVisibility1() {
     this.isPasswordVisible1 = !this.isPasswordVisible1;
   }
+}
 
+export function strongPasswordValidator(
+  control: AbstractControl
+): ValidationErrors | null {
+  const value = control.value || ''
 
+  const hasUpperCase = /[A-Z]/.test(value)
+  const hasLowerCase = /[a-z]/.test(value)
+  const hasNumeric = /[0-9]/.test(value)
+  const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(value)
+  const isValidLength = value.length >= 8
+
+  const passwordValid =
+    hasUpperCase &&
+    hasLowerCase &&
+    hasNumeric &&
+    hasSpecialCharacter &&
+    isValidLength
+
+  // Return errors object or null
+  if (!passwordValid) {
+    return {
+      strongPassword: {
+        hasUpperCase: hasUpperCase,
+        hasLowerCase: hasLowerCase,
+        hasNumeric: hasNumeric,
+        hasSpecialCharacter: hasSpecialCharacter,
+        isValidLength: isValidLength
+      }
+    }
+  }
+  return null
+}
+export class NoWhitespaceDirective {
+  static validate(control: AbstractControl): ValidationErrors | null {
+    if (!control.value || control.value.trim() == '') {
+      return { required: true };
+    }
+    return null;
+  }
 }

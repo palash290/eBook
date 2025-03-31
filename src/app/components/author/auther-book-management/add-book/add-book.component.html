@@ -4,60 +4,132 @@
             <div class="col-md-12">
                 <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap mb-4">
                     <h4 class="ct_fs_26 ct_fw_700 mb-0 ct_nunito_font">Book Management</h4>
-                    <a class="ct_purple_btn d-flex align-items-center justify-content-center">Save &
-                        Publish</a>
+                    <button (click)="onSubmit()"
+                        class="ct_purple_btn d-flex align-items-center justify-content-center">{{bookId ? 'Update Book' : 'Save & Publish'}}</button>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-8 mb-4 mb-md-0">
-                <div class="ct_white_bg">
-                    <div class="ct_full_height">
-                        <div class="ct_edit_profile_bg">
-                            <form action="">
+        <form [formGroup]="authorForm">
+            <div class="row">
+                <div class="col-md-8 mb-4 mb-md-0">
+                    <div class="ct_white_bg">
+                        <div class="ct_full_height">
+                            <div class="ct_edit_profile_bg">
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
-                                            <input type="text" class="form-control ct_input" placeholder="Book Name">
+                                            <input type="text" class="form-control ct_input" placeholder="Book Name"
+                                                formControlName="title">
+                                            <div *ngIf="authorForm.get('title')?.hasError('required') && authorForm.get('title')?.touched"
+                                                class="text-danger">
+                                                <small>Book Name is required</small>
+                                            </div>
                                         </div>
                                         <div class="form-group mb-3">
-                                            <select class="form-control ct_input">
+                                            <!-- <select class="form-control ct_input" formControlName="categoryIds">
                                                 <option value="">Select Book Category</option>
                                                 <option value="">Select Book Category</option>
-                                            </select>
+                                            </select> -->
+                                            <nz-select class="form-control ct_input" nzMode="tags"
+                                                nzPlaceHolder="Select Genere" [(ngModel)]="selectedCategories"
+                                                [nzNotFoundContent]="'No Data Found'" formControlName="categoryIds">
+                                                @for (option of categories; track option) {
+                                                <nz-option [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+                                                }
+                                            </nz-select>
+                                            <div *ngIf="authorForm.get('categoryIds')?.hasError('required') && authorForm.get('categoryIds')?.touched"
+                                                class="text-danger">
+                                                <small>Book Category is required</small>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group mb-3">
-                                                    <input type="text" class="form-control ct_input"
-                                                        placeholder="Selling Price">
+                                                    <input type="number" class="form-control ct_input"
+                                                        placeholder="Discounted Price in $" formControlName="price">
+                                                    <div *ngIf="authorForm.get('price')?.hasError('required') && authorForm.get('price')?.touched"
+                                                        class="text-danger">
+                                                        <small>Discounted Price is required</small>
+                                                    </div>
+                                                    <div *ngIf="authorForm.get('price')?.hasError('pattern') && authorForm.get('price')?.touched"
+                                                        class="text-danger">
+                                                        <small>Please enter valid price (Example: 10.00)</small>
+                                                    </div>
                                                 </div>
-
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group mb-3">
-                                                    <input type="text" class="form-control ct_input"
-                                                        placeholder="Cost Price">
+                                                    <input type="number" class="form-control ct_input"
+                                                        placeholder="Actual Price in $" formControlName="costPrice">
+                                                    <div *ngIf="authorForm.get('costPrice')?.hasError('required') && authorForm.get('costPrice')?.touched"
+                                                        class="text-danger">
+                                                        <small>Actual Price is required</small>
+                                                    </div>
+                                                    <div *ngIf="authorForm.get('costPrice')?.hasError('pattern') && authorForm.get('costPrice')?.touched"
+                                                        class="text-danger">
+                                                        <small>Please enter valid price (Example: 10.00)</small>
+                                                    </div>
+                                                    <div *ngIf="authorForm.get('costPrice')?.value < authorForm.get('price')?.value && authorForm.get('costPrice')?.touched && !authorForm.get('costPrice')?.hasError('required')"
+                                                        class="text-danger">
+                                                        <small>Actual Price should not be less than Discounted
+                                                            Price</small>
+                                                    </div>
                                                 </div>
-
                                             </div>
-
                                         </div>
                                         <div class="form-group mb-3">
-                                            <input type="text" class="form-control ct_input"
-                                                placeholder="Quantity in Stock">
+                                            <input type="number" class="form-control ct_input"
+                                                placeholder="Quantity in Stock" formControlName="stock">
+                                            <div *ngIf="authorForm.get('stock')?.hasError('required') && authorForm.get('stock')?.touched"
+                                                class="text-danger">
+                                                <small>Quantity is required</small>
+                                            </div>
                                         </div>
-
+                                        <div class="form-group mb-3">
+                                            <textarea rows="6" class="form-control ct_input h-auto"
+                                                placeholder="Short Description"
+                                                formControlName="description"></textarea>
+                                            <div *ngIf="authorForm.get('description')?.hasError('required') && authorForm.get('description')?.touched"
+                                                class="text-danger">
+                                                <small>Description is required</small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
-                                            <textarea rows="6" class="form-control ct_input h-auto"
-                                                placeholder="Short Description"></textarea>
+                                            <select class="form-control ct_input" formControlName="type"
+                                                (change)="onTypeChange($event)">
+                                                <option disabled [value]="''" selected>Select Book Type</option>
+                                                <option [value]="2">EPUB</option>
+                                                <option [value]="1">PDF</option>
+                                            </select>
+                                            <div *ngIf="authorForm.get('type')?.hasError('required') && authorForm.get('type')?.touched"
+                                                class="text-danger">
+                                                <small>Book type is required</small>
+                                            </div>
                                         </div>
-
-                                        <div class="mb-3">
+                                        @if(authorForm.get('type')?.value){
+                                        <div class="mb-3 position-relative">
+                                            @if(pdfPreviewUrl && authorForm.get('type')?.value == 1){
+                                            <iframe [src]="pdfPreviewUrl" width="100%" height="180"></iframe>
+                                            <!-- <img src="assets/img/book_1.png" alt=""
+                                                class="ct_uploaded_img position-relative" style="height: 180px;"> -->
+                                            <!-- <p>{{selectedPdfName}}</p> -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 36 36" class="remove" (click)="removePdf()">
+                                                <path fill="#e40000"
+                                                    d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2m8 22.1a1.4 1.4 0 0 1-2 2l-6-6l-6 6.02a1.4 1.4 0 1 1-2-2l6-6.04l-6.17-6.22a1.4 1.4 0 1 1 2-2L18 16.1l6.17-6.17a1.4 1.4 0 1 1 2 2L20 18.08Z"
+                                                    class="clr-i-solid clr-i-solid-path-1" />
+                                                <path fill="none" d="M0 0h36v36H0z" />
+                                            </svg>
+                                            }@else if(epubViewer && authorForm.get('type')?.value == 2){
+                                            <p>Preview not available for EPUB</p>
+                                            }@else {
                                             <label for="ct_drage_drop_1" class="d-block">
-                                                <input type="file" class="d-none" id="ct_drage_drop_1">
+                                                <input type="file" class="d-none" id="ct_drage_drop_1"
+                                                    [accept]="authorForm.get('type')?.value == 2 ? '.epub' : '.pdf'"
+                                                    (change)="onPdfUpload($event)" formControlName="pdfUrl">
                                                 <div class="ct_mail_upload_mg ct_drage_drop_box_2">
                                                     <div>
                                                         <svg width="51" height="45" viewBox="0 0 51 45" fill="none"
@@ -87,21 +159,38 @@
                                                                 Drag & drop files or <span
                                                                     class="ct_purple_text ct_text_decoration_underline">Browse</span>
                                                             </h6>
+                                                            <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a">
                                                             <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a">
                                                                 Supported
-                                                                formats: PDF</p>
+                                                                formats:
+                                                                {{authorForm.get('type')?.value == 2 ? 'EPUB':'PDF'}}
+                                                            </p>
                                                         </div>
-
                                                     </div>
-                                                    <!-- after uploaded please show image  -->
-                                                    <img src="assets/img/book_1.png" alt=""
-                                                        class="ct_uploaded_img d-none">
                                                 </div>
                                             </label>
+                                            }
+                                            <div *ngIf="!pdf && authorForm.get('pdfUrl')?.touched" class="text-danger">
+                                                <small>{{authorForm.get('type')?.value == 2 ? 'EPUB':'PDF'}} file is
+                                                    required</small>
+                                            </div>
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="ct_drage_drop_1" class="d-block">
-                                                <input type="file" class="d-none" id="ct_drage_drop_1">
+                                        }
+                                        <!-- <div class="mb-3 position-relative">
+                                            @if(audioPreviewUrl){
+                                            <audio [src]="audioPreviewUrl" controls class="w-100"></audio>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 36 36" class="remove" (click)="removeAudio()">
+                                                <path fill="#e40000"
+                                                    d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2m8 22.1a1.4 1.4 0 0 1-2 2l-6-6l-6 6.02a1.4 1.4 0 1 1-2-2l6-6.04l-6.17-6.22a1.4 1.4 0 1 1 2-2L18 16.1l6.17-6.17a1.4 1.4 0 1 1 2 2L20 18.08Z"
+                                                    class="clr-i-solid clr-i-solid-path-1" />
+                                                <path fill="none" d="M0 0h36v36H0z" />
+                                            </svg>
+                                            }@else {
+                                            <label for="ct_drage_drop_2" class="d-block">
+                                                <input type="file" class="d-none" id="ct_drage_drop_2"
+                                                    accept="audio/*,.mp3" formControlName="audioUrl"
+                                                    (change)="onAudioUpload($event)">
                                                 <div class="ct_mail_upload_mg ct_drage_drop_box_2">
                                                     <div>
                                                         <svg width="51" height="45" viewBox="0 0 51 45" fill="none"
@@ -132,36 +221,36 @@
                                                                     class="ct_purple_text ct_text_decoration_underline">Browse</span>
                                                             </h6>
                                                             <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a">
-                                                                Supported formats: Audio or EPUB </p>
+                                                                Supported formats: Audio </p>
                                                         </div>
-
                                                     </div>
-                                                    <!-- after uploaded please show image  -->
-                                                    <img src="assets/img/book_1.png" alt=""
-                                                        class="ct_uploaded_img d-none">
                                                 </div>
                                             </label>
-                                        </div>
-
-
-
+                                            }
+                                        </div> -->
                                     </div>
-
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-
-            </div>
-            <div class="col-md-4 mb-4 mb-md-0">
-                <div class="ct_white_bg">
-                    <div class="ct_full_height">
-                        <div class="ct_edit_profile_bg">
-                            <form action="">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div class="ct_white_bg">
+                        <div class="ct_full_height">
+                            <div class="ct_edit_profile_bg position-relative">
+                                @if(coverImagePreview){
+                                <img [src]="coverImagePreview" alt="Cover Image" class="preview">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 36 36"
+                                    class="remove" (click)="removeCoverImage()">
+                                    <path fill="#e40000"
+                                        d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2m8 22.1a1.4 1.4 0 0 1-2 2l-6-6l-6 6.02a1.4 1.4 0 1 1-2-2l6-6.04l-6.17-6.22a1.4 1.4 0 1 1 2-2L18 16.1l6.17-6.17a1.4 1.4 0 1 1 2 2L20 18.08Z"
+                                        class="clr-i-solid clr-i-solid-path-1" />
+                                    <path fill="none" d="M0 0h36v36H0z" />
+                                </svg>
+                                }@else{
                                 <label for="ct_upload_img_main">
-                                    <input type="file" class="d-none" id="ct_upload_img_main">
+                                    <input type="file" accept="image/*" class="d-none" id="ct_upload_img_main"
+                                        formControlName="coverImage" (change)="onImageUpload($event)">
                                     <div class="ct_mail_upload_mg">
                                         <div>
                                             <img src="assets/img/img_icon.png" alt="">
@@ -193,7 +282,7 @@
                                             <small class="ct_light_grey_text">Upload a cover
                                                 image for
                                                 your
-                                                product. <br>File Format
+                                                book. <br>File Format
                                                 <span class="text-dark"> jpeg,
                                                     png</span> Recommened Size <span class="text-dark">600x600
                                                     (1:1)</span></small>
@@ -202,11 +291,26 @@
                                         <img src="assets/img/book_1.png" alt="" class="ct_uploaded_img d-none">
                                     </div>
                                 </label>
+                                }
+                                <div *ngIf="!coverImage && authorForm.get('coverImage')?.touched" class="text-danger">
+                                    <small>Cover Image is required</small>
+                                </div>
                                 <div class="row mt-3">
-                                    <h5 class="ct_fs_16 ct_fw_500 mb-2">Additional Images</h5>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="ct_addtional_img_up">
-                                            <input type="file" class="d-none" id="ct_addtional_img_up">
+                                    <h5 class="ct_fs_16 ct_fw_500 mb-4">Additional Images</h5>
+                                    <div class="col-md-6 mb-3 position-relative">
+                                        @if(bookMediaPreviews.length >= 1){
+                                        <img [src]="bookMediaPreviews[0]" alt="Cover Image" class="h-auto w-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 36 36" class="remove" (click)="removeBookMedia(0)">
+                                            <path fill="#e40000"
+                                                d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2m8 22.1a1.4 1.4 0 0 1-2 2l-6-6l-6 6.02a1.4 1.4 0 1 1-2-2l6-6.04l-6.17-6.22a1.4 1.4 0 1 1 2-2L18 16.1l6.17-6.17a1.4 1.4 0 1 1 2 2L20 18.08Z"
+                                                class="clr-i-solid clr-i-solid-path-1" />
+                                            <path fill="none" d="M0 0h36v36H0z" />
+                                        </svg>
+                                        }@else{
+                                        <label for="ct_addtional_img_up_1">
+                                            <input type="file" class="d-none" id="ct_addtional_img_up_1"
+                                                accept="image/*" (change)="onBookMediaUpload($event)">
                                             <div class="ct_mail_upload_mg ct_addtional_img_upload">
                                                 <div>
                                                     <img src="assets/img/img_icon.png" alt="">
@@ -238,25 +342,173 @@
                                                             </defs>
                                                         </svg>
                                                         Upload Image</h6>
-
                                                 </div>
-                                                <!-- after uploaded please show image  -->
-                                                <img src="assets/img/book_1.png" alt=""
-                                                    class="ct_uploaded_img d-none">
                                             </div>
                                         </label>
+                                        }
                                     </div>
-
+                                    <div class="col-md-6 mb-3 position-relative">
+                                        @if(bookMediaPreviews.length >= 2){
+                                        <img [src]="bookMediaPreviews[1]" alt="Cover Image" class="h-auto w-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 36 36" class="remove" (click)="removeBookMedia(1)">
+                                            <path fill="#e40000"
+                                                d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2m8 22.1a1.4 1.4 0 0 1-2 2l-6-6l-6 6.02a1.4 1.4 0 1 1-2-2l6-6.04l-6.17-6.22a1.4 1.4 0 1 1 2-2L18 16.1l6.17-6.17a1.4 1.4 0 1 1 2 2L20 18.08Z"
+                                                class="clr-i-solid clr-i-solid-path-1" />
+                                            <path fill="none" d="M0 0h36v36H0z" />
+                                        </svg>
+                                        }@else{
+                                        <label for="ct_addtional_img_up_2">
+                                            <input type="file" class="d-none" id="ct_addtional_img_up_2"
+                                                accept="image/*" (change)="onBookMediaUpload($event)">
+                                            <div class="ct_mail_upload_mg ct_addtional_img_upload">
+                                                <div>
+                                                    <img src="assets/img/img_icon.png" alt="">
+                                                    <h6 class="mt-4 ct_purple_text"><svg width="19" height="18"
+                                                            viewBox="0 0 19 18" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <g clip-path="url(#clip0_192_2454)">
+                                                                <path
+                                                                    d="M12.2621 11.9753L9.36105 9.07422L6.45996 11.9753"
+                                                                    stroke="#9747FF" stroke-width="1.74066"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path d="M9.36035 9.07422V15.6017" stroke="#9747FF"
+                                                                    stroke-width="1.74066" stroke-linecap="round"
+                                                                    stroke-linejoin="round" />
+                                                                <path
+                                                                    d="M15.4458 13.708C16.1532 13.3224 16.712 12.7121 17.0341 11.9736C17.3561 11.2351 17.4231 10.4104 17.2243 9.62959C17.0256 8.8488 16.5725 8.15643 15.9366 7.66175C15.3007 7.16706 14.5181 6.89824 13.7124 6.89771H12.7986C12.579 6.04859 12.1699 5.26028 11.6018 4.59206C11.0338 3.92384 10.3217 3.39308 9.51896 3.0397C8.71627 2.68631 7.84391 2.51949 6.96746 2.55179C6.09102 2.58408 5.2333 2.81464 4.45879 3.22613C3.68427 3.63763 3.01312 4.21935 2.49579 4.92756C1.97846 5.63578 1.62842 6.45206 1.47197 7.31503C1.31552 8.178 1.35674 9.06521 1.59253 9.90996C1.82832 10.7547 2.25255 11.535 2.83332 12.1922"
+                                                                    stroke="#9747FF" stroke-width="1.74066"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path
+                                                                    d="M12.2621 11.9753L9.36105 9.07422L6.45996 11.9753"
+                                                                    stroke="#9747FF" stroke-width="1.74066"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                            </g>
+                                                            <defs>
+                                                                <clipPath id="clip0_192_2454">
+                                                                    <rect width="17.4066" height="17.4066" fill="white"
+                                                                        transform="translate(0.657227 0.371094)" />
+                                                                </clipPath>
+                                                            </defs>
+                                                        </svg>
+                                                        Upload Image</h6>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        }
+                                    </div>
+                                    <div class="col-md-6 mb-3 position-relative">
+                                        @if(bookMediaPreviews.length >= 3){
+                                        <img [src]=" bookMediaPreviews[2]" alt="Cover Image" class="h-auto w-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 36 36" class="remove" (click)="removeBookMedia(2)">
+                                            <path fill="#e40000"
+                                                d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2m8 22.1a1.4 1.4 0 0 1-2 2l-6-6l-6 6.02a1.4 1.4 0 1 1-2-2l6-6.04l-6.17-6.22a1.4 1.4 0 1 1 2-2L18 16.1l6.17-6.17a1.4 1.4 0 1 1 2 2L20 18.08Z"
+                                                class="clr-i-solid clr-i-solid-path-1" />
+                                            <path fill="none" d="M0 0h36v36H0z" />
+                                        </svg>
+                                        }@else{
+                                        <label for="ct_addtional_img_up_3">
+                                            <input type="file" class="d-none" id="ct_addtional_img_up_3"
+                                                accept="image/*" (change)="onBookMediaUpload($event)">
+                                            <div class="ct_mail_upload_mg ct_addtional_img_upload">
+                                                <div>
+                                                    <img src="assets/img/img_icon.png" alt="">
+                                                    <h6 class="mt-4 ct_purple_text"><svg width="19" height="18"
+                                                            viewBox="0 0 19 18" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <g clip-path="url(#clip0_192_2454)">
+                                                                <path
+                                                                    d="M12.2621 11.9753L9.36105 9.07422L6.45996 11.9753"
+                                                                    stroke="#9747FF" stroke-width="1.74066"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path d="M9.36035 9.07422V15.6017" stroke="#9747FF"
+                                                                    stroke-width="1.74066" stroke-linecap="round"
+                                                                    stroke-linejoin="round" />
+                                                                <path
+                                                                    d="M15.4458 13.708C16.1532 13.3224 16.712 12.7121 17.0341 11.9736C17.3561 11.2351 17.4231 10.4104 17.2243 9.62959C17.0256 8.8488 16.5725 8.15643 15.9366 7.66175C15.3007 7.16706 14.5181 6.89824 13.7124 6.89771H12.7986C12.579 6.04859 12.1699 5.26028 11.6018 4.59206C11.0338 3.92384 10.3217 3.39308 9.51896 3.0397C8.71627 2.68631 7.84391 2.51949 6.96746 2.55179C6.09102 2.58408 5.2333 2.81464 4.45879 3.22613C3.68427 3.63763 3.01312 4.21935 2.49579 4.92756C1.97846 5.63578 1.62842 6.45206 1.47197 7.31503C1.31552 8.178 1.35674 9.06521 1.59253 9.90996C1.82832 10.7547 2.25255 11.535 2.83332 12.1922"
+                                                                    stroke="#9747FF" stroke-width="1.74066"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path
+                                                                    d="M12.2621 11.9753L9.36105 9.07422L6.45996 11.9753"
+                                                                    stroke="#9747FF" stroke-width="1.74066"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                            </g>
+                                                            <defs>
+                                                                <clipPath id="clip0_192_2454">
+                                                                    <rect width="17.4066" height="17.4066" fill="white"
+                                                                        transform="translate(0.657227 0.371094)" />
+                                                                </clipPath>
+                                                            </defs>
+                                                        </svg>
+                                                        Upload Image</h6>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        }
+                                    </div>
+                                    <div class="col-md-6 mb-3 position-relative">
+                                        @if(bookMediaPreviews.length >= 4){
+                                        <img [src]="bookMediaPreviews[3]" alt="Cover Image" class="h-auto w-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 36 36" class="remove" (click)="removeBookMedia(3)">
+                                            <path fill="#e40000"
+                                                d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2m8 22.1a1.4 1.4 0 0 1-2 2l-6-6l-6 6.02a1.4 1.4 0 1 1-2-2l6-6.04l-6.17-6.22a1.4 1.4 0 1 1 2-2L18 16.1l6.17-6.17a1.4 1.4 0 1 1 2 2L20 18.08Z"
+                                                class="clr-i-solid clr-i-solid-path-1" />
+                                            <path fill="none" d="M0 0h36v36H0z" />
+                                        </svg>
+                                        }@else{
+                                        <label for="ct_addtional_img_up_4">
+                                            <input type="file" class="d-none" id="ct_addtional_img_up_4"
+                                                accept="image/*" (change)="onBookMediaUpload($event)">
+                                            <div class="ct_mail_upload_mg ct_addtional_img_upload">
+                                                <div>
+                                                    <img src="assets/img/img_icon.png" alt="">
+                                                    <h6 class="mt-4 ct_purple_text"><svg width="19" height="18"
+                                                            viewBox="0 0 19 18" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <g clip-path="url(#clip0_192_2454)">
+                                                                <path
+                                                                    d="M12.2621 11.9753L9.36105 9.07422L6.45996 11.9753"
+                                                                    stroke="#9747FF" stroke-width="1.74066"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path d="M9.36035 9.07422V15.6017" stroke="#9747FF"
+                                                                    stroke-width="1.74066" stroke-linecap="round"
+                                                                    stroke-linejoin="round" />
+                                                                <path
+                                                                    d="M15.4458 13.708C16.1532 13.3224 16.712 12.7121 17.0341 11.9736C17.3561 11.2351 17.4231 10.4104 17.2243 9.62959C17.0256 8.8488 16.5725 8.15643 15.9366 7.66175C15.3007 7.16706 14.5181 6.89824 13.7124 6.89771H12.7986C12.579 6.04859 12.1699 5.26028 11.6018 4.59206C11.0338 3.92384 10.3217 3.39308 9.51896 3.0397C8.71627 2.68631 7.84391 2.51949 6.96746 2.55179C6.09102 2.58408 5.2333 2.81464 4.45879 3.22613C3.68427 3.63763 3.01312 4.21935 2.49579 4.92756C1.97846 5.63578 1.62842 6.45206 1.47197 7.31503C1.31552 8.178 1.35674 9.06521 1.59253 9.90996C1.82832 10.7547 2.25255 11.535 2.83332 12.1922"
+                                                                    stroke="#9747FF" stroke-width="1.74066"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path
+                                                                    d="M12.2621 11.9753L9.36105 9.07422L6.45996 11.9753"
+                                                                    stroke="#9747FF" stroke-width="1.74066"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                            </g>
+                                                            <defs>
+                                                                <clipPath id="clip0_192_2454">
+                                                                    <rect width="17.4066" height="17.4066" fill="white"
+                                                                        transform="translate(0.657227 0.371094)" />
+                                                                </clipPath>
+                                                            </defs>
+                                                        </svg>
+                                                        Upload Image</h6>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        }
+                                    </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
-
             </div>
-        </div>
+        </form>
 
     </div>
 
 </div>
+
+<app-loader *ngIf="loading"></app-loader>

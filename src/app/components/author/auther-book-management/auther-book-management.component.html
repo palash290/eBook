@@ -11,17 +11,14 @@
                     <div class="col-xl-5 col-lg-6 col-md-7 col-sm-7">
                         <div class="ct_search ">
                             <input type="text" class="form-control" style="padding-right: 34px;"
-                                placeholder="Search for id, name product">
+                                placeholder="Search books by name" (input)="searchBook($event)">
                             <i class="fa-solid fa-magnifying-glass"></i>
-
                         </div>
-
                     </div>
                 </div>
                 <div class="ct_white_bg ct_p_30 h-auto">
                     <div>
                         <h2 class="ct_fs_18 ct_fw_700 ct_dash_head mb-4">All Books</h2>
-
                     </div>
                     <div class="table-responsive ">
                         <table class="table ct_custom_table">
@@ -30,208 +27,53 @@
                                     <th>Book Details</th>
                                     <th>Genre</th>
                                     <th>Date Published</th>
-                                    <th>Readers</th>
+                                    <th>Type</th>
+                                    <th>price</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @if(books.length > 0) {
+                                @for (item of books; track $index) {
                                 <tr>
                                     <td>
                                         <div class="ct_img_w_52_grid">
-                                            <img src="assets/img/book_1.png" alt="">
+                                            <img [src]="item.coverImage" alt="">
                                             <div>
-                                                <h4 class="mb-0 ct_fs_16">Build an Epic Career</h4>
-                                                <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a">Ankur Warikoo
+                                                <h4 class="mb-0 ct_fs_16">{{item.title}}</h4>
+                                                <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a text-capitalize">
+                                                    {{item.author?.fullName}}
                                                 </p>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center flex-wrap gap-2">
-                                            <span class="ct_grey_badge">Motivational</span>
-                                            <span class="ct_grey_badge">Career</span>
+                                            @for (item2 of item.books; track $index) {
+                                            <span class="ct_grey_badge">{{item2.category.name}}</span>
+                                            }
                                         </div>
-
                                     </td>
-                                    <td>Sep 09 2025</td>
-                                    <td>1,22,365 Reads</td>
-
-
+                                    <td>{{item.publishedAt | date}}</td>
+                                    <td>{{item.type == 1 ? 'PDF' : 'EPUB'}}</td>
+                                    <td>{{item.price | currency:'USD' }}</td>
                                     <td>
-                                        <a routerLink="/author/book-details" class="ct_see_detail_link">See
+                                        <a routerLink="/author/book-details" [queryParams]="{id:item.id}"
+                                            class="ct_see_detail_link">See
                                             Details</a>
                                     </td>
                                 </tr>
+                                }
+                                } @else {
                                 <tr>
-                                    <td>
-                                        <div class="ct_img_w_52_grid">
-                                            <img src="assets/img/book_1.png" alt="">
-                                            <div>
-                                                <h4 class="mb-0 ct_fs_16">Build an Epic Career</h4>
-                                                <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a">Ankur Warikoo
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="ct_grey_badge">Motivational</span>
-                                    </td>
-                                    <td>Sep 09 2025</td>
-                                    <td>1,22,365 Reads</td>
-
-
-                                    <td>
-                                        <a href="book-detail.html" class="ct_see_detail_link">See
-                                            Details</a>
-                                    </td>
+                                    <td colspan="6" class="text-center">No Books Published</td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div class="ct_img_w_52_grid">
-                                            <img src="assets/img/book_1.png" alt="">
-                                            <div>
-                                                <h4 class="mb-0 ct_fs_16">Build an Epic Career</h4>
-                                                <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a">Ankur Warikoo
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="ct_grey_badge">Motivational</span>
-                                    </td>
-                                    <td>Sep 09 2025</td>
-                                    <td>1,22,365 Reads</td>
-
-
-                                    <td>
-                                        <a href="book-detail.html" class="ct_see_detail_link">See
-                                            Details</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="ct_img_w_52_grid">
-                                            <img src="assets/img/book_1.png" alt="">
-                                            <div>
-                                                <h4 class="mb-0 ct_fs_16">Build an Epic Career</h4>
-                                                <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a">Ankur Warikoo
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="ct_grey_badge">Motivational</span>
-                                    </td>
-                                    <td>Sep 09 2025</td>
-                                    <td>1,22,365 Reads</td>
-
-
-                                    <td>
-                                        <a href="book-detail.html" class="ct_see_detail_link">See
-                                            Details</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="ct_img_w_52_grid">
-                                            <img src="assets/img/book_1.png" alt="">
-                                            <div>
-                                                <h4 class="mb-0 ct_fs_16">Build an Epic Career</h4>
-                                                <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a">Ankur Warikoo
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="ct_grey_badge">Motivational</span>
-                                    </td>
-                                    <td>Sep 09 2025</td>
-                                    <td>1,22,365 Reads</td>
-
-
-                                    <td>
-                                        <a href="book-detail.html" class="ct_see_detail_link">See
-                                            Details</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="ct_img_w_52_grid">
-                                            <img src="assets/img/book_1.png" alt="">
-                                            <div>
-                                                <h4 class="mb-0 ct_fs_16">Build an Epic Career</h4>
-                                                <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a">Ankur Warikoo
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="ct_grey_badge">Motivational</span>
-                                    </td>
-                                    <td>Sep 09 2025</td>
-                                    <td>1,22,365 Reads</td>
-
-
-                                    <td>
-                                        <a href="book-detail.html" class="ct_see_detail_link">See
-                                            Details</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="ct_img_w_52_grid">
-                                            <img src="assets/img/book_1.png" alt="">
-                                            <div>
-                                                <h4 class="mb-0 ct_fs_16">Build an Epic Career</h4>
-                                                <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a">Ankur Warikoo
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="ct_grey_badge">Motivational</span>
-                                    </td>
-                                    <td>Sep 09 2025</td>
-                                    <td>1,22,365 Reads</td>
-
-
-                                    <td>
-                                        <a href="book-detail.html" class="ct_see_detail_link">See
-                                            Details</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="ct_img_w_52_grid">
-                                            <img src="assets/img/book_1.png" alt="">
-                                            <div>
-                                                <h4 class="mb-0 ct_fs_16">Build an Epic Career</h4>
-                                                <p class="mb-0 ct_fs_14 ct_text_clr_8a8a8a">Ankur Warikoo
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="ct_grey_badge">Motivational</span>
-                                    </td>
-                                    <td>Sep 09 2025</td>
-                                    <td>1,22,365 Reads</td>
-
-
-                                    <td>
-                                        <a href="book-detail.html" class="ct_see_detail_link">See
-                                            Details</a>
-                                    </td>
-                                </tr>
+                                }
                             </tbody>
-
                         </table>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 </div>

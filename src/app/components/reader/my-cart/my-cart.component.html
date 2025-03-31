@@ -1,3 +1,4 @@
+@if (cartData.length > 0){
 <section class="ct_pt_60 ct_pb_218">
       <div class="container">
             <div class="row">
@@ -5,7 +6,6 @@
                         <h2 class="ct_fs_54 text-center ct_fw_500">Cart</h2>
                   </div>
             </div>
-
             <div class="row ct_pt_60">
                   <div class="col-lg-8 mb-4 mb-lg-0">
                         <div class="table-responsive">
@@ -19,117 +19,52 @@
                                           </tr>
                                     </thead>
                                     <tbody>
+                                          @for (item of cartData; track $index) {
                                           <tr>
                                                 <td>
                                                       <div class="ct_product_info_cart">
                                                             <div class="ct_product_img_cart">
-                                                                  <img src="assets/img/book_1.png" alt="">
+                                                                  <img [src]="item.coverImage" alt="">
                                                             </div>
                                                             <div>
-                                                                  <h5 class="ct_fs_16  ct_fw_500 mb-2">BUILD AN EPIC
-                                                                        CAREER</h5>
-                                                                  <p class="mb-2 ct_fs_14 ct_text_636363 ">ANKUR WARIKOO
-                                                                  </p>
-                                                                  <span class="ct_fw_600 ct_text_636363 ct_remove_cart"><i
-                                                                              class="fa-solid fa-xmark me-2"></i>Remove</span>
-                                                            </div>
-
-                                                      </div>
-                                                </td>
-                                                <td>
-                                                      <div class="position-relative ct_countity_count">
-                                                            <button class="ct_minus"><i
-                                                                  class="fa-solid fa-minus "></i></button>
-                                                                  <input type="number" class="form-control" value="0" />
-                                                                  <button class="ct_plus"><i
-                                                                              class="fa-solid fa-plus "></i></button>
-
-                                                      </div>
-                                                </td>
-                                                <td>
-                                                      <p class="mb-0 ct_fs_18">$19.00</p>
-                                                </td>
-                                                <td>
-                                                      <p class="mb-0 ct_fs_18 ct_fw_600">$38.00</p>
-                                                </td>
-
-                                          </tr>
-                                          <tr>
-                                                <td>
-                                                      <div class="ct_product_info_cart">
-                                                            <div class="ct_product_img_cart">
-                                                                  <img src="assets/img/book_2.png" alt="">
-                                                            </div>
-                                                            <div>
-                                                                  <h5 class="ct_fs_16  ct_fw_500 mb-2">THE SUBTITLE ART
-                                                                        OF NOT GIVING A
-                                                                        FUCK</h5>
-                                                                  <p class="mb-2 ct_fs_14 ct_text_636363 ">MARK MANSON
-                                                                  </p>
-                                                                  <span class="ct_fw_600 ct_text_636363 ct_remove_cart"><i
-                                                                              class="fa-solid fa-xmark me-2"></i>Remove</span>
-                                                            </div>
-
-                                                      </div>
-                                                </td>
-                                                <td>
-                                                      <div class="position-relative ct_countity_count">
-                                                            <button class="ct_plus"><i
-                                                                        class="fa-solid fa-plus "></i></button>
-                                                            <input type="number" class="form-control" value="0" />
-                                                            <button class="ct_minus"><i
-                                                                        class="fa-solid fa-minus "></i></button>
-
-                                                      </div>
-                                                </td>
-                                                <td>
-                                                      <p class="mb-0 ct_fs_18">$19.00</p>
-                                                </td>
-                                                <td>
-                                                      <p class="mb-0 ct_fs_18 ct_fw_600">$38.00</p>
-                                                </td>
-
-                                          </tr>
-                                          <tr>
-                                                <td>
-                                                      <div class="ct_product_info_cart">
-                                                            <div class="ct_product_img_cart">
-                                                                  <img src="assets/img/book_3.png" alt="">
-                                                            </div>
-                                                            <div>
-                                                                  <h5 class="ct_fs_16  ct_fw_500 mb-2">THE POWER OF YOUR
-                                                                        SUBCONSCIOUS MIND
+                                                                  <h5 class="ct_fs_16  ct_fw_500 mb-2 text-capitalize">
+                                                                        {{item.title}}
                                                                   </h5>
-                                                                  <p class="mb-2 ct_fs_14 ct_text_636363 ">JOSEPH MURPHY
+                                                                  <p
+                                                                        class="mb-2 ct_fs_14 ct_text_636363 text-capitalize">
+                                                                        {{item.author?.fullName}}
                                                                   </p>
-                                                                  <span class="ct_fw_600 ct_text_636363 ct_remove_cart"><i
-                                                                              class="fa-solid fa-xmark me-2"></i>Remove</span>
+                                                                  <span (click)="remove(item.id)"
+                                                                        class="ct_fw_600 ct_text_636363 ct_remove_cart ct_cursor_pointer text-danger"><i
+                                                                              class="fa-solid fa-trash me-2"></i>Remove</span>
                                                             </div>
-
                                                       </div>
                                                 </td>
                                                 <td>
                                                       <div class="position-relative ct_countity_count">
-                                                            <button class="ct_plus"><i
-                                                                        class="fa-solid fa-plus "></i></button>
-                                                            <input type="number" class="form-control" value="0" />
-                                                            <button class="ct_minus"><i
+                                                            <button (click)="decreaseQuantity(item)" class="ct_minus"><i
                                                                         class="fa-solid fa-minus "></i></button>
+                                                            <input type="number" class="form-control"
+                                                                  [value]="item.quantity" readonly />
+                                                            <button [disabled]="disable"
+                                                                  (click)="increaseQuantity(item)" class="ct_plus"><i
+                                                                        class="fa-solid fa-plus "></i></button>
 
                                                       </div>
                                                 </td>
                                                 <td>
-                                                      <p class="mb-0 ct_fs_18">$19.00</p>
+                                                      <p class="mb-0 ct_fs_18">{{item.price | currency:'USD'}}</p>
                                                 </td>
                                                 <td>
-                                                      <p class="mb-0 ct_fs_18 ct_fw_600">$38.00</p>
+                                                      <p class="mb-0 ct_fs_18 ct_fw_600">
+                                                            {{item.price * item.quantity | currency:'USD'}}
+                                                      </p>
                                                 </td>
 
                                           </tr>
+                                          }
                                     </tbody>
-
                               </table>
-
                         </div>
                   </div>
 
@@ -137,78 +72,32 @@
                         <div class="ct_cart_summary_card">
                               <h4 class="ct_fs_20 ct_fw_500 mb-4">Cart summary</h4>
                               <ul>
+                                    @for (item of cartData; track $index) {
                                     <li>
                                           <div class="ct_product_info_cart">
                                                 <div class="ct_product_img_cart ct_product_img_cart_img_60">
-                                                      <img src="assets/img/book_3.png" alt="">
+                                                      <img [src]="item.coverImage" alt="">
                                                 </div>
                                                 <div>
-                                                      <h5 class="ct_fs_14  ct_fw_500 mb-2">THE POWER OF YOUR
-                                                            SUBCONSCIOUS MIND
+                                                      <h5 class="ct_fs_14  ct_fw_500 mb-2 text-capitalize">
+                                                            {{item.title}}
                                                       </h5>
-                                                     <div class="d-flex align-items-center gap-2 justify-content-between">
-                                                      <p class="mb-2 ct_fs_14">
-                                                            <span class="ct_fw_600">Quantity : </span> <span>$20</span>X<span>
-                                                                  3
-                                                            </span>
-                                                      </p>
-                                                      <p class="mb-2 ct_fs_14 ct_fw_600 text-dark">
-                                                            $60
-                                                      </p>
-                                                     </div>
-                                                     
-                                                </div>
-
-                                          </div>
-                                    </li>
-                                    <li>
-                                          <div class="ct_product_info_cart">
-                                                <div class="ct_product_img_cart ct_product_img_cart_img_60">
-                                                      <img src="assets/img/book_3.png" alt="">
-                                                </div>
-                                                <div>
-                                                      <h5 class="ct_fs_14  ct_fw_500 mb-2">THE POWER OF YOUR
-                                                            SUBCONSCIOUS MIND
-                                                      </h5>
-                                                      <div class="d-flex align-items-center gap-2 justify-content-between">
+                                                      <div
+                                                            class="d-flex align-items-center gap-2 justify-content-between">
                                                             <p class="mb-2 ct_fs_14">
-                                                                  <span class="ct_fw_600">Quantity : </span> <span>$20</span>X<span>
-                                                                        3
+                                                                  <span class="ct_fw_600">Quantity : </span>
+                                                                  <span>{{item.price | currency:'USD'}}</span>X<span>
+                                                                        {{item.quantity}}
                                                                   </span>
                                                             </p>
                                                             <p class="mb-2 ct_fs_14 ct_fw_600 text-dark">
-                                                                  $60
+                                                                  {{item.price * item.quantity | currency:'USD'}}
                                                             </p>
-                                                           </div>
-                                                     
+                                                      </div>
                                                 </div>
-
                                           </div>
                                     </li>
-                                    <li>
-                                          <div class="ct_product_info_cart">
-                                                <div class="ct_product_img_cart ct_product_img_cart_img_60">
-                                                      <img src="assets/img/book_3.png" alt="">
-                                                </div>
-                                                <div>
-                                                      <h5 class="ct_fs_14  ct_fw_500 mb-2">THE POWER OF YOUR
-                                                            SUBCONSCIOUS MIND
-                                                      </h5>
-                                                      <div class="d-flex align-items-center gap-2 justify-content-between">
-                                                            <p class="mb-2 ct_fs_14">
-                                                                  <span class="ct_fw_600">Quantity : </span> <span>$20</span>X<span>
-                                                                        3
-                                                                  </span>
-                                                            </p>
-                                                            <p class="mb-2 ct_fs_14 ct_fw_600 text-dark">
-                                                                  $60
-                                                            </p>
-                                                           </div>
-                                                     
-                                                </div>
-
-                                          </div>
-                                    </li>
+                                    }
                               </ul>
                               <!-- <div class="mb-4">
                                     <div>
@@ -239,16 +128,20 @@
                               </div> -->
                               <table class="table ct_custom_table">
                                     <tr>
-                                          <td class="ct_py_13 px-0">
+                                          <td class="ct_py_13 px-2">
                                                 Subtotal
                                           </td>
-                                          <td class="ct_fw_600 ct_py_13 text-end  px-0">$1234.00</td>
+                                          <td class="ct_fw_600 ct_py_13 text-end  px-2">
+                                                {{getSubtotal() | currency:'USD'}}
+                                          </td>
                                     </tr>
                                     <tr>
-                                          <td class="ct_fw_600 ct_py_13 border-0  px-0">
+                                          <td class="ct_fw_600 ct_py_13 border-0  px-2">
                                                 Total
                                           </td>
-                                          <td class="ct_fw_600 ct_py_13 text-end  px-0  border-0">$1234.00</td>
+                                          <td class="ct_fw_600 ct_py_13 text-end  px-2  border-0">
+                                                {{getTotal() | currency:'USD'}}
+                                          </td>
                                     </tr>
 
                               </table>
@@ -267,3 +160,33 @@
 
       </div>
 </section>
+} @else {
+<section class="ct_py_100">
+      <div class="container">
+            <div class="row">
+                  <div class="col-md-10 mx-auto">
+                        <div class="ct_payment_succesfull_main text-center">
+                              <div class="ct_check_icon_success">
+                                    <svg width="214" height="208" viewBox="0 0 214 208" fill="none"
+                                          xmlns="http://www.w3.org/2000/svg">
+                                          <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M74.2396 193.476H65.4891C59.2195 193.476 53.2062 190.985 48.7734 186.556C44.3387 182.126 41.8498 176.116 41.8498 169.851C41.8498 163.585 44.3387 157.576 48.7734 153.145C51.8618 150.059 55.7173 147.913 59.8917 146.898L25.6629 30.1298L2.30614 16.6539C0.8447 15.8102 0.344097 13.941 1.18584 12.4815C2.0296 11.0221 3.9008 10.5215 5.36224 11.3633L29.7788 25.4528C30.459 25.8444 30.9637 26.4843 31.1837 27.2393L38.1578 51.03H213.403L195.008 132.879C192.225 144.265 182.017 152.275 170.289 152.275H64.71C64.5101 152.334 64.3022 152.372 64.0862 152.39C64.058 152.392 64.0277 152.396 63.9994 152.398C59.8957 152.747 56.0302 154.532 53.0952 157.465C49.809 160.749 47.962 165.204 47.962 169.851C47.962 174.495 49.809 178.952 53.0952 182.237C56.3814 185.521 60.8404 187.366 65.4891 187.366H74.2396C75.6849 179.31 82.7398 173.185 91.2157 173.185C99.6917 173.185 106.747 179.31 108.192 187.366H146.151C147.596 179.31 154.651 173.185 163.127 173.185C172.645 173.185 180.372 180.908 180.372 190.422C180.372 199.933 172.645 207.656 163.127 207.656C154.651 207.656 147.596 201.532 146.151 193.476H108.192C106.747 201.532 99.6917 207.656 91.2157 207.656C82.7398 207.656 75.6849 201.532 74.2396 193.476ZM106.058 75.1458C106.058 72.8971 104.231 71.0723 101.983 71.0723H93.8298C91.579 71.0723 89.7523 72.8971 89.7523 75.1458V83.2927C89.7523 85.5434 91.579 87.3682 93.8298 87.3682H101.983C104.231 87.3682 106.058 85.5434 106.058 83.2927V75.1458ZM92.6469 130.218C96.8838 117.717 109.437 108.71 124.191 108.71C138.945 108.71 151.496 117.717 155.735 130.218C156.276 131.815 158.012 132.673 159.609 132.132C161.207 131.591 162.065 129.855 161.524 128.258C156.496 113.426 141.698 102.602 124.191 102.602C106.684 102.602 91.8859 113.426 86.8576 128.258C86.3167 129.855 87.1746 131.591 88.7732 132.132C90.3699 132.673 92.1059 131.815 92.6469 130.218ZM158.63 75.1458C158.63 72.8971 156.803 71.0723 154.552 71.0723H146.399C144.148 71.0723 142.322 72.8971 142.322 75.1458V83.2927C142.322 85.5434 144.148 87.3682 146.399 87.3682H154.552C156.803 87.3682 158.63 85.5434 158.63 83.2927V75.1458ZM62.869 44.9219L54.8978 15.1925C54.2296 12.6975 55.7132 10.1279 58.2102 9.45976L79.3244 3.80577C81.8213 3.13561 84.393 4.61925 85.0611 7.11419L87.8326 17.4492C81.9202 17.5037 77.1362 22.318 77.1362 28.2384V44.9219H62.869ZM83.2484 44.9219V28.2384C83.2484 25.6567 85.3457 23.5574 87.9315 23.5574H109.793C112.376 23.5574 114.476 25.6567 114.476 28.2384V44.9219H83.2484ZM166.409 44.9219V25.3519L179.13 3.32939C180.422 1.09282 183.29 0.323749 185.529 1.61765L204.459 12.5401C206.7 13.832 207.467 16.6963 206.175 18.9349L191.163 44.9219H166.409ZM129.068 44.9219V18.943C129.068 16.3592 131.167 14.2619 133.753 14.2619H155.612C158.196 14.2619 160.295 16.3592 160.295 18.943V44.9219H129.068Z"
+                                                fill="#0A142F" fill-opacity="0.8" />
+                                    </svg>
+
+                              </div>
+                              <div class="mt-5">
+                                    <h4 class="ct_fs_36 ct_fw_600 mb-4">Oops! Your Cart is Empty</h4>
+                                    <p class="ct_fs_18 mb-3">It looks like you haven't added any items to your cart yet.
+                                          Start exploring our collection and add your favorite books to enjoy seamless
+                                          shopping. Don't miss out on great reads!</p>
+                                    <div class="ct_mt_60">
+                                          <a routerLink="/explore-books" class="ct_purple_btn ">EXPLORE NOW</a>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</section>
+}

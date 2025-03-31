@@ -4,7 +4,7 @@
     </div>
     <div class="d-flex align-items-center gap-3">
         <div class="ct_notification_main">
-            <div class="position-relative ct_notification_click">
+            <!-- <div class="position-relative ct_notification_click">
                 <svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M10.0277 0C7.73472 0 5.80843 1.72411 5.55522 4.00306L4.5 13.5H1.5C0.671573 13.5 0 14.1716 0 15V16.5C0 17.3284 0.671573 18 1.5 18H22.5C23.3284 18 24 17.3284 24 16.5V15C24 14.1716 23.3284 13.5 22.5 13.5H19.5L18.4448 4.00306C18.1916 1.72411 16.2653 0 13.9723 0H10.0277Z"
@@ -14,7 +14,7 @@
                 <div class="ct_notification_alert">
                     <span>6</span>
                 </div>
-            </div>
+            </div> -->
 
             <div class="ct_notification_custom_dropdown">
                 <ul>
@@ -43,9 +43,9 @@
         <div class="ct_right_dropdown dropdown">
             <button id="dropdownMenuButton" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="d-flex align-items-center gap-2">
-                    <img src="assets/img/user.jpg" alt="">
-                    <div class="text-start">
-                        <p class="mb-0 ct_fw_500">John Doe</p>
+                    <img [src]="userInfo?.avatar_url ? userInfo?.avatar_url : 'assets/img/profile_logo.jpg'" alt="">
+                    <div class="text-start d-grid">
+                        <p class="mb-0 ct_fw_500 text-capitalize">{{userInfo?.fullName}}</p>
                         <small>Author</small>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                     <div class="modal-footer justify-content-center border-0 ct_modal_footer">
                         <button type="button" class="ct_purple_btn ct_outline_blue w-100 ct_fw_600"
                             data-bs-dismiss="modal">Cancele</button>
-                        <button (click)="logout()" type="button"
+                        <button (click)="logout()" type="button" data-bs-dismiss="modal"
                             class="ct_purple_btn ct_btn_red w-100 ct_fw_600">Log Out</button>
                     </div>
                 </div>
