@@ -69,8 +69,8 @@
                               <h4 class="ct_fs_24 ct_fw_600 text-capitalize "> {{bookData.title}} by
                                     {{bookData.author?.fullName}}
                               </h4>
-                              <p class="ct_fs_14 ct_fw_500 mt-3"><span
-                                          class="ct_text_636363">{{bookData.costPrice | currency:'USD' }}</span>
+                              <p class="ct_fs_14 ct_fw_500 mt-3"><span class="ct_text_636363">{{bookData.costPrice |
+                                          currency:'USD' }}</span>
                                     <span class="ct_purple_text ms-2">-{{((bookData.costPrice -
                                           bookData.price)/bookData.costPrice)*100 | number:'1.0-0'}}%
                                           off</span>
@@ -190,7 +190,7 @@
                                     <button>DESCRIPTION</button>
                               </li>
                         </ul>
-                        <div class="ct_description_tab_content">
+                        <div class="ct_description_tab_content ct_description_tab_content">
                               @if(bookData){
                               <p>
                                     {{bookData.description}}
@@ -224,7 +224,8 @@
                                                 {{item.author?.fullName}}
                                           </h5>
                                           <p><span class="ct_fw_500">{{item.price | currency:'USD'}}</span><span
-                                                      class="ct_text_676767 ms-2"><del>{{item.costPrice | currency:'USD'}}</del></span>
+                                                      class="ct_text_676767 ms-2"><del>{{item.costPrice |
+                                                            currency:'USD'}}</del></span>
                                           </p>
                                     </div>
                               </a>
