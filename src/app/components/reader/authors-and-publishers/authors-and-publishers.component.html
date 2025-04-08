@@ -91,7 +91,7 @@
                                                 </div>
                                           </div>
                                           <button class="ct_purple_outline_btn  ct_grey_outline_btn"
-                                                (click)="isFollowing(item) ? unfollowAuthor(item.id) : followAuthor(item.id)">{{isFollowing(item)
+                                                (click)="item.isFollowed ? unfollowAuthor(item.id) : followAuthor(item.id)">{{item.isFollowed
                                                 ? 'Following' : 'Follow'}}</button>
                                     </div>
 
@@ -146,7 +146,8 @@
                                           class="ct_purple_outline_btn w-100 ct_outline_btn_w_icon">
                                           View Detail
                                     </a>
-                                    <a class="ct_purple_outline_btn ct_outline_btn_w_icon w-100">
+                                    <a (click)="sendMessage(item)"
+                                          class="ct_purple_outline_btn ct_outline_btn_w_icon w-100">
                                           <svg width="19" height="15" viewBox="0 0 19 15" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M1.11328 3.54199L7.91738 8.30486C8.46836 8.69054 8.74384 8.88339 9.0435 8.95808C9.30819 9.02406 9.58504 9.02406 9.84973 8.95808C10.1494 8.88339 10.4249 8.69055 10.9758 8.30486L17.7799 3.54199M5.11328 14.3753H13.7799C15.1801 14.3753 15.8801 14.3753 16.4149 14.1028C16.8853 13.8632 17.2678 13.4807 17.5075 13.0103C17.7799 12.4755 17.7799 11.7755 17.7799 10.3753V5.04199C17.7799 3.64186 17.7799 2.9418 17.5075 2.40702C17.2678 1.93661 16.8853 1.55416 16.4149 1.31448C15.8801 1.04199 15.1801 1.04199 13.7799 1.04199H5.11328C3.71315 1.04199 3.01308 1.04199 2.4783 1.31448C2.0079 1.55416 1.62545 1.93661 1.38576 2.40702C1.11328 2.9418 1.11328 3.64186 1.11328 5.04199V10.3753C1.11328 11.7755 1.11328 12.4755 1.38576 13.0103C1.62545 13.4807 2.0079 13.8632 2.4783 14.1028C3.01308 14.3753 3.71315 14.3753 5.11328 14.3753Z"

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap mb-4">
-                    <h4 class="ct_fs_26 ct_fw_700 mb-0 ct_nunito_font">Book Management</h4>
+                    <h4 class="ct_fs_26 ct_fw_700 mb-0 ct_nunito_font">{{bookId ? 'Update' : 'Add'}} Book</h4>
                     <button (click)="onSubmit()"
                         class="ct_purple_btn d-flex align-items-center justify-content-center">{{bookId ? 'Update Book'
                         : 'Save & Publish'}}</button>
@@ -16,7 +16,6 @@
                     <div class="ct_white_bg">
                         <div class="ct_full_height">
                             <div class="ct_edit_profile_bg">
-
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
@@ -41,7 +40,7 @@
                                             </nz-select>
                                             <div *ngIf="authorForm.get('categoryIds')?.hasError('required') && authorForm.get('categoryIds')?.touched"
                                                 class="text-danger">
-                                                <small>Book Generes Are required</small>
+                                                <small>Book Genres Are required</small>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -406,7 +405,7 @@
                                     </div>
                                     <div class="col-md-6 mb-3 position-relative">
                                         @if(bookMediaPreviews.length >= 3){
-                                        <img [src]=" bookMediaPreviews[2]" alt="Cover Image"
+                                        <img [src]="bookMediaPreviews[2]" alt="Cover Image"
                                             class="et_img_preview_146 w-100">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 36 36" class="remove" (click)="removeBookMedia(2)">

@@ -34,8 +34,9 @@
 
                                                 <div class="d-flex align-items-center gap-2">
                                                       <button class="ct_purple_outline_btn"
-                                                            (click)="isFollowing(authors) ? unfollowAuthor(authors.id) : followAuthor(authors.id)">{{isFollowing(authors) ? 'Following' : 'Follow'}}</button>
-                                                      <a class="ct_purple_outline_btn">Message</a>
+                                                            (click)="authors.isFollowed ? unfollowAuthor(authors.id) : followAuthor(authors.id)">{{authors.isFollowed ? 'Following' : 'Follow'}}</button>
+                                                      <a (click)="sendMessage(authors)"
+                                                            class="ct_purple_outline_btn">Message</a>
                                                 </div>
                                           </div>
                                     </figcaption>
@@ -60,7 +61,7 @@
                                     </svg>
                                     Followers - <span class="ct_fw_600">{{authors.following.length}}</span></p>
                         </li>
-                        @if(authors.instagram != 'null'){
+                        @if(authors.instagram && authors.instagram !== 'null'){
                         <li>
                               <p class="mb-0 ct_dark_purple_text">
                                     <svg width="16" height="16" viewBox="0 0 48 48" fill="none"
@@ -88,7 +89,7 @@
                               </p>
                         </li>
                         }
-                        @if(authors.facebook != 'null'){
+                        @if(authors.facebook && authors.facebook !== 'null'){
                         <li>
                               <p class="mb-0 ct_dark_purple_text">
                                     <svg width="16" height="16" viewBox="0 0 47 48" fill="none"
@@ -157,3 +158,4 @@
             </div>
       </div>
 </section>
+<app-loader *ngIf="loading"></app-loader>

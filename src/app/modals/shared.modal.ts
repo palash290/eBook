@@ -18,6 +18,7 @@ export interface Book {
       audioUrl: string;
       createdAt: string;
       updatedAt: string;
+      isFavorite: boolean;
       author?: Author;
       bookMedia: BookMedia[];
 }
@@ -51,6 +52,7 @@ export interface User {
       profilePic: string | null;
       instagram: string;
       following: Follow[];
+      isFollowed: boolean
       facebook: string;
       genres: string;
       createdAt: string;

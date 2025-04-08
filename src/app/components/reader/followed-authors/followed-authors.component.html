@@ -14,7 +14,8 @@
                     <h4 routerLink="/author-detail" [queryParams]="{author: item.followingId}"
                         class="ct_fs_28 ct_fw_600 mb-1 text-capitalize">{{item.following.fullName}}</h4>
                     <p class="mb-1 ">{{item.following.email}}</p>
-                    <div class="ct_followed_user_img">
+                    <div class="ct_followed_user_img" routerLink="/author-detail"
+                        [queryParams]="{author: item.followingId}">
                         <img [src]="item.following.avatar_url ? item.following.avatar_url : 'assets/img/profile_logo.jpg'"
                             alt="" class="ct_img_w_160">
                     </div>

@@ -38,17 +38,83 @@
                                           }
                                     </ul>
                               </div>
+                              <div class="ct_notification_main">
+                                    <div class="position-relative ct_notification_click">
+                                          <svg width="24" height="26" viewBox="0 0 24 26" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                      d="M10.0277 0C7.73472 0 5.80843 1.72411 5.55522 4.00306L4.5 13.5H1.5C0.671573 13.5 0 14.1716 0 15V16.5C0 17.3284 0.671573 18 1.5 18H22.5C23.3284 18 24 17.3284 24 16.5V15C24 14.1716 23.3284 13.5 22.5 13.5H19.5L18.4448 4.00306C18.1916 1.72411 16.2653 0 13.9723 0H10.0277Z"
+                                                      fill="#9747FF" />
+                                                <rect opacity="0.3" x="9" y="19.5" width="6" height="6" rx="2.25"
+                                                      fill="#FF0000" />
+                                          </svg>
+                                          @if(notifications.length > 0){
+                                          <div class="ct_notification_alert">
+                                                <span>{{notifications.length}}</span>
+                                          </div>
+                                          }
+                                    </div>
+                                    <div class="ct_notification_custom_dropdown">
+                                          <ul>
+                                                @if(notifications.length > 0){
+                                                @for (item of notifications; track $index) {
+                                                <li>
+                                                      @if(item.byUser.avatar_url){
+                                                      <img [src]="item.byUser.avatar_url"
+                                                            class="ct_notify_user_img_icon" />
+                                                      } @else {
+                                                      <span
+                                                            class="ct_notify_user_icon">{{item.byUser.fullName.split('')[0]}}</span>
+                                                      }
+                                                      <div class="d-flex justify-content-between align-items-center">
+                                                            <div>
+                                                                  <p class="mb-0">
+                                                                        {{item.content}}
+                                                                  </p>
+                                                                  <small class="ct_fw_500">{{item.createdAt | date:'mediumDate' }}
+                                                                        at
+                                                                        {{item.createdAt | date:'shortTime' }}</small>
+                                                            </div>
+                                                            <span class="ct_fw_700 ct_cursor_pointer"
+                                                                  (click)="deleteNotification(item.id)">x</span>
+                                                      </div>
+                                                </li>
+                                                }
+                                                <li class="mb-2  noWrap ClearNotification"
+                                                      (click)="clearNotification()">
+                                                      Clear All Notifications
+                                                </li>
+                                                } @else {
+                                                <li>
+                                                      <p class="mb-0 noWrap">
+                                                            Notifications Not Found.
+                                                      </p>
+                                                </li>
+                                                }
+                                          </ul>
+                                    </div>
+
+                              </div>
                               <div class="ct_right_menu_items">
+
                                     <ul>
                                           <li class="ct_wishlist_icon">
-                                                <a routerLink="/wishlist">
-                                                      <svg width="24" height="24" viewBox="0 0 18 18" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M9 15.1875C9 15.1875 1.96875 11.25 1.96875 6.46876C1.96889 5.62369 2.26171 4.80476 2.79741 4.1512C3.33312 3.49763 4.07865 3.04977 4.90724 2.88376C5.73584 2.71775 6.59636 2.84384 7.34249 3.24059C8.08863 3.63734 8.67432 4.28026 9.00001 5.06004L8.99999 5.06005C9.32567 4.28027 9.91137 3.63734 10.6575 3.24059C11.4036 2.84384 12.2642 2.71775 13.0928 2.88376C13.9214 3.04977 14.6669 3.49763 15.2026 4.1512C15.7383 4.80476 16.0311 5.62369 16.0312 6.46876C16.0312 11.25 9 15.1875 9 15.1875Z"
-                                                                  stroke="#1D2026" stroke-width="1.125"
-                                                                  stroke-linecap="round" stroke-linejoin="round" />
-                                                      </svg>
-                                                </a>
+                                                <div class="position-relative">
+                                                      <a routerLink="/wishlist">
+                                                            <svg width="24" height="24" viewBox="0 0 18 18" fill="none"
+                                                                  xmlns="http://www.w3.org/2000/svg">
+                                                                  <path d="M9 15.1875C9 15.1875 1.96875 11.25 1.96875 6.46876C1.96889 5.62369 2.26171 4.80476 2.79741 4.1512C3.33312 3.49763 4.07865 3.04977 4.90724 2.88376C5.73584 2.71775 6.59636 2.84384 7.34249 3.24059C8.08863 3.63734 8.67432 4.28026 9.00001 5.06004L8.99999 5.06005C9.32567 4.28027 9.91137 3.63734 10.6575 3.24059C11.4036 2.84384 12.2642 2.71775 13.0928 2.88376C13.9214 3.04977 14.6669 3.49763 15.2026 4.1512C15.7383 4.80476 16.0311 5.62369 16.0312 6.46876C16.0312 11.25 9 15.1875 9 15.1875Z"
+                                                                        stroke="#1D2026" stroke-width="1.125"
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round" />
+                                                            </svg>
+                                                            @if (favCount() > 0){
+                                                            <div class="ct_count_icon">
+                                                                  <h5 class="mb-0">{{ favCount() }}</h5>
+                                                            </div>
+                                                            }
+                                                      </a>
+                                                </div>
                                           </li>
                                           <li>
                                                 <a routerLink="/my-cart">

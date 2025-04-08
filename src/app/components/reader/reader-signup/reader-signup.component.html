@@ -4,11 +4,9 @@
             <div class="col-md-12">
                 <div class="ct_logo text-center">
                     <img src="assets/img/logo.svg" alt="">
-
                 </div>
             </div>
         </div>
-
     </div>
 </header>
 
@@ -28,16 +26,16 @@
                                 class="ct_forgot_pass_link"> Log In</a></p>
                     </div>
 
-                    <div class="ct_btn_group ct_mt_32 justify-content-center ct_other_login_btn_group">
+                    <!-- <div class="ct_btn_group ct_mt_32 justify-content-center ct_other_login_btn_group">
                         <a href="#" class="ct_purple_outline_btn ct_grey_outline_btn"><img src="assets/img/google.svg"
                                 alt="">Continue with Google</a>
                         <a href="#" class="ct_purple_outline_btn ct_grey_outline_btn"><img src="assets/img/facebook.svg"
                                 alt="">Continue with Facebook</a>
-                    </div>
+                    </div> -->
 
-                    <div class="ct_decoration_line_text ct_mt_32">
+                    <!-- <div class="ct_decoration_line_text ct_mt_32">
                         <p class="mb-0 text-center"> Or continue with mail</p>
-                    </div>
+                    </div> -->
 
                     <form [formGroup]="signupForm">
                         <div class="ct_input-container">
@@ -48,7 +46,8 @@
                         </div>
                         <div *ngIf="signupForm.controls['full_name'].invalid && signupForm.controls['full_name'].touched"
                             class="error-message">
-                            <div *ngIf="signupForm.controls['full_name'].errors?.['required']" class="ct_fs_14">Name
+                            <div *ngIf="signupForm.controls['full_name'].errors?.['required']" class="ct_fs_14">Full
+                                name
                                 is
                                 required.</div>
                         </div>

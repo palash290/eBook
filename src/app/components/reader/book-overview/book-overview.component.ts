@@ -3,17 +3,19 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SharedService } from '../../../services/shared.service';
 import { ModalService } from '../../../services/modal.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Book } from '../../../modals/shared.modal';
+import { Book, BookMedia, User } from '../../../modals/shared.modal';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from "../shared/loader/loader.component";
 import { CartService } from '../../../services/cart.service';
+import { WishlistComponent } from '../wishlist/wishlist.component';
 declare var $: any;
 @Component({
   selector: 'app-book-overview',
   standalone: true,
   imports: [RouterLink, CommonModule, LoaderComponent],
   templateUrl: './book-overview.component.html',
-  styleUrl: './book-overview.component.css'
+  styleUrl: './book-overview.component.css',
+  providers: [WishlistComponent]
 })
 export class BookOverviewComponent {
   bookData!: Book;
@@ -22,7 +24,8 @@ export class BookOverviewComponent {
   loading: boolean = false
   quantity: number = 1
   categoryNames: any
-  constructor(private router: Router, private service: SharedService, private modalService: ModalService, private toastr: NzMessageService, private route: ActivatedRoute, private cartService: CartService) {
+  userInfo: User | null = null
+  constructor(private router: Router, private service: SharedService, private modalService: ModalService, private toastr: NzMessageService, private route: ActivatedRoute, private cartService: CartService, private wishlist: WishlistComponent) {
     this.route.queryParams.subscribe(params => {
       this.bookId = params['id'];
       this.getBookById()
@@ -31,6 +34,10 @@ export class BookOverviewComponent {
 
   ngOnInit(): void {
     // this.getBookById()
+    const data = localStorage.getItem('userInfo');
+    if (data) {
+      this.userInfo = JSON.parse(data);
+    }
   }
 
   getBookById() {
@@ -155,5 +162,34 @@ export class BookOverviewComponent {
     this.cartService.addToCart(data, this.quantity, isLoggedIn);
     this.toastr.success('Book added to cart successfully');
   }
-}
 
+  addToFav(bookId: number) {
+    if (this.service.isLogedIn('user')) {
+      // this.loading = true
+      this.service.postAPI('users/favBook', { bookId: bookId }).subscribe({
+        next: (resp: any) => {
+          // this.toastr.success(resp.message);
+          this.loading = false
+          this.bookData.isFavorite = !this.bookData.isFavorite
+          this.wishlist.getFavBooks()
+        },
+        error: error => {
+          console.log(error.message);
+          this.loading = false
+        }
+      });
+    } else {
+      this.modalService.openModal()
+    }
+  }
+
+  reloadComponent(item: any) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/book-overview'], { queryParams: { id: item.id } });
+    });
+  }
+
+  isFav(item: any) {
+    return item.following?.some((_e: any) => _e.followerId === this.userInfo?.id);
+  }
+}

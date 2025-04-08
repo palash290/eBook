@@ -133,11 +133,29 @@ export class AddBookComponent {
     }
   }
 
+  /*************  ✨ Codeium Command 🌟  *************/
   removeBookMedia(index: any) {
-    this.bookMedia.splice(index, 1);
-    this.bookMediaPreviews.splice(index, 1);
+    const id = this.bookData.bookMedia?.find((item, i) => i === index)?.id;
+    if (id) {
+      this.service.delete(`author/deleteImages/${id}`).subscribe({
+        next: (res: any) => {
+          if (res.success == true) {
+            this.toster.success(res.message);
+            this.bookMedia.splice(index, 1);
+            this.bookMediaPreviews.splice(index, 1);
+            this.bookData.bookMedia?.splice(index, 1);
+          } else {
+            this.loading = false;
+            this.toster.warning(res.message)
+          }
+        },
+        error: (error) => {
+          this.loading = false;
+          this.toster.error(error);
+        }
+      });
+    }
   }
-
 
   onSubmit() {
     if (this.authorForm.invalid || !this.coverImage || !this.pdf) {

@@ -6,6 +6,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../reader/shared/footer/footer.component';
 import { LoaderComponent } from "../../reader/shared/loader/loader.component";
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-auther-login',
@@ -20,7 +21,7 @@ export class AutherLoginComponent {
   isPasswordVisible: boolean = false;
   loading: boolean = false;
 
-  constructor(private router: Router, private srevice: SharedService, private toster: NzMessageService) { }
+  constructor(private router: Router, private srevice: SharedService, private toster: NzMessageService, private authService: AuthService) { }
 
   logout() {
     localStorage.removeItem('userRole')
@@ -49,12 +50,13 @@ export class AutherLoginComponent {
       const formURlData = new URLSearchParams();
       formURlData.set('email', this.loginForm.value.email);
       formURlData.set('password', this.loginForm.value.password);
+      formURlData.set('fcm_token', localStorage.getItem('fcm_token') || '');
       this.srevice.postAPI('author/login', formURlData.toString()).subscribe({
         next: (res: any) => {
           if (res.success == true) {
+            this.router.navigateByUrl('/author/auther-dashboard');
             this.srevice.setToken(res.token, 'author');
             this.toster.success(res.message)
-            this.router.navigateByUrl('/author/auther-dashboard');
             localStorage.setItem('userRole', 'author')
             localStorage.setItem('userInfo', JSON.stringify(res.authorData));
             if (this.loginForm.value.rememberMe) {
@@ -82,5 +84,36 @@ export class AutherLoginComponent {
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  loginWithGoogle() {
+    this.authService.googleLogin().then(res => {
+
+      const formData = {
+        email: res.user.email,
+        fullName: res.user.displayName,
+        fcm_token: localStorage.getItem('fcm_token') || ''
+      }
+
+      this.srevice.postAPI('author/social-login', formData).subscribe({
+        next: (resp: any) => {
+          if (resp.success == true) {
+            this.srevice.setToken(resp.token, 'author');
+            localStorage.setItem('userRole', 'author')
+            localStorage.setItem('userInfo', JSON.stringify(resp.user));
+            this.router.navigateByUrl('/author/auther-dashboard');
+            this.toster.success(resp.message)
+            this.loading = false;
+          } else {
+            this.loading = false;
+            this.toster.warning(resp.message)
+          }
+        },
+        error: (error) => {
+          this.loading = false;
+          this.toster.error(error);
+        }
+      });
+    });
   }
 }

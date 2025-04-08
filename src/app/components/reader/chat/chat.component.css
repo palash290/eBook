@@ -1,0 +1,36 @@
+.preview {
+      /* height: 100px; */
+      /* width: 100px; */
+      position: relative;
+}
+
+.preview .remove {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      color: #ef1b30;
+      cursor: pointer;
+      background: #fff;
+      border-radius: 50%;
+}
+
+.preview img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
+}
+
+.preview-container {
+      display: flex;
+      /* height: 100px; */
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      /* padding-left: 100PX;
+      padding-right: 160px; */
+}
+
+.ct_cursor_pointer:hover {
+      color: #1511e9;
+}

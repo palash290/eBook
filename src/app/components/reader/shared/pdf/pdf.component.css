@@ -73,3 +73,19 @@ button:hover {
       height: 500px;
       overflow: auto;
 }
+
+.et_back_icon_1 {
+      color: #000;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: 0.4s ease all;
+      background-color: #e6e6e6;
+      padding: 3px 10px;
+      border-radius: 4px;
+}
+
+.et_back_icon_1:hover {
+      color: var(--purple_light);
+}

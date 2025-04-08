@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -11,6 +11,8 @@ import { CartService } from './cart.service';
 export class SharedService {
   baseUrl = environment.baseUrl
   //isAuthenticatedSignal = signal(false);;
+  favItems = signal<any[]>([]);
+  FavCount = computed(() => this.favItems()?.length);
 
   constructor(private http: HttpClient, private router: Router, private cartService: CartService) { }
 
@@ -48,6 +50,7 @@ export class SharedService {
     localStorage.removeItem('userRole');
     localStorage.removeItem('cart');
     this.cartService.cartItems.set([]);
+    this.favItems.set([]);
     this.profileDataSubject.next(null);
   }
 

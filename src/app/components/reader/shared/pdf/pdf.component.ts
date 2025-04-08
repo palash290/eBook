@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 import { ActivatedRoute } from '@angular/router';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { LoaderComponent } from "../loader/loader.component";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-pdf',
@@ -17,7 +18,7 @@ export class PdfComponent {
 
   pdfUrl!: SafeResourceUrl;
   title: string = '';
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, public location: Location) {
     this.route.queryParams.subscribe(params => {
       this.pdfUrl = params['url'];
       this.title = params['title'];
@@ -52,5 +53,8 @@ export class PdfComponent {
     if (this.zoom > 0.2) {
       this.zoom -= 0.1;
     }
+  }
+  goBack() {
+    this.location.back();
   }
 }

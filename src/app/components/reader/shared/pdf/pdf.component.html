@@ -1,9 +1,12 @@
 <div class="container mx-auto p-3">
     <div class="row">
         <div class="col-md-12">
-            <div class="d-flex align-items-center justify-content-between et_flex_direction_991">
-                <h4 class="ct_fs_24 ct_fw_600 text-capitalize "> {{title}}
-                </h4>
+            <div class="d-flex align-items-center justify-content-between et_flex_direction_991 mb-4">
+                <div class="d-flex align-items-center gap-3">
+                    <a class="et_back_icon_1" (click)="goBack()"><i class="fa-solid fa-arrow-left"></i>Back</a>
+                    <h4 class="ct_fs_24 ct_fw_600 text-capitalize mb-0"> {{title}}
+                    </h4>
+                </div>
                 <div class="controls flex-wrap">
                     <button [disabled]="page === 1" (click)="prevPage()"> <i class="fa-solid fa-angle-left"></i>
                         Prev</button>

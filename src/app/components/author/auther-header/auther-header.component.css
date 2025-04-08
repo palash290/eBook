@@ -1,0 +1,16 @@
+.ct_cursor_pointer:hover {
+      color: red;
+}
+
+.noWrap {
+      white-space: nowrap;
+}
+
+.ClearNotification:hover {
+      cursor: pointer;
+      color: red;
+}
+
+.ClearNotification {
+      text-align: center;
+}

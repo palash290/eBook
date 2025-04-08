@@ -55,7 +55,7 @@ export class AutherSignupComponent {
           if (res.success == true) {
             this.loading = false;
             this.toster.success(res.message);
-            this.router.navigateByUrl(`/auther-login`);
+            this.router.navigateByUrl(`/author-login`);
           } else {
             this.toster.warning(res.message);
             this.loading = false;

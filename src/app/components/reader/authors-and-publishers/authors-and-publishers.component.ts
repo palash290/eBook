@@ -110,6 +110,13 @@ export class AuthorsAndPublishersComponent {
     });
   }
 
+  sendMessage(item: any) {
+    if (this.service.isLogedIn('user')) {
+      this.router.navigate(['/chat'], { queryParams: { author: item.id } });
+    } else {
+      this.modalService.openModal();
+    }
+  }
   isFollowing(item: any) {
     return item.following?.some((_e: any) => _e.followerId === this.userInfo?.id);
   }

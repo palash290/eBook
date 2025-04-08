@@ -1,4 +1,4 @@
-<section class="ct_px_40 ct_pt_80 ct_pb_100  ct_mb_40">
+<!-- <section class="ct_px_40 ct_pt_80 ct_pb_100  ct_mb_40">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -9,13 +9,6 @@
                             <div>
                                 <h5 class="ct_fs_20 ct_fw_600 mb-0">Sarah Wilson</h5>
                                 <p class="ct_fs_18 ct_text_636363 ct_fw_500 mb-0">Fiction Writer</p>
-                            </div>
-                        </div>
-                        <div class="ct_books_authore_price">
-                            <img src="assets/img/book_4.png" alt="">
-                            <div>
-                                <h5 class="ct_fs_16 ct_fw_600 mb-0">Ankur Warikoo</h5>
-                                <p class="mb-0 ct_fs_14 ct_fw_600">$85</p>
                             </div>
                         </div>
                     </div>
@@ -133,10 +126,18 @@
                         </div>
                     </div>
 
+
+                    <div *ngIf="previewFiles.length > 0" class="preview-container">
+                        <div *ngFor="let file of previewFiles" class="preview">
+                            <img *ngIf="file.type.startsWith('image/')" [src]="file.url" alt="File preview" />
+                            <i (click)="removeFile(file)" class="fa fa-minus-circle remove" aria-hidden="true"></i>
+                        </div>
+                    </div>
                     <div class="ct_bottom_chat_footer">
                         <div class="ct_upload_icons">
                             <label for="ct_chat_image_upload">
-                                <input type="file" class="d-none" id="ct_chat_image_upload">
+                                <input type="file" class="d-none" id="ct_chat_image_upload"
+                                    (change)="onFileChange($event)" multiple>
                                 <div class="ct_chat_image_div">
                                     <svg width="30" height="31" viewBox="0 0 44 45" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -164,7 +165,8 @@
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control ct_input_text ct_border_radius_30"
-                                placeholder="Type your message...">
+                                placeholder="Type your message..." [(ngModel)]="newMessage"
+                                [ngModelOptions]="{standalone: true}" (keydown)="onKeyDown($event)">
                         </div>
                         <button class="ct_purple_btn ct_send_chat_btn"><i class="fa-solid fa-paper-plane me-2 "></i>
                             <span>Send</span></button>
@@ -176,4 +178,159 @@
 
         </div>
     </div>
+</section> -->
+
+<section class="message-area p-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 px-0">
+                <div class="chat-area">
+                    <!-- chatlist -->
+                    <div class="chatlist">
+                        <div class="modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="chat-header">
+                                    <div class="msg-search">
+                                        <input type="text" class="form-control" id="inlineFormInputGroup"
+                                            placeholder="Search" aria-label="search">
+                                    </div>
+                                </div>
+                                <div class="modal-body mt-4">
+                                    <!-- chat-list -->
+                                    <div class="chat-lists">
+                                        <div class="chat-list">
+                                            @for (item of chatList; track $index) {
+                                            <a class="d-flex align-items-center">
+                                                <div class="flex-shrink-0">
+                                                    <img class="img-fluid ct_img_w_50"
+                                                        [src]="item.isGroupChat ? '' : item.participants[0].Author.avatar_url"
+                                                        alt="user img">
+                                                    @if(item.participants[0].Author.isOnline){
+                                                    <span class="active"></span>
+                                                    }
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h3 class="ct_fs_16 ct_fw_600">
+                                                        {{item.isGroupChat ? item.name : item.participants[0].Author.fullName}}
+                                                    </h3>
+                                                    <p class="ct_fs_14 ct_purple_text">
+                                                        {{item.lastMessage}}
+                                                    </p>
+                                                </div>
+                                                <div class="ct_caht_msg_notify">
+                                                    <h4 class="ct_notify-time">
+                                                        {{ formatDate(item.createdAt) }}
+                                                    </h4>
+                                                    @if(item.unreadCount > 0){
+                                                    <span>{{item.unreadCount}}</span>
+                                                    }
+                                                </div>
+                                            </a>
+                                            }
+                                        </div>
+                                    </div>
+                                    <!-- chat-list -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- chatlist -->
+                    <!-- chatbox -->
+                    <div class="chatbox">
+                        <div class="modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="msg-head">
+                                    <h4 class="ct_fs_28 ct_fw_700 mb-1">
+                                        {{authorDetail?.fullName}}
+                                    </h4>
+                                    @if(authorDetail?.isOnline){
+                                    <p class="mb-0 ct_fw_600 ct_text_898989">
+                                        online</p>
+                                    }
+                                </div>
+                                <div class="modal-body">
+                                    <div class="msg-body">
+                                        <ul>
+                                            @for (item of allMessages.reverse(); track $index) {
+                                            @if(item.senderAuthorId){
+                                            <li>
+                                                <img [src]="item.isGroupChat ? '' : authorDetail.avatar_url ? authorDetail.avatar_url : 'assets/img/profile_logo.jpg'"
+                                                    alt="">
+                                                <div class="sender">
+                                                    @if(item.ChatMessageFiles.length > 0){
+                                                    <div class="d-flex gap-2">
+                                                        @for (file of item.ChatMessageFiles; track $index) {
+                                                        <img [src]="file.fileName" class="img-fluid">
+                                                        }
+                                                    </div>
+                                                    }
+                                                    <p class="ct_fw_600 mb-2">
+                                                        {{item.content}}
+                                                    </p>
+                                                    <span
+                                                        class="time ms-auto d-block text-end">{{formatDate(item.createdAt)}}</span>
+                                                </div>
+                                            </li>
+                                            }
+                                            @if(item.senderUserId){
+                                            <li>
+                                                <div class="repaly">
+                                                    @if(item.ChatMessageFiles.length > 0){
+                                                    <div class="d-flex gap-2">
+                                                        @for (file of item.ChatMessageFiles; track $index) {
+                                                        <img [src]="file.fileName" class="img-fluid">
+                                                        }
+                                                    </div>
+                                                    }
+                                                    <p>{{item.content}}
+                                                    </p>
+                                                    <span class="time text-white">{{formatDate(item.createdAt)}}
+                                                    </span>
+                                                </div>
+                                                <img [src]="userInfo.avatar_url ? userInfo.avatar_url : 'assets/img/profile_logo.jpg'"
+                                                    alt="">
+                                            </li>
+                                            }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div *ngIf="previewFiles.length > 0" class="preview-container">
+                                    <div *ngFor="let file of previewFiles" class="preview">
+                                        <img *ngIf="file.type.startsWith('image/')" [src]="file.url"
+                                            alt="File preview" />
+                                        <i (click)="removeFile(file)" class="fa fa-minus-circle remove"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="send-box px-0 ">
+                                    <form action="" class="position-relative m-0">
+                                        <label for="upload_chat_img_2" class="ct_upload_paper_click_img">
+                                            <input type="file" (change)="onFileChange($event)" multiple class="d-none"
+                                                id="upload_chat_img_2">
+                                            <div>
+                                                <i class="fa-solid fa-paperclip"></i>
+                                            </div>
+                                        </label>
+                                        <textarea type="text" class="form-control" aria-label="message…"
+                                            placeholder="Write message…" [(ngModel)]="newMessage"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (keydown)="onKeyDown($event)"></textarea>
+
+                                        <div class="ct_right_side_send_chat_btns">
+                                            <!-- <i class="fa-solid fa-microphone"></i> -->
+                                            <i class="fa fa-paper-plane ct_cursor_pointer" (click)="sendMessage()"></i>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- chatbox -->
+            </div>
+        </div>
+    </div>
 </section>
+
+<app-loader *ngIf="loading"></app-loader>

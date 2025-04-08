@@ -2,6 +2,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import ePub from 'epubjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-epub-reader',
   standalone: true,
@@ -17,7 +19,7 @@ export class EpubReaderComponent {
 
   pdfUrl: any;
   title: string = '';
-  constructor(private route: ActivatedRoute, private toastr: NzMessageService) {
+  constructor(private route: ActivatedRoute, private toastr: NzMessageService, public location: Location) {
     this.route.queryParams.subscribe(params => {
       this.pdfUrl = params['url'];
       this.title = params['title'];
@@ -62,5 +64,8 @@ export class EpubReaderComponent {
     } else {
       this.toastr.warning('No audio found in the book.');
     }
+  }
+  goBack() {
+    this.location.back();
   }
 }

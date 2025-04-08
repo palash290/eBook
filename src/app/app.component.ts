@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { LogInAlertComponent } from './components/reader/shared/log-in-alert/log-in-alert.component';
+import { NotificationService } from './services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,23 @@ import { LogInAlertComponent } from './components/reader/shared/log-in-alert/log
 })
 export class AppComponent {
   title = 'e-book';
-  constructor(private router: Router) { 
-    
+  constructor(private router: Router, private notificationService: NotificationService) {
+    if (localStorage.getItem('userRole') == 'author') {
+      this.router.navigate(['/author/auther-dashboard']);
+    } else if (localStorage.getItem('userRole') == 'reader') {
+      // this.router.navigate(['/']);
+    }
   }
   ngOnInit() {
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        this.notificationService.requestPermission()
+      }
+    });
+
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
+        this.notificationService.listenForMessages();
         const existingScript = document.querySelector('script[src="assets/js/main.js"]');
         if (existingScript) {
           existingScript.remove();
