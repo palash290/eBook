@@ -46,12 +46,18 @@ export class ChatComponent {
     });
   }
 
+  newParticipant: any;
+
   createChatRoom() {
     this.loading = true
     this.apiService.postAPI(`chat/chatOnetoOne/${this.authorId}`, {}).subscribe({
       next: (resp: any) => {
         this.loading = false
-        this.getAllChatList()
+        //debugger
+        this.newParticipant = resp.payload.participants[0]
+        this.activeChatId = resp.payload.id
+        this.getAllmessages(resp.payload.id)
+        //this.getAllChatList()
       },
       error: error => {
         this.loading = false
@@ -59,12 +65,17 @@ export class ChatComponent {
     });
   }
 
+  activeChatId: any
+
   getAllChatList() {
     this.loading = true
     this.apiService.get(`chat/getAllChats`).subscribe({
       next: (resp: any) => {
+        //debugger
+
         this.loading = false
         this.chatList = resp.data
+        this.activeChatId = this.chatList[0].id
         this.getAllmessages(this.chatList[0].id)
       },
       error: error => {
@@ -76,8 +87,8 @@ export class ChatComponent {
   getAllmessages(chatId: number) {
     this.apiService.get(`chat/getAllMessages/${chatId}`).subscribe({
       next: (resp: any) => {
-        this.allMessages = resp.messages
-        this.authorDetail = this.chatList.find((c: any) => c.id == 33)?.participants[0].Author
+        this.allMessages = resp.messages.reverse()
+        this.authorDetail = this.chatList.find((c: any) => c.id == chatId)?.participants[0].Author
       },
       error: error => {
         this.loading = false
@@ -86,43 +97,56 @@ export class ChatComponent {
   }
 
   sendMessage() {
+    //debugger
     if (this.files.length > 0) {
       let formData = new FormData()
       if (this.files && this.files.length > 0) {
         for (let i = 0; i < this.files.length; i++) {
-          formData.append('socket_image_message', this.files[i]);
+          formData.append('files', this.files[i]);
         }
       }
 
-      this.apiService.postAPI('user/socket-imagesend', formData).subscribe((res: any) => {
+      this.apiService.postAPI('chat/uploadImages', formData).subscribe((res: any) => {
         if (res.success) {
-          this.sendNormalMsg(res.data)
+          this.sendNormalMsg(res.filenames);
+          setTimeout(() => {
+            this.getAllmessages(this.activeChatId);
+          }, 100);
         }
       })
     } else {
       if (this.newMessage.trim().length == 0) {
         return
       }
-      this.sendNormalMsg('')
+      this.sendNormalMsg('');
+      setTimeout(() => {
+        this.getAllmessages(this.activeChatId);
+      }, 100);
     }
   };
 
-  sendNormalMsg(img_path: string) {
+  sendNormalMsg(filenames?: any) {
     const msg = {
-      chatId: 30,
+      chatId: this.activeChatId,
       content: this.newMessage?.trim(),
       isLink: 0,
-      fileNames: null,
+      fileNames: filenames && filenames.length > 0 ? filenames.join(',') : null,
       isUser: 1
     };
     this.socketService.sendMessage(msg).then(() => {
       this.chatList.push(msg);
+      setTimeout(() => {
+        this.getAllmessages(this.activeChatId);
+      }, 100);
+
     })
       .catch((error) => { });
     this.newMessage = '';
     this.files = [],
       this.previewFiles = []
   }
+
+
   onKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter' && this.newMessage.trim()) {
       this.sendMessage();
@@ -176,5 +200,5 @@ export class ChatComponent {
     }
   }
 
-  
+
 }

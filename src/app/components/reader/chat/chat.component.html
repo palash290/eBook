@@ -199,7 +199,7 @@
                                     <!-- chat-list -->
                                     <div class="chat-lists">
                                         <div class="chat-list">
-                                            @for (item of chatList; track $index) {
+                                            <!-- @for (item of chatList; track $index) {
                                             <a class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <img class="img-fluid ct_img_w_50"
@@ -214,7 +214,7 @@
                                                         {{item.isGroupChat ? item.name : item.participants[0].Author.fullName}}
                                                     </h3>
                                                     <p class="ct_fs_14 ct_purple_text">
-                                                        {{item.lastMessage}}
+                                                        {{item.lastMessage.content}}
                                                     </p>
                                                 </div>
                                                 <div class="ct_caht_msg_notify">
@@ -226,7 +226,35 @@
                                                     }
                                                 </div>
                                             </a>
-                                            }
+                                            } -->
+
+                                            <a class="d-flex align-items-center">
+                                                <div class="flex-shrink-0">
+                                                    <img class="img-fluid ct_img_w_50"
+                                                        [src]="newParticipant?.avatar_url ? newParticipant?.avatar_url : 'assets/img/np_pro.png'"
+                                                        alt="user img">
+                                                    <!-- @if(newParticipant.participants[0].Author.isOnline){
+                                                        <span class="active"></span>
+                                                        } -->
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h3 class="ct_fs_16 ct_fw_600">
+                                                        {{newParticipant?.fullName}}
+                                                    </h3>
+                                                    <p class="ct_fs_14 ct_purple_text">
+                                                        <!-- {{item.lastMessage.content}} -->
+                                                    </p>
+                                                </div>
+                                                <div class="ct_caht_msg_notify">
+                                                    <h4 class="ct_notify-time">
+                                                        {{ formatDate(newParticipant?.createdAt) }}
+                                                    </h4>
+                                                    <!-- @if(item.unreadCount > 0){
+                                                        <span>{{item.unreadCount}}</span>
+                                                        } -->
+                                                </div>
+                                            </a>
+
                                         </div>
                                     </div>
                                     <!-- chat-list -->
@@ -241,23 +269,23 @@
                             <div class="modal-content">
                                 <div class="msg-head">
                                     <h4 class="ct_fs_28 ct_fw_700 mb-1">
-                                        {{authorDetail?.fullName}}
+                                        {{newParticipant?.fullName}}
                                     </h4>
                                     @if(authorDetail?.isOnline){
                                     <p class="mb-0 ct_fw_600 ct_text_898989">
                                         online</p>
                                     }
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" #scrollMe [scrollTop]="scrollMe.scrollHeight">
                                     <div class="msg-body">
                                         <ul>
-                                            @for (item of allMessages.reverse(); track $index) {
+                                            @for (item of allMessages; track $index) {
                                             @if(item.senderAuthorId){
                                             <li>
-                                                <img [src]="item.isGroupChat ? '' : authorDetail.avatar_url ? authorDetail.avatar_url : 'assets/img/profile_logo.jpg'"
+                                                <img [src]="item.isGroupChat ? '' : authorDetail?.avatar_url ? authorDetail?.avatar_url : 'assets/img/profile_logo.jpg'"
                                                     alt="">
                                                 <div class="sender">
-                                                    @if(item.ChatMessageFiles.length > 0){
+                                                    @if(item.ChatMessageFiles?.length > 0){
                                                     <div class="d-flex gap-2">
                                                         @for (file of item.ChatMessageFiles; track $index) {
                                                         <img [src]="file.fileName" class="img-fluid">
@@ -275,7 +303,7 @@
                                             @if(item.senderUserId){
                                             <li>
                                                 <div class="repaly">
-                                                    @if(item.ChatMessageFiles.length > 0){
+                                                    @if(item.ChatMessageFiles?.length > 0){
                                                     <div class="d-flex gap-2">
                                                         @for (file of item.ChatMessageFiles; track $index) {
                                                         <img [src]="file.fileName" class="img-fluid">
@@ -303,7 +331,7 @@
                                             aria-hidden="true"></i>
                                     </div>
                                 </div>
-                                <div class="send-box px-0 ">
+                                <div class="send-box px-0">
                                     <form action="" class="position-relative m-0">
                                         <label for="upload_chat_img_2" class="ct_upload_paper_click_img">
                                             <input type="file" (change)="onFileChange($event)" multiple class="d-none"

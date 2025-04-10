@@ -59,24 +59,24 @@
                                                 @if(notifications.length > 0){
                                                 @for (item of notifications; track $index) {
                                                 <li>
-                                                      @if(item.byUser.avatar_url){
-                                                      <img [src]="item.byUser.avatar_url"
+                                                      @if(item.byUser?.avatar_url){
+                                                      <img [src]="item.byUser?.avatar_url"
                                                             class="ct_notify_user_img_icon" />
                                                       } @else {
                                                       <span
-                                                            class="ct_notify_user_icon">{{item.byUser.fullName.split('')[0]}}</span>
+                                                            class="ct_notify_user_icon">{{item.byUser?.fullName.split('')[0]}}</span>
                                                       }
                                                       <div class="d-flex justify-content-between align-items-center">
                                                             <div>
                                                                   <p class="mb-0">
-                                                                        {{item.content}}
+                                                                        {{item?.content}}
                                                                   </p>
-                                                                  <small class="ct_fw_500">{{item.createdAt | date:'mediumDate' }}
+                                                                  <small class="ct_fw_500">{{item?.createdAt | date:'mediumDate' }}
                                                                         at
-                                                                        {{item.createdAt | date:'shortTime' }}</small>
+                                                                        {{item?.createdAt | date:'shortTime' }}</small>
                                                             </div>
                                                             <span class="ct_fw_700 ct_cursor_pointer"
-                                                                  (click)="deleteNotification(item.id)">x</span>
+                                                                  (click)="deleteNotification(item?.id)">x</span>
                                                       </div>
                                                 </li>
                                                 }

@@ -11,25 +11,23 @@
                     <div class="chatlist ct_chatroom_chatlist">
                         <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-3">
                             <h4 class="ct_fs_16 mb-0 ct_fw_700 ct_nunito_font">Contacts</h4>
-                            <h4 class="ct_fs_16 mb-0 ct_fw_700 ct_nunito_font ct_text_op_07">34</h4>
+                            <h4 class="ct_fs_16 mb-0 ct_fw_700 ct_nunito_font ct_text_op_07">{{participantList?.length}}</h4>
 
                         </div>
                         <div class="modal-dialog-scrollable">
-                            <div class="modal-content ">
+                            <div class="modal-content">
                                 <div class="chat-header">
                                     <div class="msg-search">
                                         <input type="text" class="form-control" id="inlineFormInputGroup"
                                             placeholder="Search" aria-label="search">
                                     </div>
-
-
                                 </div>
 
                                 <div class="modal-body mt-4">
                                     <!-- chat-list -->
-                                    <div class="chat-lists">
+                                    <div class="chat-lists" *ngFor="let item of participantList">
                                         <div class="chat-list">
-                                            <a href="#" class="d-flex align-items-center">
+                                            <!-- <a class="d-flex align-items-center">
                                                 <div class="ct_chat_list_grid">
                                                     <div class="position-relative">
                                                         <img class="img-fluid ct_img_w_50"
@@ -45,179 +43,34 @@
                                                 </div>
                                                 <div class="ct_caht_msg_notify text-end">
                                                     <span class="ms-auto text-dark"
-                                                        style="background-color: #FFCC91;">1</span>
+                                                        style="background-color: #FFCC91;">1 unreadCount</span>
                                                     <h4 class="ct_notify-time mt-3">12:55 am</h4>
                                                 </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
+                                            </a> -->
+                                            <a class="d-flex align-items-center"
+                                                (click)="getAllmessages(item.participants[0]?.chatId, item.participants[0])">
                                                 <div class="position-relative">
                                                     <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
+                                                        [src]="item.participants[0]?.User?.avatar_url || 'assets/img/girl_1.png'"
+                                                        alt="user img">
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
-                                                    <h3>Ryhan</h3>
+                                                    <h3>{{ item.participants[0]?.User?.fullName || 'Unknown User' }}
+                                                    </h3>
                                                     <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
+                                                        {{ item.lastMessage?.content || 'No messages yet' }}
+                                                    </p>
                                                 </div>
+                                                @if(item.unreadCount > 0){
+                                                <div class="ct_caht_msg_notify text-end">
+                                                    <span class="ms-auto text-dark"
+                                                        style="background-color: #FFCC91;">{{item.unreadCount}}</span>
+                                                    <h4 class="ct_notify-time mt-3">{{item.lastMessage?.createdAt |
+                                                        date:'HH:mm'}}</h4>
+                                                </div>
+                                                }
                                             </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Malek Hasan</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Sadik Hasan</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Bulu </h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Maria SK</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Dipa Hasan</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Jhon Hasan</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Tumpa Moni</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Payel Akter</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Baby Akter</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Zuwel Rana</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Habib </h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Jalal Ahmed</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Hasan Ali</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="d-flex align-items-center">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        src="assets/img/girl_1.png" alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>Mehedi Hasan</h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        Devon Lane sent</p>
-                                                </div>
-                                            </a>
-
-
                                         </div>
-
                                     </div>
                                     <!-- chat-list -->
                                 </div>
@@ -236,31 +89,35 @@
                                     <div
                                         class="msg-head d-flex align-items-center justify-content-between gap-3 flex-wrap">
                                         <div class="ct_grid_56_auto">
-                                            <img src="assets/img/user2.jpg" alt="">
+                                            @if(allMessages.length > 0){
+                                            <img [src]="userDet?.avatar_url ? userDet?.avatar_url : 'assets/img/np_pro.png'"
+                                                alt="">
+                                            }
                                             <div>
-                                                <h4 class="ct_fs_14 ct_fw_600 ct_nunito_font mb-0">Jane Doe
+                                                <h4 class="ct_fs_14 ct_fw_600 ct_nunito_font mb-0">{{userDet?.fullName}}
                                                 </h4>
-                                                <p class="mb-0"> <small class="ct_dot_online"></small><span
-                                                        class="ct_online_text_clr">Online</span>
-                                                    <span class="ct_text_op_07">12:55
+                                                <p class="mb-0">
+                                                    <!-- <small class="ct_dot_online"></small> -->
+                                                    <!-- <span class="ct_online_text_clr">Online</span> -->
+                                                    <!-- <span class="ct_text_op_07">12:55
                                                         am
-                                                    </span>
+                                                    </span> -->
                                                 </p>
                                             </div>
                                         </div>
                                         <div>
-                                            <a href="#">View Profile</a>
-                                            <p class="mb-0 mt-2"><svg width="19" height="18"
-                                                    viewBox="0 0 19 18" fill="none"
+                                            <!-- <a href="#">View Profile</a>
+                                            <p class="mb-0 mt-2">
+                                                <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                                         d="M12.6044 15.7543H6.53751C4.30898 15.7543 2.59933 14.9494 3.08495 11.7097L3.6504 7.31917C3.94975 5.70265 4.98086 5.08398 5.88558 5.08398H13.283C14.201 5.08398 15.1722 5.74922 15.5181 7.31917L16.0836 11.7097C16.496 14.5835 14.833 15.7543 12.6044 15.7543Z"
-                                                        stroke="#53545C" stroke-width="1.30818"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                        stroke="#53545C" stroke-width="1.30818" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
                                                     <path
                                                         d="M12.7052 4.92411C12.7052 3.18999 11.2994 1.78421 9.56531 1.78421V1.78421C8.73026 1.78067 7.92819 2.10992 7.33646 2.69915C6.74474 3.28838 6.4121 4.08904 6.41211 4.92411H6.41211"
-                                                        stroke="#53545C" stroke-width="1.30818"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                        stroke="#53545C" stroke-width="1.30818" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
                                                     <path d="M11.7203 8.19687H11.6871" stroke="#53545C"
                                                         stroke-width="1.30818" stroke-linecap="round"
                                                         stroke-linejoin="round" />
@@ -269,173 +126,85 @@
                                                         stroke-linejoin="round" />
                                                 </svg>
                                                 <span>0</span> Orders
-                                            </p>
+                                            </p> -->
                                         </div>
                                     </div>
-                                    <div class="modal-body">
+                                    <div class="modal-body" #scrollMe [scrollTop]="scrollMe.scrollHeight">
                                         <div class="msg-body">
                                             <ul>
+                                                @for (item of allMessages; track $index) {
 
-                                                <li>
-                                                    <img src="assets/img/user2.jpg" alt="">
-                                                    <div class="sender">
-                                                        <h5
-                                                            class="ct_fs_16 ct_fw_700 mb-2 ct_dark_blue_text ">
-                                                            Jasmin Lowery</h5>
-                                                        <p class="ct_fw_600 mb-2"> Hey, Are
-                                                            you
-                                                            there? </p>
-                                                        <span class="time ms-auto d-block text-end">10:06
-                                                            am</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="sender">
-                                                        <h5
-                                                            class="ct_fs_16 ct_fw_700 mb-2 ct_dark_blue_text ">
-                                                            Jasmin Lowery</h5>
-                                                        <p class="ct_fw_600 mb-2"> Hey, Are
-                                                            you
-                                                            there? </p>
-                                                        <span class="time ms-auto d-block text-end">10:06
-                                                            am</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <img src="assets/img/user2.jpg" alt="">
-                                                    <div class="sender">
-                                                        <h5
-                                                            class="ct_fs_16 ct_fw_700 mb-2 ct_dark_blue_text ">
-                                                            Jasmin Lowery</h5>
-                                                        <p class="ct_fw_600 mb-2"> Hey, Are
-                                                            you
-                                                            there? </p>
-                                                        <span class="time ms-auto d-block text-end">10:06
-                                                            am</span>
-                                                    </div>
-                                                </li>
+                                                @if(item.senderAuthorId){
                                                 <li>
                                                     <div class="repaly">
-                                                        <p>The world-building is insane. The
-                                                            highstorms, the spren, really
-                                                            went all out.😊 </p>
-                                                        <span class="time text-white">10:06
-                                                            am</span>
-                                                    </div>
-                                                    <img src="assets/img/user2.jpg" alt="">
-                                                </li>
-
-                                                <li>
-                                                    <img src="assets/img/user2.jpg" alt="">
-                                                    <div class="sender">
-                                                        <h5
-                                                            class="ct_fs_16 ct_fw_700 mb-2 ct_dark_blue_text ">
-                                                            Jasmin Lowery</h5>
-                                                        <div class="ct_send_audio_file">
-                                                            <div class="ct_audio_icon_12">
-                                                                <i class="fa-solid fa-play"></i>
-                                                            </div>
-                                                            <div class="ct_audio_track">
-                                                                <svg width="197" height="22"
-                                                                    viewBox="0 0 197 22" fill="none"
-                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                    <rect y="10" width="4" height="12"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="6" y="2" width="4" height="20"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="12" width="4" height="22"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="18" y="3" width="4" height="19"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="24" y="11" width="4"
-                                                                        height="11" rx="2" fill="#7A7BED" />
-                                                                    <rect x="30" y="15" width="4" height="7"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="36" y="12" width="4"
-                                                                        height="10" rx="2" fill="#7A7BED" />
-                                                                    <rect x="42" y="9" width="4" height="13"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="48" y="6" width="4" height="16"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="54" y="2" width="4" height="20"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="60" y="9" width="4" height="13"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="66" width="4" height="22"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="72" y="3" width="4" height="19"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="78" y="9" width="4" height="13"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="84" width="4" height="22"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="90" y="9" width="4" height="13"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="96" y="10" width="4"
-                                                                        height="12" rx="2" fill="#7A7BED" />
-                                                                    <rect x="102" y="4" width="4"
-                                                                        height="18" rx="2" fill="#7A7BED" />
-                                                                    <rect x="108" y="6" width="4"
-                                                                        height="16" rx="2" fill="#7A7BED" />
-                                                                    <rect x="114" y="9" width="4"
-                                                                        height="13" rx="2" fill="#7A7BED" />
-                                                                    <rect x="120" y="11" width="4"
-                                                                        height="11" rx="2" fill="#7A7BED" />
-                                                                    <rect x="127" y="10" width="4"
-                                                                        height="12" rx="2" fill="#7A7BED" />
-                                                                    <rect x="133" y="2" width="4"
-                                                                        height="20" rx="2" fill="#7A7BED" />
-                                                                    <rect x="139" width="4" height="22"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="145" y="3" width="4"
-                                                                        height="19" rx="2" fill="#7A7BED" />
-                                                                    <rect x="151" y="11" width="4"
-                                                                        height="11" rx="2" fill="#7A7BED" />
-                                                                    <rect x="157" y="15" width="4"
-                                                                        height="7" rx="2" fill="#7A7BED" />
-                                                                    <rect x="163" y="12" width="4"
-                                                                        height="10" rx="2" fill="#7A7BED" />
-                                                                    <rect x="169" y="6" width="4"
-                                                                        height="16" rx="2" fill="#7A7BED" />
-                                                                    <rect x="175" y="2" width="4"
-                                                                        height="20" rx="2" fill="#7A7BED" />
-                                                                    <rect x="181" y="9" width="4"
-                                                                        height="13" rx="2" fill="#7A7BED" />
-                                                                    <rect x="187" width="4" height="22"
-                                                                        rx="2" fill="#7A7BED" />
-                                                                    <rect x="193" y="10" width="4"
-                                                                        height="12" rx="2" fill="#7A7BED" />
-                                                                </svg>
-
-                                                            </div>
-
+                                                        @if(item.ChatMessageFiles?.length > 0){
+                                                        <div class="d-flex gap-2">
+                                                            @for (file of item.ChatMessageFiles; track $index) {
+                                                            <img [src]="file.fileName" class="img-fluid">
+                                                            }
                                                         </div>
-                                                        <span class="time ms-auto d-block text-end">10:06
-                                                            am</span>
+                                                        }
+                                                        <p>{{item.content}}
+                                                        </p>
+                                                        <span class="time text-white">{{formatDate(item.createdAt)}}
+                                                        </span>
+                                                    </div>
+                                                    <img [src]="item.avatar_url ? item.avatar_url : 'assets/img/profile_logo.jpg'"
+                                                        alt="">
+                                                </li>
+                                                }
+                                                @if(item.senderUserId){
+                                                <li>
+                                                    <img [src]="item.isGroupChat ? '' : item.avatar_url ? item.avatar_url : 'assets/img/profile_logo.jpg'"
+                                                        alt="">
+                                                    <div class="sender">
+                                                        @if(item.ChatMessageFiles?.length > 0){
+                                                        <div class="d-flex gap-2">
+                                                            @for (file of item.ChatMessageFiles; track $index) {
+                                                            <img [src]="file.fileName" class="img-fluid">
+                                                            }
+                                                        </div>
+                                                        }
+                                                        <p class="ct_fw_600 mb-2">
+                                                            {{item.content}}
+                                                        </p>
+                                                        <span
+                                                            class="time ms-auto d-block text-end">{{formatDate(item.createdAt)}}</span>
                                                     </div>
                                                 </li>
-
-
-
+                                                }
+                                                }
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="send-box ">
-                                        <form action="" class="position-relative">
-                                            <label for="upload_chat_img_2"
-                                                class="ct_upload_paper_click_img">
-                                                <input type="text" class="d-none" id="upload_chat_img_2">
+
+                                    <div *ngIf="previewFiles.length > 0" class="preview-container">
+                                        <div *ngFor="let file of previewFiles" class="preview">
+                                            <img *ngIf="file.type.startsWith('image/')" [src]="file.url"
+                                                alt="File preview" />
+                                            <i (click)="removeFile(file)" class="fa fa-minus-circle remove"
+                                                aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="send-box px-0">
+                                        <form action="" class="position-relative m-0">
+                                            <label for="upload_chat_img_2" class="ct_upload_paper_click_img">
+                                                <input type="file" (change)="onFileChange($event)" multiple
+                                                    class="d-none" id="upload_chat_img_2">
                                                 <div>
                                                     <i class="fa-solid fa-paperclip"></i>
                                                 </div>
                                             </label>
-                                            <textarea type="text" class="form-control h-auto"
-                                                aria-label="message…"
-                                                placeholder="Write message…"></textarea>
+                                            <textarea type="text" class="form-control" aria-label="message…"
+                                                placeholder="Write message…" [(ngModel)]="newMessage"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keydown)="onKeyDown($event)"></textarea>
 
                                             <div class="ct_right_side_send_chat_btns">
-                                                <i class="fa-solid fa-microphone"></i>
-                                                <i class="fa-regular fa-paper-plane"></i>
+                                                <!-- <i class="fa-solid fa-microphone"></i> -->
+                                                <i class="fa fa-paper-plane ct_cursor_pointer"
+                                                    (click)="sendMessage()"></i>
                                             </div>
                                         </form>
 
@@ -447,36 +216,32 @@
                                 <div class="ct_empty_chat_box_content d-none">
                                     <svg width="123" height="123" viewBox="0 0 123 123" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="0.956267" y="1.3696" width="120.87" height="120.87"
-                                            rx="60.4348" fill="#F4F5FA" />
-                                        <rect x="0.956267" y="1.3696" width="120.87" height="120.87"
-                                            rx="60.4348" stroke="#E1E2E9" stroke-width="0.869565" />
+                                        <rect x="0.956267" y="1.3696" width="120.87" height="120.87" rx="60.4348"
+                                            fill="#F4F5FA" />
+                                        <rect x="0.956267" y="1.3696" width="120.87" height="120.87" rx="60.4348"
+                                            stroke="#E1E2E9" stroke-width="0.869565" />
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M76.764 77.1737C70.1202 83.8182 60.2823 85.2538 52.2315 81.5305C51.043 81.052 50.0686 80.6653 49.1423 80.6653C46.5621 80.6806 43.3505 83.1824 41.6814 81.5152C40.0122 79.8459 42.516 76.6318 42.516 74.036C42.516 73.1096 42.1446 72.1526 41.6661 70.9618C37.9411 62.9123 39.3787 53.0711 46.0225 46.4288C54.5036 37.9445 68.2828 37.9445 76.764 46.4266C85.2605 54.924 85.2452 68.6916 76.764 77.1737Z"
                                             fill="#BEC0CA" stroke="#8B8D97" stroke-width="1.30435"
                                             stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M69.9541 62.7022H69.9737" stroke="#8B8D97"
-                                            stroke-width="1.73913" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path d="M61.2412 62.7022H61.2608" stroke="#8B8D97"
-                                            stroke-width="1.73913" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path d="M52.5244 62.7022H52.544" stroke="#8B8D97"
-                                            stroke-width="1.73913" stroke-linecap="round"
-                                            stroke-linejoin="round" />
+                                        <path d="M69.9541 62.7022H69.9737" stroke="#8B8D97" stroke-width="1.73913"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M61.2412 62.7022H61.2608" stroke="#8B8D97" stroke-width="1.73913"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M52.5244 62.7022H52.544" stroke="#8B8D97" stroke-width="1.73913"
+                                            stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                     <div>
                                         <h4 class="ct_fs_20 ct_fw_600">Messages</h4>
                                         <p>Click on a contact to view messages.</p>
                                         <div class="">
-                                            <a href="#"
-                                                class="ct_purple_btn d-flex align-items-center gap-2"><svg
+                                            <a href="#" class="ct_purple_btn d-flex align-items-center gap-2"><svg
                                                     width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                                         d="M15.8447 16.039C13.1871 18.6968 9.25198 19.271 6.03167 17.7817C5.55627 17.5903 5.16651 17.4356 4.79598 17.4356C3.7639 17.4417 2.47927 18.4425 1.81162 17.7756C1.14396 17.1079 2.14545 15.8222 2.14545 14.7839C2.14545 14.4133 1.99688 14.0305 1.8055 13.5542C0.315505 10.3344 0.890529 6.39795 3.54805 3.74101C6.94052 0.347298 12.4522 0.347298 15.8447 3.74014C19.2432 7.1391 19.2371 12.6461 15.8447 16.039Z"
-                                                        stroke="white" stroke-width="1.30435"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                        stroke="white" stroke-width="1.30435" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
                                                     <path d="M13.1203 10.2505H13.1281" stroke="white"
                                                         stroke-width="1.73913" stroke-linecap="round"
                                                         stroke-linejoin="round" />
@@ -503,74 +268,74 @@
     </div>
 </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="view_user" tabindex="-1" aria-labelledby="view_userLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content ">
-                <div class="modal-header border-0 ">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body pt-0">
-                    <div class="ct_user_detail">
-                        <h4 class="ct_fs_24 ct_fw_600 text-center ">User Details</h4>
-                        <div class="ct_user_img ct_mt_40">
-                            <img src="assets/img/avatar.png" alt="">
-                        </div>
-                        <div class="">
-                            <table class="table ct_user_border_0">
-                                <tr>
-                                    <td class="ct_fw_600">Full Name</td>
-                                    <td>John doe</td>
-                                </tr>
-                                <tr>
-                                    <td class="ct_fw_600">Email</td>
-                                    <td>Johndoegamil.com</td>
-                                </tr>
-                                <tr>
-                                    <td class="ct_fw_600">Joined Date</td>
-                                    <td>07-09-2024</td>
-                                </tr>
-                                <tr>
-                                    <td class="ct_fw_600">Phone</td>
-                                    <td>+1 93072059670</td>
-                                </tr>
-                            </table>
-                        </div>
+<!-- Modal -->
+<div class="modal fade" id="view_user" tabindex="-1" aria-labelledby="view_userLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+            <div class="modal-header border-0 ">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0">
+                <div class="ct_user_detail">
+                    <h4 class="ct_fs_24 ct_fw_600 text-center ">User Details</h4>
+                    <div class="ct_user_img ct_mt_40">
+                        <img src="assets/img/avatar.png" alt="">
+                    </div>
+                    <div class="">
+                        <table class="table ct_user_border_0">
+                            <tr>
+                                <td class="ct_fw_600">Full Name</td>
+                                <td>John doe</td>
+                            </tr>
+                            <tr>
+                                <td class="ct_fw_600">Email</td>
+                                <td>Johndoegamil.com</td>
+                            </tr>
+                            <tr>
+                                <td class="ct_fw_600">Joined Date</td>
+                                <td>07-09-2024</td>
+                            </tr>
+                            <tr>
+                                <td class="ct_fw_600">Phone</td>
+                                <td>+1 93072059670</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
-
             </div>
+
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="ct_logout_modal_post" tabindex="-1" aria-labelledby="ct_delete_postLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header py-0 border-0">
-                    <button type="button" class="btn-close ct_close" data-bs-dismiss="modal" aria-label="Close"><i
-                            class="fa-solid fa-xmark"></i></button>
-                </div>
-                <div class="modal-body">
-                    <div class="ct_delete_post_modal">
-                        <figure>
-                            <div class="ct_delete_post_icon">
-                                <i class="fa-solid fa-power-off"></i>
-                            </div>
-                            <figcaption class="mt-4">
-                                <h4 class="ct_fs_18 ct_fw_600">Log Out</h4>
-                                <p class="mb-0">Are you sure you want to logout? once you logout you need to login
-                                    again.</p>
-                            </figcaption>
-                        </figure>
-                        <div class="modal-footer justify-content-center border-0 ct_modal_footer">
-                            <button type="button" class="ct_purple_btn ct_outline_blue w-100 ct_fw_600"
-                                data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="ct_purple_btn ct_btn_red w-100 ct_fw_600">Log Out</button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="ct_logout_modal_post" tabindex="-1" aria-labelledby="ct_delete_postLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header py-0 border-0">
+                <button type="button" class="btn-close ct_close" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="ct_delete_post_modal">
+                    <figure>
+                        <div class="ct_delete_post_icon">
+                            <i class="fa-solid fa-power-off"></i>
                         </div>
+                        <figcaption class="mt-4">
+                            <h4 class="ct_fs_18 ct_fw_600">Log Out</h4>
+                            <p class="mb-0">Are you sure you want to logout? once you logout you need to login
+                                again.</p>
+                        </figcaption>
+                    </figure>
+                    <div class="modal-footer justify-content-center border-0 ct_modal_footer">
+                        <button type="button" class="ct_purple_btn ct_outline_blue w-100 ct_fw_600"
+                            data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="ct_purple_btn ct_btn_red w-100 ct_fw_600">Log Out</button>
                     </div>
                 </div>
-
             </div>
+
         </div>
     </div>
+</div>
