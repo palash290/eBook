@@ -18,6 +18,7 @@ export interface Book {
       audioUrl: string;
       createdAt: string;
       updatedAt: string;
+      totalViews: number;
       isFavorite: boolean;
       author?: Author;
       bookMedia: BookMedia[];

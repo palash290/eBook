@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { LoaderComponent } from "../loader/loader.component";
 import { Location } from '@angular/common';
+import { SharedService } from '../../../../services/shared.service';
 
 @Component({
   selector: 'app-pdf',
@@ -18,14 +19,23 @@ export class PdfComponent {
 
   pdfUrl!: SafeResourceUrl;
   title: string = '';
-  constructor(private route: ActivatedRoute, public location: Location) {
+  bookId: any;
+  constructor(private route: ActivatedRoute, public location: Location, private service: SharedService) {
     this.route.queryParams.subscribe(params => {
       this.pdfUrl = params['url'];
+      this.bookId = params['id'];
       this.title = params['title'];
     })
   }
 
   ngOnInit(): void {
+    this.service.postAPI('users/recordBookRead', { bookId: Number(this.bookId) }).subscribe({
+      next: (resp: any) => {
+      },
+      error: error => {
+        console.log(error.message);
+      }
+    });
   }
 
   page: number = 1;

@@ -1,13 +1,14 @@
-importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js');
 
 firebase.initializeApp({
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyDve8qhgMDHLSU5EexRltguFzyX9UVNmek",
+      authDomain: "ebookink-57739.firebaseapp.com",
+      projectId: "ebookink-57739",
+      storageBucket: "ebookink-57739.firebasestorage.app",
+      messagingSenderId: "429289989858",
+      appId: "1:429289989858:web:aad201238091a5e8c2a0bb",
+      measurementId: "G-NFNPYP07L2",
 });
 
 const messaging = firebase.messaging();

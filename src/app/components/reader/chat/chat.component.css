@@ -34,3 +34,32 @@
 .ct_cursor_pointer:hover {
       color: #1511e9;
 }
+
+.activeChat {
+      background: #afafeb;
+}
+
+.chat-list p {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-transform: capitalize;
+      margin-bottom: 0;
+      white-space: nowrap;
+      width: 63px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+}
+
+.chat-list h3 {
+      white-space: nowrap;
+      width: 63px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+}
+
+.ct_notify-time {
+      font-size: 10px;
+      color: #898787;
+      text-align: end;
+}

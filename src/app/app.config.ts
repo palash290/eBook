@@ -10,7 +10,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideMessaging, getMessaging } from '@angular/fire/messaging';
-
+import { provideFirestore, getFirestore } from '@angular/fire/firestore'
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -19,6 +19,10 @@ const scrollConfig: InMemoryScrollingOptions = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideMessaging(() => getMessaging()),
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
     provideRouter(routes, withInMemoryScrolling(scrollConfig)),
     provideAnimations(),
     provideHttpClient(
@@ -37,8 +41,6 @@ export const appConfig: ApplicationConfig = {
         disableImageLazyLoadWarning: true
       }
     },
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth()),
-    provideMessaging(() => getMessaging())
+
   ]
 };

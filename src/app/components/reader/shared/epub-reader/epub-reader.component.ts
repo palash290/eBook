@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import ePub from 'epubjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Location } from '@angular/common';
+import { SharedService } from '../../../../services/shared.service';
 
 @Component({
   selector: 'app-epub-reader',
@@ -19,14 +20,26 @@ export class EpubReaderComponent {
 
   pdfUrl: any;
   title: string = '';
-  constructor(private route: ActivatedRoute, private toastr: NzMessageService, public location: Location) {
+  bookId: any;
+  constructor(private route: ActivatedRoute, private toastr: NzMessageService, public location: Location, private service: SharedService) {
     this.route.queryParams.subscribe(params => {
       this.pdfUrl = params['url'];
+      this.bookId = params['id'];
       this.title = params['title'];
     })
   }
   ngAfterViewInit() {
     this.loadEpub();
+  }
+
+  ngOnInit(): void {
+    this.service.postAPI('users/recordBookRead', { bookId: Number(this.bookId) }).subscribe({
+      next: (resp: any) => {
+      },
+      error: error => {
+        console.log(error.message);
+      }
+    });
   }
 
   loadEpub() {

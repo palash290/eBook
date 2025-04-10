@@ -52,11 +52,11 @@ export class WishlistComponent {
     });
   }
 
-  read(url: string, title: string) {
-    if (url.endsWith('.epub')) {
-      this.router.navigate(['/epub-reader'], { queryParams: { url: url, title: title } });
+  read(bookData: any) {
+    if (bookData.pdfUrl.endsWith('.epub')) {
+      this.router.navigate(['/epub-reader'], { queryParams: { url: bookData.pdfUrl, id: bookData.id, title: bookData.title } });
     } else {
-      this.router.navigate(['/pdf'], { queryParams: { url: url, title: title } });
+      this.router.navigate(['/pdf'], { queryParams: { url: bookData.pdfUrl, id: bookData.id, title: bookData.title } });
     }
   }
 

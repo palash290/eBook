@@ -2144,7 +2144,7 @@ message-area
   outline: 0;
   height: 100%;
   overflow: hidden;
-  width: 380px;
+  width: 310px;
   float: left;
   padding: 15px;
 }
@@ -2464,7 +2464,7 @@ a.add img {
 .time {
   display: block;
   color: #000;
-  font-size: 12px;
+  font-size: 9px;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -2533,7 +2533,7 @@ a.add img {
   appearance: none;
   border-radius: 12px;
   padding-left: 35px;
-  height: 48px;
+  height: 38px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 

@@ -21,10 +21,7 @@ cr-icon-button #download {
   z-index: 7 !important;
 }
 
-.ant-select-focused:not(.ant-select-disabled).ant-select:not(
-    .ant-select-customize-input
-  )
-  .ant-select-selector {
+.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
   flex-wrap: nowrap;
   overflow: hidden;
 }
@@ -49,7 +46,13 @@ cr-icon-button #download {
   color: #fff;
   font-size: 16px;
 }
+
 .sender p,
 .repaly p {
   word-break: break-word;
+}
+
+.ant-image-preview-img-wrapper {
+  backdrop-filter: brightness(0.5);
+  padding: 3rem;
 }

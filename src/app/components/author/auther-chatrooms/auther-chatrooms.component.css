@@ -21,6 +21,18 @@
     border-radius: 10px;
 }
 
+.msg-body ul li img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.modal-dialog-scrollable .modal-body {
+    overflow-y: auto;
+    height: calc(100vh - 200px);
+}
+
 .preview-container {
     display: flex;
     /* height: 100px; */
@@ -33,4 +45,8 @@
 
 .ct_cursor_pointer:hover {
     color: #1511e9;
+}
+
+.et_textarea_hide_scroll::-webkit-scrollbar {
+    display: none;
 }

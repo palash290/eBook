@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { SharedService } from '../../../services/shared.service';
 import { ActivatedRoute } from '@angular/router';
 import { LoaderComponent } from "../shared/loader/loader.component";
+import { NzImageModule } from 'ng-zorro-antd/image';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, LoaderComponent],
+  imports: [CommonModule, FormsModule, LoaderComponent, NzImageModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
   providers: [DatePipe]
@@ -19,10 +20,12 @@ export class ChatComponent {
   newMessage: string = '';
   authorId: any;
   loading: boolean = false;
-  chatList: any[] = []
   allMessages: any[] = []
   authorDetail: any
   userInfo: any;
+  participantList: any[] = [];
+  chatList: any[] = [];
+  originalChatList: any[] = [];
   constructor(private socketService: SocketService, private apiService: SharedService, private route: ActivatedRoute, private datePipe: DatePipe) {
     this.route.queryParams.subscribe(params => {
       this.authorId = params['author'];
@@ -32,7 +35,20 @@ export class ChatComponent {
   ngOnInit() {
     this.socketService.connect();
     this.socketService.getMessage().subscribe((message) => {
-      this.messages.push(message);
+      const index = this.chatList.findIndex((chat) => chat.id === message.chatId);
+      if (index > -1) {
+        const lastChat = this.chatList.splice(index, 1);
+        this.chatList.unshift(lastChat[0])
+        if (lastChat[0]) {
+          lastChat[0].unreadCount += 1;
+          lastChat[0].lastMessage.content = message.content;
+        }
+      }
+
+      if (this.activeChatId === message.chatId) {
+        this.allMessages.push(message);
+      }
+      // this.activeChatId = message.chatId;
     });
     this.createChatRoom();
     this.apiService.profileData$.subscribe((data) => {
@@ -40,29 +56,28 @@ export class ChatComponent {
         this.userInfo = data;
       }
     });
-
-    this.socketService.getMessage().subscribe((chats) => {
-      this.chatList.push(chats);
-    });
   }
 
   newParticipant: any;
 
   createChatRoom() {
-    this.loading = true
-    this.apiService.postAPI(`chat/chatOnetoOne/${this.authorId}`, {}).subscribe({
-      next: (resp: any) => {
-        this.loading = false
-        //debugger
-        this.newParticipant = resp.payload.participants[0]
-        this.activeChatId = resp.payload.id
-        this.getAllmessages(resp.payload.id)
-        //this.getAllChatList()
-      },
-      error: error => {
-        this.loading = false
-      }
-    });
+    if (this.authorId) {
+      this.loading = true
+      this.apiService.postAPI(`chat/chatOnetoOne/${this.authorId}`, {}).subscribe({
+        next: (resp: any) => {
+          this.loading = false
+          this.authorDetail = resp?.payload?.participants?.[0] || resp?.data?.participants?.[0]
+          this.activeChatId = resp.payload?.id || resp.data?.id;
+          this.getAllChatList()
+          this.getAllmessages(this.activeChatId)
+        },
+        error: error => {
+          this.loading = false
+        }
+      });
+    } else {
+      this.getAllChatList()
+    }
   }
 
   activeChatId: any
@@ -71,12 +86,11 @@ export class ChatComponent {
     this.loading = true
     this.apiService.get(`chat/getAllChats`).subscribe({
       next: (resp: any) => {
-        //debugger
-
         this.loading = false
-        this.chatList = resp.data
-        this.activeChatId = this.chatList[0].id
-        this.getAllmessages(this.chatList[0].id)
+        this.originalChatList = resp.data
+        this.chatList = [...this.originalChatList]
+        this.activeChatId = this.allMessages[0]?.id
+        this.getAllmessages(this.allMessages[0]?.id)
       },
       error: error => {
         this.loading = false
@@ -88,6 +102,7 @@ export class ChatComponent {
     this.apiService.get(`chat/getAllMessages/${chatId}`).subscribe({
       next: (resp: any) => {
         this.allMessages = resp.messages.reverse()
+        this.activeChatId = chatId
         this.authorDetail = this.chatList.find((c: any) => c.id == chatId)?.participants[0].Author
       },
       error: error => {
@@ -97,7 +112,6 @@ export class ChatComponent {
   }
 
   sendMessage() {
-    //debugger
     if (this.files.length > 0) {
       let formData = new FormData()
       if (this.files && this.files.length > 0) {
@@ -134,13 +148,15 @@ export class ChatComponent {
       isUser: 1
     };
     this.socketService.sendMessage(msg).then(() => {
-      this.chatList.push(msg);
+      this.allMessages.push(msg);
       setTimeout(() => {
         this.getAllmessages(this.activeChatId);
       }, 100);
 
     })
       .catch((error) => { });
+
+
     this.newMessage = '';
     this.files = [],
       this.previewFiles = []
@@ -200,5 +216,15 @@ export class ChatComponent {
     }
   }
 
+  search(event: any) {
+    const searchValue = event.target.value.trim().toLowerCase();
 
+    if (searchValue) {
+      this.chatList = this.originalChatList.filter(list =>
+        list.participants[0].Author.fullName.toLowerCase().includes(searchValue)
+      );
+    } else {
+      this.chatList = [...this.originalChatList];
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ChatComponent } from '../chat/chat.component';
+import { ChatComponent } from "../chat/chat.component";
 
 @Component({
   selector: 'app-community',

@@ -192,18 +192,20 @@
                                 <div class="chat-header">
                                     <div class="msg-search">
                                         <input type="text" class="form-control" id="inlineFormInputGroup"
-                                            placeholder="Search" aria-label="search">
+                                            placeholder="Search" aria-label="search" (input)="search($event)">
                                     </div>
                                 </div>
                                 <div class="modal-body mt-4">
                                     <!-- chat-list -->
                                     <div class="chat-lists">
                                         <div class="chat-list">
-                                            <!-- @for (item of chatList; track $index) {
-                                            <a class="d-flex align-items-center">
-                                                <div class="flex-shrink-0">
+                                            @for (item of chatList; track $index) {
+                                            <a class="d-flex align-items-center"
+                                                [ngClass]="{ 'activeChat': item.id === activeChatId }"
+                                                (click)="getAllmessages(item.id)">
+                                                <div class="flex-shrink-0 position-relative">
                                                     <img class="img-fluid ct_img_w_50"
-                                                        [src]="item.isGroupChat ? '' : item.participants[0].Author.avatar_url"
+                                                        [src]="item.isGroupChat ? '' : item.participants[0].Author.avatar_url ? item.participants[0].Author.avatar_url : 'assets/img/profile_logo.jpg'"
                                                         alt="user img">
                                                     @if(item.participants[0].Author.isOnline){
                                                     <span class="active"></span>
@@ -214,7 +216,7 @@
                                                         {{item.isGroupChat ? item.name : item.participants[0].Author.fullName}}
                                                     </h3>
                                                     <p class="ct_fs_14 ct_purple_text">
-                                                        {{item.lastMessage.content}}
+                                                        {{ item.lastMessage?.content || 'No messages yet' }}
                                                     </p>
                                                 </div>
                                                 <div class="ct_caht_msg_notify">
@@ -226,34 +228,34 @@
                                                     }
                                                 </div>
                                             </a>
-                                            } -->
+                                            }
 
-                                            <a class="d-flex align-items-center">
+                                            <!-- <a class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <img class="img-fluid ct_img_w_50"
                                                         [src]="newParticipant?.avatar_url ? newParticipant?.avatar_url : 'assets/img/np_pro.png'"
                                                         alt="user img">
-                                                    <!-- @if(newParticipant.participants[0].Author.isOnline){
+                                                   @if(newParticipant.participants[0].Author.isOnline){
                                                         <span class="active"></span>
-                                                        } -->
+                                                        } 
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
                                                     <h3 class="ct_fs_16 ct_fw_600">
                                                         {{newParticipant?.fullName}}
                                                     </h3>
                                                     <p class="ct_fs_14 ct_purple_text">
-                                                        <!-- {{item.lastMessage.content}} -->
+                                                     {{item.lastMessage.content}} 
                                                     </p>
                                                 </div>
                                                 <div class="ct_caht_msg_notify">
                                                     <h4 class="ct_notify-time">
                                                         {{ formatDate(newParticipant?.createdAt) }}
                                                     </h4>
-                                                    <!-- @if(item.unreadCount > 0){
+                                                   @if(item.unreadCount > 0){
                                                         <span>{{item.unreadCount}}</span>
-                                                        } -->
+                                                        } 
                                                 </div>
-                                            </a>
+                                            </a> -->
 
                                         </div>
                                     </div>
@@ -265,31 +267,35 @@
                     <!-- chatlist -->
                     <!-- chatbox -->
                     <div class="chatbox">
+                        @if(allMessages.length > 0 && activeChatId){
                         <div class="modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="msg-head">
-                                    <h4 class="ct_fs_28 ct_fw_700 mb-1">
-                                        {{newParticipant?.fullName}}
+                                    <h4 class="ct_fs_24 ct_fw_700 mb-3 text-capitalize">
+                                        {{authorDetail?.fullName}}
                                     </h4>
                                     @if(authorDetail?.isOnline){
                                     <p class="mb-0 ct_fw_600 ct_text_898989">
                                         online</p>
                                     }
                                 </div>
-                                <div class="modal-body" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                                <!-- #scrollMe [scrollTop]="scrollMe.scrollHeight -->
+                                <div class="modal-body">
                                     <div class="msg-body">
                                         <ul>
                                             @for (item of allMessages; track $index) {
                                             @if(item.senderAuthorId){
-                                            <li>
+                                            <li style="max-width: fit-content;">
                                                 <img [src]="item.isGroupChat ? '' : authorDetail?.avatar_url ? authorDetail?.avatar_url : 'assets/img/profile_logo.jpg'"
                                                     alt="">
                                                 <div class="sender">
                                                     @if(item.ChatMessageFiles?.length > 0){
-                                                    <div class="d-flex gap-2">
-                                                        @for (file of item.ChatMessageFiles; track $index) {
-                                                        <img [src]="file.fileName" class="img-fluid">
-                                                        }
+                                                    <div class="d-flex gap-2 flex-wrap">
+                                                        <nz-image-group>
+                                                            @for (file of item.ChatMessageFiles; track $index) {
+                                                            <img nz-image [nzSrc]="file.fileName" class="img-fluid m-1">
+                                                            }
+                                                        </nz-image-group>
                                                     </div>
                                                     }
                                                     <p class="ct_fw_600 mb-2">
@@ -301,13 +307,15 @@
                                             </li>
                                             }
                                             @if(item.senderUserId){
-                                            <li>
+                                            <li style="width: fit-content;margin-left: auto;">
                                                 <div class="repaly">
                                                     @if(item.ChatMessageFiles?.length > 0){
-                                                    <div class="d-flex gap-2">
-                                                        @for (file of item.ChatMessageFiles; track $index) {
-                                                        <img [src]="file.fileName" class="img-fluid">
-                                                        }
+                                                    <div class="d-flex gap-2 flex-wrap">
+                                                        <nz-image-group>
+                                                            @for (file of item.ChatMessageFiles; track $index) {
+                                                            <img nz-image [nzSrc]="file.fileName" class="img-fluid m-1">
+                                                            }
+                                                        </nz-image-group>
                                                     </div>
                                                     }
                                                     <p>{{item.content}}
@@ -322,20 +330,21 @@
                                             }
                                         </ul>
                                     </div>
-                                </div>
-                                <div *ngIf="previewFiles.length > 0" class="preview-container">
-                                    <div *ngFor="let file of previewFiles" class="preview">
-                                        <img *ngIf="file.type.startsWith('image/')" [src]="file.url"
-                                            alt="File preview" />
-                                        <i (click)="removeFile(file)" class="fa fa-minus-circle remove"
-                                            aria-hidden="true"></i>
+                                    <div *ngIf="previewFiles.length > 0" class="preview-container">
+                                        <div *ngFor="let file of previewFiles" class="preview">
+                                            <img *ngIf="file.type.startsWith('image/')" [src]="file.url"
+                                                alt="File preview" />
+                                            <i (click)="removeFile(file)" class="fa fa-minus-circle remove"
+                                                aria-hidden="true"></i>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="send-box px-0">
                                     <form action="" class="position-relative m-0">
                                         <label for="upload_chat_img_2" class="ct_upload_paper_click_img">
-                                            <input type="file" (change)="onFileChange($event)" multiple class="d-none"
-                                                id="upload_chat_img_2">
+                                            <input type="file" accept="image/*" (change)="onFileChange($event)" multiple
+                                                class="d-none" id="upload_chat_img_2">
                                             <div>
                                                 <i class="fa-solid fa-paperclip"></i>
                                             </div>
@@ -353,6 +362,52 @@
                                 </div>
                             </div>
                         </div>
+                        } @else {
+                        <!-- when chat is empty then show below content -->
+                        <div class="ct_empty_chat_box_content">
+                            <svg width="123" height="123" viewBox="0 0 123 123" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect x="0.956267" y="1.3696" width="120.87" height="120.87" rx="60.4348"
+                                    fill="#F4F5FA" />
+                                <rect x="0.956267" y="1.3696" width="120.87" height="120.87" rx="60.4348"
+                                    stroke="#E1E2E9" stroke-width="0.869565" />
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M76.764 77.1737C70.1202 83.8182 60.2823 85.2538 52.2315 81.5305C51.043 81.052 50.0686 80.6653 49.1423 80.6653C46.5621 80.6806 43.3505 83.1824 41.6814 81.5152C40.0122 79.8459 42.516 76.6318 42.516 74.036C42.516 73.1096 42.1446 72.1526 41.6661 70.9618C37.9411 62.9123 39.3787 53.0711 46.0225 46.4288C54.5036 37.9445 68.2828 37.9445 76.764 46.4266C85.2605 54.924 85.2452 68.6916 76.764 77.1737Z"
+                                    fill="#BEC0CA" stroke="#8B8D97" stroke-width="1.30435" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M69.9541 62.7022H69.9737" stroke="#8B8D97" stroke-width="1.73913"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M61.2412 62.7022H61.2608" stroke="#8B8D97" stroke-width="1.73913"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M52.5244 62.7022H52.544" stroke="#8B8D97" stroke-width="1.73913"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div>
+                                <h4 class="ct_fs_20 ct_fw_600">Messages</h4>
+                                <p>Click on a contact to view messages.</p>
+                                <!-- <div class="">
+                                    <a href="#" class="ct_purple_btn d-flex align-items-center gap-2"><svg
+                                            width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M15.8447 16.039C13.1871 18.6968 9.25198 19.271 6.03167 17.7817C5.55627 17.5903 5.16651 17.4356 4.79598 17.4356C3.7639 17.4417 2.47927 18.4425 1.81162 17.7756C1.14396 17.1079 2.14545 15.8222 2.14545 14.7839C2.14545 14.4133 1.99688 14.0305 1.8055 13.5542C0.315505 10.3344 0.890529 6.39795 3.54805 3.74101C6.94052 0.347298 12.4522 0.347298 15.8447 3.74014C19.2432 7.1391 19.2371 12.6461 15.8447 16.039Z"
+                                                stroke="white" stroke-width="1.30435" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M13.1203 10.2505H13.1281" stroke="white"
+                                                stroke-width="1.73913" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M9.63595 10.2505H9.64377" stroke="white"
+                                                stroke-width="1.73913" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M6.14962 10.2505H6.15745" stroke="white"
+                                                stroke-width="1.73913" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                        <span> New Message</span></a>
+                                </div> -->
+                            </div>
+                        </div>
+                        }
                     </div>
                 </div>
                 <!-- chatbox -->

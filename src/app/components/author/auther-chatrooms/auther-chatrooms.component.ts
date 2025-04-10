@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { SocketService } from '../../../services/socket.service';
 import { SharedService } from '../../../services/shared.service';
-import { ActivatedRoute } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NzImageModule } from 'ng-zorro-antd/image';
 
 @Component({
   selector: 'app-auther-chatrooms',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NzImageModule],
   templateUrl: './auther-chatrooms.component.html',
   styleUrl: './auther-chatrooms.component.css',
   providers: [DatePipe]
@@ -18,7 +18,8 @@ export class AutherChatroomsComponent {
   newMessage: string = '';
   authorDetail: any
   loading: boolean = false;
-  participantList: any;
+  participantList: any[] = [];
+  originalChatList: any[] = [];
   allMessages: any[] = [];
   userDetail: any;
   userInfo: any;
@@ -30,7 +31,7 @@ export class AutherChatroomsComponent {
   ngOnInit() {
     this.socketService.connect();
     this.socketService.getMessage().subscribe((message) => {
-      this.messages.push(message);
+      this.allMessages.push(message);
     });
     this.getAllChatList();
 
@@ -38,9 +39,6 @@ export class AutherChatroomsComponent {
       if (data) {
         this.userInfo = data;
       }
-    });
-    this.socketService.getMessage().subscribe((chats) => {
-      this.chatList.push(chats);
     });
   }
 
@@ -50,10 +48,9 @@ export class AutherChatroomsComponent {
     this.loading = true
     this.apiService.get(`author/getAllChats`).subscribe({
       next: (resp: any) => {
-        //debugger
-
         this.loading = false
-        this.participantList = resp.data;
+        this.originalChatList = resp.data
+        this.participantList = [...this.originalChatList];
         //this.activeChatId = this.chatList[0].id
         //this.getAllmessages(this.chatList[0].id)
       },
@@ -70,7 +67,7 @@ export class AutherChatroomsComponent {
       next: (resp: any) => {
         this.allMessages = resp.messages.reverse();
         this.activeChatId = userId;
-        this.userDet = userDetail.User;
+        this.userDet = userDetail.User ? userDetail.User : userDetail;
         this.getAllChatList();
 
         //this.userDetail = this.chatList.find((c: any) => c.id == chatId)?.participants[0].Author
@@ -81,7 +78,6 @@ export class AutherChatroomsComponent {
     });
   }
 
-  chatList: any[] = []
 
   // sendMessage() {
   //   if (this.files.length > 0) {
@@ -105,7 +101,6 @@ export class AutherChatroomsComponent {
   //   }
   // };
   sendMessage() {
-    //debugger
     if (this.files.length > 0) {
       let formData = new FormData()
       if (this.files && this.files.length > 0) {
@@ -118,7 +113,7 @@ export class AutherChatroomsComponent {
         if (res.success) {
           this.sendNormalMsg(res.filenames);
           setTimeout(() => {
-            this.getAllmessages(this.activeChatId, '');
+            this.getAllmessages(this.activeChatId, this.userDet);
           }, 100);
         }
       })
@@ -128,7 +123,7 @@ export class AutherChatroomsComponent {
       }
       this.sendNormalMsg('');
       setTimeout(() => {
-        this.getAllmessages(this.activeChatId, '');
+        this.getAllmessages(this.activeChatId, this.userDet);
       }, 100);
     }
   };
@@ -158,9 +153,9 @@ export class AutherChatroomsComponent {
       isUser: 0
     };
     this.socketService.sendMessage(msg).then(() => {
-      this.chatList.push(msg);
+      this.allMessages.push(msg);
       setTimeout(() => {
-        this.getAllmessages(this.activeChatId, '');
+        this.getAllmessages(this.activeChatId, this.userDet);
       }, 100);
 
     })
@@ -224,6 +219,16 @@ export class AutherChatroomsComponent {
     }
   }
 
+  search(event: any) {
+    const searchValue = event.target.value.trim().toLowerCase();
 
+    if (searchValue) {
+      this.participantList = this.originalChatList.filter(list =>
+        list.participants[0].User.fullName.toLowerCase().includes(searchValue)
+      );
+    } else {
+      this.participantList = [...this.originalChatList];
+    }
+  }
 }
 
