@@ -67,3 +67,7 @@
   height: calc(100vh - 191px);
   min-height: calc(100% - 27rem);
 }
+.preview-container {
+  position: absolute;
+  bottom: 0px;
+}

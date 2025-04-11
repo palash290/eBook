@@ -180,7 +180,7 @@
     </div>
 </section> -->
 @if(activeChatId){
-<section class="message-area p-5">
+<section class="message-area p-md-0">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 px-0">
@@ -213,7 +213,8 @@
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
                                                     <h3 class="ct_fs_16 ct_fw_600">
-                                                        {{item.isGroupChat ? item.name : item.participants[0].Author.fullName}}
+                                                        {{item.isGroupChat ? item.name :
+                                                        item.participants[0].Author.fullName}}
                                                     </h3>
                                                     <p class="ct_fs_14 ct_purple_text">
                                                         {{ item.lastMessage?.content || 'No messages yet' }}
