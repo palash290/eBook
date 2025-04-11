@@ -361,7 +361,9 @@
   .ct_px_40 {
     padding-inline: 15px;
   }
-
+  .send-box {
+    padding-bottom: 0px;
+  }
   .ct_authore_profile_info img {
     margin-top: 0px;
     width: 100px;

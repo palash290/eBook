@@ -64,8 +64,11 @@
   text-align: end;
 }
 .chat-area {
-  height: calc(100vh - 191px);
-  min-height: calc(100% - 27rem);
+  height: calc(100vh - 120px);
+  /* min-height: calc(100% - 27rem); */
+}
+.modal-dialog-scrollable .modal-body {
+  height: calc(100vh - 120px);
 }
 .preview-container {
   position: absolute;
