@@ -96,6 +96,13 @@ export class AutherChatroomsComponent {
     });
   }
 
+  closeChatBox() {
+    const chatBox = document.querySelector('.chatbox');
+    if (chatBox) {
+      chatBox.classList.remove('showbox');
+    }
+  }
+
 
   // sendMessage() {
   //   if (this.files.length > 0) {

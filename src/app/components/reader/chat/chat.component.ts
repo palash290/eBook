@@ -40,6 +40,7 @@ export class ChatComponent {
         const lastChat = this.chatList.splice(index, 1);
         this.chatList.unshift(lastChat[0])
         if (lastChat[0]) {
+          debugger
           lastChat[0].unreadCount += 1;
           lastChat[0].lastMessage.content = message.content;
         }
@@ -240,6 +241,13 @@ export class ChatComponent {
     const chatBox = document.querySelector('.chatbox');
     if (chatBox) {
       chatBox.classList.add('showbox');
+    }
+  }
+
+  closeChatBox() {
+    const chatBox = document.querySelector('.chatbox');
+    if (chatBox) {
+      chatBox.classList.remove('showbox');
     }
   }
 }
