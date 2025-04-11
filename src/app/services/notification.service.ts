@@ -39,6 +39,13 @@ export class NotificationService {
                   console.log(" noticiation payload componet", payload);
                   this.setMessage(payload)
 
+                  const title = payload.notification?.title || 'Notification';
+                  const body = payload.notification?.body || '';
+                  new Notification(title, {
+                        body: body,
+                        icon: 'assets/img/logo.svg',
+                  });
+
             });
       }
 

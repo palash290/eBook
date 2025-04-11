@@ -31,7 +31,21 @@ export class AutherChatroomsComponent {
   ngOnInit() {
     this.socketService.connect();
     this.socketService.getMessage().subscribe((message) => {
-      this.allMessages.push(message);
+      // this.allMessages.push(message);
+      const index = this.participantList.findIndex((chat) => chat.id === message.chatId);
+      if (index > -1) {
+        const lastChat = this.participantList.splice(index, 1);
+        this.participantList.unshift(lastChat[0])
+        if (lastChat[0]) {
+          lastChat[0].unreadCount += 1;
+          lastChat[0].lastMessage.content = message.content;
+        }
+      }
+
+      if (this.activeChatId === message.chatId) {
+        this.allMessages.push(message);
+      }
+      // this.activeChatId = message.chatId;
     });
     this.getAllChatList();
 
@@ -51,6 +65,7 @@ export class AutherChatroomsComponent {
         this.loading = false
         this.originalChatList = resp.data
         this.participantList = [...this.originalChatList];
+        // this.getAllmessages(this.originalChatList[0]?.participants[0]?.chatId, this.originalChatList[0]?.participants[0])
         //this.activeChatId = this.chatList[0].id
         //this.getAllmessages(this.chatList[0].id)
       },
@@ -100,6 +115,7 @@ export class AutherChatroomsComponent {
   //     this.sendNormalMsg('')
   //   }
   // };
+  uploading: boolean = false
   sendMessage() {
     if (this.files.length > 0) {
       let formData = new FormData()
@@ -108,13 +124,16 @@ export class AutherChatroomsComponent {
           formData.append('files', this.files[i]);
         }
       }
-
+      this.uploading = true
       this.apiService.postAPI('author/uploadImages', formData).subscribe((res: any) => {
         if (res.success) {
           this.sendNormalMsg(res.filenames);
           setTimeout(() => {
             this.getAllmessages(this.activeChatId, this.userDet);
+            this.uploading = false
           }, 100);
+        } else {
+          this.uploading = false
         }
       })
     } else {
@@ -124,6 +143,7 @@ export class AutherChatroomsComponent {
       this.sendNormalMsg('');
       setTimeout(() => {
         this.getAllmessages(this.activeChatId, this.userDet);
+        this.uploading = false
       }, 100);
     }
   };

@@ -50,7 +50,9 @@ export class ChatComponent {
       }
       // this.activeChatId = message.chatId;
     });
-    this.createChatRoom();
+    if (this.apiService.isLogedIn('user')) {
+      this.createChatRoom();
+    }
     this.apiService.profileData$.subscribe((data) => {
       if (data) {
         this.userInfo = data;
@@ -89,8 +91,8 @@ export class ChatComponent {
         this.loading = false
         this.originalChatList = resp.data
         this.chatList = [...this.originalChatList]
-        this.activeChatId = this.allMessages[0]?.id
-        this.getAllmessages(this.allMessages[0]?.id)
+        this.activeChatId = this.originalChatList[0]?.id
+        this.getAllmessages(this.originalChatList[0]?.id)
       },
       error: error => {
         this.loading = false
@@ -103,6 +105,7 @@ export class ChatComponent {
       next: (resp: any) => {
         this.allMessages = resp.messages.reverse()
         this.activeChatId = chatId
+        this.chatList.map((c: any) => c.id == chatId ? c.unreadCount = 0 : c.unreadCount)
         this.authorDetail = this.chatList.find((c: any) => c.id == chatId)?.participants[0].Author
       },
       error: error => {
@@ -111,6 +114,7 @@ export class ChatComponent {
     });
   }
 
+  uploading: boolean = false
   sendMessage() {
     if (this.files.length > 0) {
       let formData = new FormData()
@@ -119,13 +123,16 @@ export class ChatComponent {
           formData.append('files', this.files[i]);
         }
       }
-
+      this.uploading = true
       this.apiService.postAPI('chat/uploadImages', formData).subscribe((res: any) => {
         if (res.success) {
           this.sendNormalMsg(res.filenames);
           setTimeout(() => {
             this.getAllmessages(this.activeChatId);
+            this.uploading = false
           }, 100);
+        } else {
+          this.uploading = false
         }
       })
     } else {
@@ -135,6 +142,7 @@ export class ChatComponent {
       this.sendNormalMsg('');
       setTimeout(() => {
         this.getAllmessages(this.activeChatId);
+        this.uploading = false
       }, 100);
     }
   };

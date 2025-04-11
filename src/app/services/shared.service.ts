@@ -49,6 +49,7 @@ export class SharedService {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('userRole');
     localStorage.removeItem('cart');
+    localStorage.removeItem('fcm_token');
     this.cartService.cartItems.set([]);
     this.favItems.set([]);
     this.profileDataSubject.next(null);

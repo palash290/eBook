@@ -1,6 +1,7 @@
 import { Author } from "./followedAuthor.modal";
 
 export interface Book {
+      favoriteCount: any;
       type: number;
       books: CategoryBook[];
       quantity: any;

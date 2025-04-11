@@ -33,13 +33,15 @@ export class EpubReaderComponent {
   }
 
   ngOnInit(): void {
-    this.service.postAPI('users/recordBookRead', { bookId: Number(this.bookId) }).subscribe({
-      next: (resp: any) => {
-      },
-      error: error => {
-        console.log(error.message);
-      }
-    });
+    if (this.service.isLogedIn('user')) {
+      this.service.postAPI('users/recordBookRead', { bookId: Number(this.bookId) }).subscribe({
+        next: (resp: any) => {
+        },
+        error: error => {
+          console.log(error.message);
+        }
+      });
+    }
   }
 
   loadEpub() {

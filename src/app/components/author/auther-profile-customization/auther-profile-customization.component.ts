@@ -91,7 +91,7 @@ export class AutherProfileCustomizationComponent {
     }
     this.loading = true;
     let formData = new FormData()
-    formData.append('fullName', this.editProfileForm.value.fullName)
+    formData.append('fullName', this.editProfileForm.value.fullName.trim())
     formData.append('tagline', this.editProfileForm.value.tagline ? this.editProfileForm.value.tagline : '')
     formData.append('instagram', this.editProfileForm.value.instagram ? this.editProfileForm.value.instagram : '')
     formData.append('facebook', this.editProfileForm.value.facebook ? this.editProfileForm.value.facebook : '')

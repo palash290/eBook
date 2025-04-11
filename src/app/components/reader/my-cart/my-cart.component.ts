@@ -6,11 +6,12 @@ import { ModalService } from '../../../services/modal.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../../services/cart.service';
+import { LoaderComponent } from "../shared/loader/loader.component";
 
 @Component({
   selector: 'app-my-cart',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, LoaderComponent],
   templateUrl: './my-cart.component.html',
   styleUrl: './my-cart.component.css'
 })

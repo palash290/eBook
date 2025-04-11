@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { RoleGuard } from '../../guards/roleGuard';
 
 export const readerRoutes: Routes = [
       {

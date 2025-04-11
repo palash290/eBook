@@ -3,11 +3,13 @@ import { Router, RouterLink } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { SharedService } from '../../../services/shared.service';
 import { Book } from '../../../modals/shared.modal';
+import { LoaderComponent } from '../shared/loader/loader.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, LoaderComponent, CommonModule],
   templateUrl: './wishlist.component.html',
   styleUrl: './wishlist.component.css'
 })
