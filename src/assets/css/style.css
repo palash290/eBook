@@ -2538,7 +2538,9 @@ a.add img {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   resize: none;
 }
-
+.msg-body {
+  position: relative;
+}
 .send-box .form-control::placeholder {
   color: #898787;
   position: absolute;
@@ -2911,10 +2913,12 @@ button:focus {
 
 .progress-container {
   display: flex;
-  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  background-color: #fff;
+  padding: 10px;
   width: 100%;
-  max-width: 100%;
-  position: relative;
 }
 
 .progress-bar {
