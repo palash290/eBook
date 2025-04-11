@@ -150,13 +150,16 @@ $(document).ready(function () {
   $(".ct_notification_click").click(function (event) {
     event.stopPropagation();
     $(".ct_notification_custom_dropdown").removeClass("ct_notification_active");
-    $(this).next(".ct_notification_custom_dropdown").toggleClass("ct_notification_active");
+    $(this)
+      .next(".ct_notification_custom_dropdown")
+      .toggleClass("ct_notification_active");
   });
 
   $(document).click(function (event) {
     if (!$(event.target).closest(".ct_notification_custom_dropdown").length) {
-      $(".ct_notification_custom_dropdown").removeClass("ct_notification_active");
+      $(".ct_notification_custom_dropdown").removeClass(
+        "ct_notification_active"
+      );
     }
   });
 });
-
