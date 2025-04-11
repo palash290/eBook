@@ -84,7 +84,10 @@ export class AutherChatroomsComponent {
         this.activeChatId = userId;
         this.userDet = userDetail.User ? userDetail.User : userDetail;
         this.getAllChatList();
-
+        const chatBox = document.querySelector('.chatbox');
+        if (chatBox) {
+          chatBox.classList.add('showbox');
+        }
         //this.userDetail = this.chatList.find((c: any) => c.id == chatId)?.participants[0].Author
       },
       error: error => {

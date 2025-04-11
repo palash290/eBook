@@ -20,13 +20,9 @@ export class HomeComponent {
   }
 
   ngOnInit() {
-    this.router.events.subscribe((event: any) => {
-      if (event instanceof NavigationEnd) {
-        const hiddenFooterRoutes = ['/chat'];
-        const url = event.urlAfterRedirects.split('?')[0];
-        this.showFooter = !hiddenFooterRoutes.includes(url);
-      }
-    });
+    const hiddenFooterRoutes = ['/chat'];
+    const url = this.router.url.split('?')[0];
+    this.showFooter = !hiddenFooterRoutes.includes(url);
   }
 }
 

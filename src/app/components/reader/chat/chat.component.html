@@ -202,7 +202,7 @@
                                             @for (item of chatList; track $index) {
                                             <a class="d-flex align-items-center"
                                                 [ngClass]="{ 'activeChat': item.id === activeChatId }"
-                                                (click)="getAllmessages(item.id)">
+                                                (click)="getAllmessages(item.id) ; show()">
                                                 <div class="flex-shrink-0 position-relative">
                                                     <img class="img-fluid ct_img_w_50"
                                                         [src]="item.isGroupChat ? '' : item.participants[0].Author.avatar_url ? item.participants[0].Author.avatar_url : 'assets/img/profile_logo.jpg'"

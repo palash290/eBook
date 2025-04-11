@@ -83,7 +83,7 @@ export class HeaderComponent {
         this.notifications = this.notifications.filter((item: any) => item.id !== id);
       },
       error: (error) => {
-        this.toastr.error(error);
+        // this.toastr.error(error);
       }
     })
   }

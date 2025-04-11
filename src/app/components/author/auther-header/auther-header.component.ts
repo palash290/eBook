@@ -58,7 +58,7 @@ export class AutherHeaderComponent {
         this.notifications = this.notifications.filter((item: any) => item.id !== id);
       },
       error: (error) => {
-        this.toastr.error(error);
+        // this.toastr.error(error);
       }
     })
   }
@@ -69,7 +69,7 @@ export class AutherHeaderComponent {
         this.notifications = [];
       },
       error: (error) => {
-        this.toastr.error(error);
+        // this.toastr.error(error);
       }
     })
   }

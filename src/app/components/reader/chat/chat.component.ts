@@ -235,4 +235,11 @@ export class ChatComponent {
       this.chatList = [...this.originalChatList];
     }
   }
+
+  show() {
+    const chatBox = document.querySelector('.chatbox');
+    if (chatBox) {
+      chatBox.classList.add('showbox');
+    }
+  }
 }
