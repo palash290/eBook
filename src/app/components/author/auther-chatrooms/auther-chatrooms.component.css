@@ -61,3 +61,9 @@
 .et_textarea_hide_scroll::-webkit-scrollbar {
   display: none;
 }
+
+.ct_chat_back_btn {
+  color: #000;
+  cursor: pointer;
+  display: none;
+}

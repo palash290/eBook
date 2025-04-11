@@ -56,9 +56,10 @@
         <div class="ct_right_dropdown dropdown">
             <button id="dropdownMenuButton" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="d-flex align-items-center gap-2">
-                    <img [src]="userInfo?.avatar_url ? userInfo?.avatar_url : 'assets/img/profile_logo.jpg'" alt="">
+                    <img [src]="userInfo?.avatar_url ? userInfo?.avatar_url : 'assets/img/profile_logo.jpg'" alt=""
+                        style="flex-shrink: 0;">
                     <div class="text-start d-grid">
-                        <p class="mb-0 ct_fw_500 text-capitalize">{{userInfo?.fullName}}</p>
+                        <p class="mb-0 ct_fw_500 text-capitalize ct_use_name_short_elipse">{{userInfo?.fullName}}</p>
                         <small>Author</small>
                     </div>
                 </div>
