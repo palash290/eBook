@@ -38,7 +38,7 @@
                                           }
                                     </ul>
                               </div>
-                              <div class="ct_notification_main">
+                              <div class="ct_notification_main ms-auto">
                                     <div class="position-relative ct_notification_click">
                                           <svg width="24" height="26" viewBox="0 0 24 26" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -63,15 +63,17 @@
                                                       <img [src]="item.byUser?.avatar_url ? item.byUser?.avatar_url : item.byAuthor?.avatar_url"
                                                             class="ct_notify_user_img_icon" />
                                                       } @else {
-                                                      <span
-                                                            class="ct_notify_user_icon">{{item.byUser?.fullName ? item.byUser?.fullName.split('')[0] : item.byAuthor?.fullName.split('')[0]}}</span>
+                                                      <span class="ct_notify_user_icon">{{item.byUser?.fullName ?
+                                                            item.byUser?.fullName.split('')[0] :
+                                                            item.byAuthor?.fullName.split('')[0]}}</span>
                                                       }
                                                       <div class="d-flex justify-content-between align-items-center">
                                                             <div>
                                                                   <p class="mb-0">
                                                                         {{item?.content}}
                                                                   </p>
-                                                                  <small class="ct_fw_500">{{item?.createdAt | date:'mediumDate' }}
+                                                                  <small class="ct_fw_500">{{item?.createdAt |
+                                                                        date:'mediumDate' }}
                                                                         at
                                                                         {{item?.createdAt | date:'shortTime' }}</small>
                                                             </div>

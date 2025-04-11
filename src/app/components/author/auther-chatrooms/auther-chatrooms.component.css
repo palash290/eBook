@@ -1,52 +1,63 @@
 .preview {
-    /* height: 100px; */
-    /* width: 100px; */
-    position: relative;
+  /* height: 100px; */
+  /* width: 100px; */
+  position: relative;
 }
 
 .preview .remove {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    color: #ef1b30;
-    cursor: pointer;
-    background: #fff;
-    border-radius: 50%;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  color: #ef1b30;
+  cursor: pointer;
+  background: #fff;
+  border-radius: 50%;
+}
+.chat-area {
+  height: calc(100dvh - 238px);
+}
+.modal-dialog-scrollable .modal-body {
+  overflow-y: auto;
+  height: calc(100vh - 347px) !important;
+}
+.preview-container {
+  position: absolute;
+  bottom: 0px;
 }
 
 .preview img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 10px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .msg-body ul li img {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .modal-dialog-scrollable .modal-body {
-    overflow-y: auto;
-    height: calc(100vh - 200px);
+  overflow-y: auto;
+  height: calc(100vh - 200px);
 }
 
 .preview-container {
-    display: flex;
-    /* height: 100px; */
-    gap: 10px;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-    /* padding-left: 100PX;
+  display: flex;
+  /* height: 100px; */
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  /* padding-left: 100PX;
     padding-right: 160px; */
 }
 
 .ct_cursor_pointer:hover {
-    color: #1511e9;
+  color: #1511e9;
 }
 
 .et_textarea_hide_scroll::-webkit-scrollbar {
-    display: none;
+  display: none;
 }

@@ -51,7 +51,7 @@
                                                     <span class="ms-auto text-dark"
                                                         style="background-color: #FFCC91;">{{item.unreadCount}}</span>
                                                     <h4 class="ct_notify-time mt-3">{{item.lastMessage?.createdAt |
-                                                            date:'HH:mm'}}</h4>
+                                                        date:'HH:mm'}}</h4>
                                                 </div>
                                                 }
                                             </a>
@@ -93,8 +93,10 @@
                             <div class="modal-content ct_chatroom_modal_content">
                                 @if (allMessages.length > 0) {
                                 <div class="d-block">
-                                    <div
-                                        class="msg-head d-flex align-items-center justify-content-between gap-3 flex-wrap">
+                                    <div class="msg-head d-flex align-items-center  gap-3 flex-wrap">
+                                        <a href="javascript:void(0)">
+                                            <i class="fa-solid fa-arrow-left text-dark"></i>
+                                        </a>
                                         <div class="ct_grid_56_auto">
                                             @if(allMessages.length > 0){
                                             <img [src]="userDet?.avatar_url ? userDet?.avatar_url : 'assets/img/np_pro.png'"

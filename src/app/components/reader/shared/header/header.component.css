@@ -20,6 +20,9 @@
   top: -3px;
   right: -6px;
 }
+.ct_notification_click {
+  cursor: pointer;
+}
 
 .ct_favcount_icon h5 {
   color: #fff;

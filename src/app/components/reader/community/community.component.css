@@ -1,0 +1,4 @@
+.chat-area {
+  height: calc(100vh - 339px);
+  /* min-height: calc(100% - 27rem); */
+}
