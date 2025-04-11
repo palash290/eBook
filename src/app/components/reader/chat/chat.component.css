@@ -71,3 +71,9 @@
   position: absolute;
   bottom: 0px;
 }
+
+.ct_chat_back_btn {
+  color: #000;
+  cursor: pointer;
+  display: none;
+}

@@ -1,16 +1,24 @@
 .ct_cursor_pointer:hover {
-      color: red;
+  color: red;
 }
 
 .noWrap {
-      white-space: nowrap;
+  white-space: nowrap;
 }
 
 .ClearNotification:hover {
-      cursor: pointer;
-      color: red;
+  cursor: pointer;
+  color: red;
 }
 
 .ClearNotification {
-      text-align: center;
+  text-align: center;
+}
+
+.ct_use_name_short_elipse {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+  width: 100px;
 }

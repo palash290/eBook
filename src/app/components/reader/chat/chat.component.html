@@ -270,14 +270,18 @@
                     <div class="chatbox">
                         <div class="modal-dialog-scrollable">
                             <div class="modal-content">
-                                <div class="msg-head">
-                                    <h4 class="ct_fs_24 ct_fw_700 mb-3 text-capitalize">
-                                        {{authorDetail?.fullName}}
-                                    </h4>
-                                    @if(authorDetail?.isOnline){
-                                    <p class="mb-0 ct_fw_600 ct_text_898989">
-                                        online</p>
-                                    }
+                                <div class="msg-head d-flex  gap-3">
+                                    <a href="javascript:void(0)" class="ct_chat_back_btn"><i
+                                            class="fa-solid fa-arrow-left"></i></a>
+                                    <div>
+                                        <h4 class="ct_fs_24 ct_fw_700 mb-0 text-capitalize">
+                                            {{authorDetail?.fullName}}
+                                        </h4>
+                                        @if(authorDetail?.isOnline){
+                                        <p class="mb-0 mt-2 ct_fw_600 ct_text_898989">
+                                            online</p>
+                                        }
+                                    </div>
                                 </div>
                                 <!-- #scrollMe [scrollTop]="scrollMe.scrollHeight -->
                                 <div class="modal-body" #scrollMe [scrollTop]=" scrollMe.scrollHeight">
