@@ -6,6 +6,7 @@ import { SharedService } from '../../../services/shared.service';
 import { ActivatedRoute } from '@angular/router';
 import { LoaderComponent } from "../shared/loader/loader.component";
 import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-chat',
@@ -26,7 +27,7 @@ export class ChatComponent {
   participantList: any[] = [];
   chatList: any[] = [];
   originalChatList: any[] = [];
-  constructor(private socketService: SocketService, private apiService: SharedService, private route: ActivatedRoute, private datePipe: DatePipe) {
+  constructor(private socketService: SocketService, private apiService: SharedService, private route: ActivatedRoute, private datePipe: DatePipe, private toastService: NzMessageService) {
     this.route.queryParams.subscribe(params => {
       this.authorId = params['author'];
     })
@@ -116,6 +117,7 @@ export class ChatComponent {
 
   uploading: boolean = false
   sendMessage() {
+
     if (this.files.length > 0) {
       let formData = new FormData()
       if (this.files && this.files.length > 0) {
@@ -187,6 +189,14 @@ export class ChatComponent {
   onFileChange(event: any) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
+      const maxFiles = 5;
+      const selectedFiles = Array.from(input.files);
+      if (selectedFiles.length > maxFiles) {
+        this.toastService.error(`You can only select up to ${maxFiles} images.`);
+        input.value = '';
+        return;
+      }
+
       Array.from(input.files).forEach((file) => {
         this.files.push(file);
         const reader = new FileReader();

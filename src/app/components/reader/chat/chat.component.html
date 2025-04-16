@@ -199,6 +199,7 @@
                                     <!-- chat-list -->
                                     <div class="chat-lists">
                                         <div class="chat-list">
+                                            @if(chatList.length > 0){
                                             @for (item of chatList; track $index) {
                                             <a class="d-flex align-items-center"
                                                 [ngClass]="{ 'activeChat': item.id === activeChatId }"
@@ -214,7 +215,7 @@
                                                 <div class="flex-grow-1 ms-3">
                                                     <h3 class="ct_fs_16 ct_fw_600">
                                                         {{item.isGroupChat ? item.name :
-                                                        item.participants[0].Author.fullName}}
+                                                                item.participants[0].Author.fullName}}
                                                     </h3>
                                                     <p class="ct_fs_14 ct_purple_text">
                                                         {{ item.lastMessage?.content || 'No messages yet' }}
@@ -230,6 +231,10 @@
                                                 </div>
                                             </a>
                                             }
+                                            } @else {
+                                            <span class="mb-0 text-center">No Chats Found</span>
+                                            }
+
 
                                             <!-- <a class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
@@ -271,7 +276,7 @@
                         <div class="modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="msg-head d-flex  gap-3">
-                                    <a href="javascript:void(0)" class="ct_chat_back_btn"><i
+                                    <a (click)="closeChatBox()" class="ct_chat_back_btn"><i
                                             class="fa-solid fa-arrow-left"></i></a>
                                     <div>
                                         <h4 class="ct_fs_24 ct_fw_700 mb-0 text-capitalize">
@@ -333,22 +338,23 @@
                                             }
                                             }
                                         </ul>
-                                    </div>
-                                    <div *ngIf="previewFiles.length > 0" class="preview-container">
-                                        <div *ngFor="let file of previewFiles" class="preview">
-                                            <img *ngIf="file.type.startsWith('image/')" [src]="file.url"
-                                                alt="File preview" />
-                                            <i (click)="removeFile(file)" class="fa fa-minus-circle remove"
-                                                aria-hidden="true"></i>
+                                        <div *ngIf="previewFiles.length > 0" class="preview-container">
+                                            <div *ngFor="let file of previewFiles" class="preview">
+                                                <img *ngIf="file.type.startsWith('image/')" [src]="file.url"
+                                                    alt="File preview" />
+                                                <i (click)="removeFile(file)" class="fa fa-minus-circle remove"
+                                                    aria-hidden="true"></i>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
 
                                 <div class="send-box px-0">
                                     <form action="" class="position-relative m-0">
                                         <label for="upload_chat_img_2" class="ct_upload_paper_click_img">
                                             <input type="file" accept="image/*" (change)="onFileChange($event)" multiple
-                                                class="d-none" id="upload_chat_img_2">
+                                                [multiple]="true" class="d-none" id="upload_chat_img_2">
                                             <div>
                                                 <i class="fa-solid fa-paperclip"></i>
                                             </div>

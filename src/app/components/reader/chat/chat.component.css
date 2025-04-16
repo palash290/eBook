@@ -58,21 +58,31 @@
   overflow: hidden;
 }
 
+.msg-body {
+  position: relative;
+}
+
 .ct_notify-time {
   font-size: 10px;
   color: #898787;
   text-align: end;
 }
+
 .chat-area {
   height: calc(100vh - 120px);
   /* min-height: calc(100% - 27rem); */
 }
+
 .modal-dialog-scrollable .modal-body {
   height: calc(100vh - 120px);
 }
+
 .preview-container {
   position: absolute;
   bottom: 0px;
+  background-color: #fff;
+  padding: 10px;
+  width: 100%;
 }
 
 .ct_chat_back_btn {

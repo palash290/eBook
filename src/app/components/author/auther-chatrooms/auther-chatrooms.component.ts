@@ -4,6 +4,7 @@ import { SharedService } from '../../../services/shared.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-auther-chatrooms',
@@ -24,7 +25,7 @@ export class AutherChatroomsComponent {
   userDetail: any;
   userInfo: any;
 
-  constructor(private socketService: SocketService, private apiService: SharedService, private datePipe: DatePipe) {
+  constructor(private socketService: SocketService, private apiService: SharedService, private datePipe: DatePipe, private toastService: NzMessageService) {
 
   }
 
@@ -212,6 +213,15 @@ export class AutherChatroomsComponent {
   onFileChange(event: any) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
+
+      const maxFiles = 5;
+      const selectedFiles = Array.from(input.files);
+      if (selectedFiles.length > maxFiles) {
+        this.toastService.error(`You can only select up to ${maxFiles} images.`);
+        input.value = '';
+        return;
+      }
+
       Array.from(input.files).forEach((file) => {
         this.files.push(file);
         const reader = new FileReader();

@@ -45,7 +45,7 @@ export class WishlistComponent {
     // this.loading = true
     this.service.postAPI('users/favBook', { bookId: bookId }).subscribe({
       next: (resp: any) => {
-        this.toastr.success(resp.message);
+        // this.toastr.success(resp.message);
         this.getFavBooks()
       },
       error: error => {

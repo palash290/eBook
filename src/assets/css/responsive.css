@@ -12,6 +12,7 @@
 }
 
 @media screen and (min-width: 1500px) {
+
   /* .ct_author_info {
     height: 220px;
   } */
@@ -35,6 +36,7 @@
 }
 
 @media screen and (max-width: 1400px) {
+
   .ct_nav_menu_list ul li a,
   .ct_right_menu_items ul li a {
     font-size: 15px;
@@ -42,6 +44,7 @@
 }
 
 @media screen and (max-width: 1199px) {
+
   .ct_close_menu,
   .ct_open_menu {
     display: block;
@@ -83,7 +86,7 @@
     align-items: flex-start;
   }
 
-  .ct_nav_menu_list ul li + li {
+  .ct_nav_menu_list ul li+li {
     margin-top: 15px;
   }
 
@@ -249,7 +252,7 @@
     margin-top: 20px;
   }
 
-  ul.ct_custom-dots .ct_dot + .ct_dot {
+  ul.ct_custom-dots .ct_dot+.ct_dot {
     margin-top: 0px;
   }
 
@@ -357,13 +360,19 @@
 }
 
 @media screen and (max-width: 575px) {
+  .ct_notification_custom_dropdown {
+    left: -58px;
+  }
+
   header,
   .ct_px_40 {
     padding-inline: 15px;
   }
+
   .send-box {
     padding-bottom: 0px;
   }
+
   .ct_authore_profile_info img {
     margin-top: 0px;
     width: 100px;

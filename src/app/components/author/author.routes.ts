@@ -47,6 +47,11 @@ export const authorRoutes: Routes = [
                         loadComponent: () => import('./change-password/change-password.component').then(m => m.ChangePasswordComponent),
                         canActivate: [RoleGuard], data: { roles: ['author'] }
                   },
+                  {
+                        path: 'jitsi',
+                        loadComponent: () => import('./jitsi/jitsi.component').then(m => m.JitsiComponent),
+                        canActivate: [RoleGuard], data: { roles: ['author'] }
+                  },
             ],
             //canActivate: [RoleGuard], data: { roles: ['author'] }
       },

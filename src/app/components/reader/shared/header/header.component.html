@@ -55,6 +55,14 @@
                                           }
                                     </div>
                                     <div class="ct_notification_custom_dropdown">
+                                          <div class="d-flex align-items-center justify-content-between gap-2">
+                                                <p class="mb-0 ct_fw_600">All Notifications</p>
+                                                @if(notifications.length > 0){
+                                                <div class="ct_dlt_all_12" (click)="clearNotification()">
+                                                      <button><i class="fa-solid fa-trash-can"></i>Delete All</button>
+                                                </div>
+                                                }
+                                          </div>
                                           <ul>
                                                 @if(notifications.length > 0){
                                                 @for (item of notifications; track $index) {
@@ -82,10 +90,10 @@
                                                       </div>
                                                 </li>
                                                 }
-                                                <li class="mb-2  noWrap ClearNotification"
+                                                <!-- <li class="mb-2  noWrap ClearNotification"
                                                       (click)="clearNotification()">
                                                       Clear All Notifications
-                                                </li>
+                                                </li> -->
                                                 } @else {
                                                 <li>
                                                       <p class="mb-0 noWrap">

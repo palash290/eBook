@@ -36,7 +36,6 @@ export class SocketService {
                         }
                   }, (response: any) => {
                         if (response.success) {
-                              debugger
                               resolve(response);
                         } else {
                               reject(response.error);

@@ -122,14 +122,15 @@
                         <div class="row">
                               @if(authors.books.length > 0){
                               @for (item of authors.books; track $index) {
-                              <div class="col-lg-4 col-md-4 mb-4">
+                              <div class="col-lg-4 col-md-4 mb-4" routerLink="/book-overview"
+                                    [queryParams]="{id: item.id}">
                                     <div class="ct_book_card ct_sell_book_card_bg">
                                           <figure>
                                                 <div class="ct_book_img">
                                                       <img [src]="item.coverImage" alt="">
                                                 </div>
                                                 <figcaption>
-                                                      <a routerLink="/book-overview" [queryParams]="{id: item.id}"
+                                                      <a
                                                             class="ct_fs_14 ct_ff_Montserrat text-capitalize">{{item.title}}</a>
                                                       <h4
                                                             class="ct_fs_12 mb-0 ct_ff_Montserrat  ct_text_898989 ct_fw_400">

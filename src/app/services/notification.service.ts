@@ -45,10 +45,8 @@ export class NotificationService {
                         body: body,
                         icon: 'assets/img/logo.svg',
                   });
-
             });
       }
-
 
       setMessage(value: any) {
             this.messageSource.next(value);

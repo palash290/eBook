@@ -18,6 +18,14 @@
                 }
             </div>
             <div class="ct_notification_custom_dropdown">
+                <div class="d-flex align-items-center justify-content-between gap-2">
+                    <p class="mb-0 ct_fw_600">All Notifications</p>
+                    @if(notifications.length > 0){
+                    <div class="ct_dlt_all_12" (click)="clearNotification()">
+                        <button><i class="fa-solid fa-trash-can"></i>Delete All</button>
+                    </div>
+                    }
+                </div>
                 <ul>
                     @if(notifications.length > 0){
                     @for (item of notifications; track $index) {
@@ -39,9 +47,9 @@
                         </div>
                     </li>
                     }
-                    <li class="mb-2  noWrap ClearNotification" (click)="clearNotification()">
+                    <!-- <li class="mb-2  noWrap ClearNotification" (click)="clearNotification()">
                         Clear All Notifications
-                    </li>
+                    </li> -->
                     } @else {
                     <li>
                         <p class="mb-0 noWrap">
@@ -97,7 +105,7 @@
                     </figure>
                     <div class="modal-footer justify-content-center border-0 ct_modal_footer">
                         <button type="button" class="ct_purple_btn ct_outline_blue w-100 ct_fw_600"
-                            data-bs-dismiss="modal">Cancele</button>
+                            data-bs-dismiss="modal">Cancel</button>
                         <button (click)="logout()" type="button" data-bs-dismiss="modal"
                             class="ct_purple_btn ct_btn_red w-100 ct_fw_600">Log Out</button>
                     </div>

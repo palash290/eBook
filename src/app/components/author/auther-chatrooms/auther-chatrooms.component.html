@@ -26,6 +26,7 @@
 
                                 <div class="modal-body mt-4">
                                     <!-- chat-list -->
+                                    @if(participantList.length > 0){
                                     <div class="chat-lists" *ngFor="let item of participantList">
                                         <div class="chat-list">
                                             <a class="d-flex align-items-center"
@@ -33,7 +34,7 @@
                                                 <div class="ct_chat_list_grid">
                                                     <div class="position-relative">
                                                         <img class="img-fluid ct_img_w_50"
-                                                            [src]="item.participants[0]?.User?.avatar_url || 'assets/img/girl_1.png'"
+                                                            [src]="item.participants[0]?.User?.avatar_url || 'assets/img/np_pro.png'"
                                                             alt="user img">
                                                         <span class="active"></span>
                                                     </div>
@@ -51,35 +52,39 @@
                                                     <span class="ms-auto text-dark"
                                                         style="background-color: #FFCC91;">{{item.unreadCount}}</span>
                                                     <h4 class="ct_notify-time mt-3">{{item.lastMessage?.createdAt |
-                                                        date:'HH:mm'}}</h4>
+                                                            date:'HH:mm'}}</h4>
                                                 </div>
                                                 }
                                             </a>
                                             <!-- <a class="d-flex align-items-center"
-                                                (click)="getAllmessages(item.participants[0]?.chatId, item.participants[0])">
-                                                <div class="position-relative">
-                                                    <img class="img-fluid ct_img_w_50"
-                                                        [src]="item.participants[0]?.User?.avatar_url || 'assets/img/girl_1.png'"
-                                                        alt="user img">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h3>{{ item.participants[0]?.User?.fullName || 'Unknown User' }}
-                                                    </h3>
-                                                    <p class="ct_fs_14 ct_purple_text">
-                                                        {{ item.lastMessage?.content || 'No messages yet' }}
-                                                    </p>
-                                                </div>
-                                                @if(item.unreadCount > 0){
-                                                <div class="ct_caht_msg_notify text-end">
-                                                    <span class="ms-auto text-dark"
-                                                        style="background-color: #FFCC91;">{{item.unreadCount}}</span>
-                                                    <h4 class="ct_notify-time mt-3">{{item.lastMessage?.createdAt |
-                                                        date:'HH:mm'}}</h4>
-                                                </div>
-                                                }
-                                            </a> -->
+                                                    (click)="getAllmessages(item.participants[0]?.chatId, item.participants[0])">
+                                                    <div class="position-relative">
+                                                        <img class="img-fluid ct_img_w_50"
+                                                            [src]="item.participants[0]?.User?.avatar_url || 'assets/img/girl_1.png'"
+                                                            alt="user img">
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h3>{{ item.participants[0]?.User?.fullName || 'Unknown User' }}
+                                                        </h3>
+                                                        <p class="ct_fs_14 ct_purple_text">
+                                                            {{ item.lastMessage?.content || 'No messages yet' }}
+                                                        </p>
+                                                    </div>
+                                                    @if(item.unreadCount > 0){
+                                                    <div class="ct_caht_msg_notify text-end">
+                                                        <span class="ms-auto text-dark"
+                                                            style="background-color: #FFCC91;">{{item.unreadCount}}</span>
+                                                        <h4 class="ct_notify-time mt-3">{{item.lastMessage?.createdAt |
+                                                            date:'HH:mm'}}</h4>
+                                                    </div>
+                                                    }
+                                                </a> -->
                                         </div>
                                     </div>
+                                    }@else {
+                                    <span class="mb-0 text-center">No Chats Found</span>
+                                    }
+
                                     <!-- chat-list -->
                                 </div>
                             </div>
