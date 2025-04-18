@@ -1,0 +1,29 @@
+.ct_upload_product_main {
+  border: 2px dashed #646464;
+  border-radius: 5px;
+  background-color: #e5e7eb;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.ct_browse_btn {
+  background-color: #f3f4f6;
+  padding: 9px 20px;
+  font-weight: 500;
+  border-radius: 5px;
+}
+.ct_uploaded_img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  object-fit: cover;
+  pointer-events: none;
+}
+.ct_outline_blue {
+  background-color: transparent;
+  color: var(--purple);
+}
