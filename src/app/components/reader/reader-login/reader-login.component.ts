@@ -5,13 +5,12 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { SharedService } from '../../../services/shared.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { CommonModule } from '@angular/common';
-import { LoaderComponent } from "../shared/loader/loader.component";
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-reader-login',
   standalone: true,
-  imports: [FooterComponent, RouterLink, CommonModule, FormsModule, ReactiveFormsModule, LoaderComponent],
+  imports: [FooterComponent, RouterLink, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './reader-login.component.html',
   styleUrl: './reader-login.component.css'
 })
