@@ -1,0 +1,11 @@
+.ct_live_stream_timing_list ul {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 15px;
+}
+.ct_live_stream_timing_list ul li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

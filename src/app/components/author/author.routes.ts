@@ -52,6 +52,27 @@ export const authorRoutes: Routes = [
                         loadComponent: () => import('./jitsi/jitsi.component').then(m => m.JitsiComponent),
                         canActivate: [RoleGuard], data: { roles: ['author'] }
                   },
+                  {
+                        path: 'group-chat',
+                        loadComponent: () => import('./group-chat/group-chat.component').then(m => m.GroupChatComponent),
+                        canActivate: [RoleGuard], data: { roles: ['author'] }
+                  },
+                  {
+                        path: 'session',
+                        loadComponent: () => import('./session-management/session-management.component').then(m => m.SessionManagementComponent),
+                        canActivate: [RoleGuard], data: { roles: ['author'] }
+                  },
+                  {
+                        path: 'add-session',
+                        loadComponent: () => import('./session-management/add-session/add-session.component').then(m => m.AddSessionComponent),
+                        canActivate: [RoleGuard], data: { roles: ['author'] }
+                  },
+                  {
+                        path: 'live-session',
+                        loadComponent: () => import('./session-management/live-session/live-session.component').then(m => m.LiveSessionComponent),
+                        canActivate: [RoleGuard], data: { roles: ['author'] }
+                  },
+                  
             ],
             //canActivate: [RoleGuard], data: { roles: ['author'] }
       },
