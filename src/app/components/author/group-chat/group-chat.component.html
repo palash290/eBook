@@ -72,8 +72,8 @@
                             <div class="modal-content">
                                 <div class="msg-head d-flex gap-3 align-items-center"><a class="ct_chat_back_btn"><i
                                             class="fa-solid fa-arrow-left"></i></a>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <h4 class="ct_fs_24 ct_fw_700 mb-0 text-capitalize ct_chat_text_overflow">
+                                    <div class=" align-items-center gap-3">
+                                        <h4 class="ct_fs_24 ct_fw_700 mb-0 text-capitalize ">
                                             Mystery Authors Guild </h4>
                                         <p class="mb-0 ct_text_op_07" data-bs-toggle="modal"
                                             data-bs-target="#ct_members_list_modal" style="cursor: pointer;">8 members
@@ -100,8 +100,6 @@
                                                     d="M1.0625 1.0625H15.9375C16.5252 1.0625 17 1.5373 17 2.125V3.1875C17 3.7752 16.5252 4.25 15.9375 4.25H1.0625C0.474805 4.25 0 3.7752 0 3.1875V2.125C0 1.5373 0.474805 1.0625 1.0625 1.0625ZM1.0625 5.3125H15.9375V13.8125C15.9375 14.9846 14.9846 15.9375 13.8125 15.9375H3.1875C2.01543 15.9375 1.0625 14.9846 1.0625 13.8125V5.3125ZM5.3125 7.96875C5.3125 8.26094 5.55156 8.5 5.84375 8.5H11.1562C11.4484 8.5 11.6875 8.26094 11.6875 7.96875C11.6875 7.67656 11.4484 7.4375 11.1562 7.4375H5.84375C5.55156 7.4375 5.3125 7.67656 5.3125 7.96875Z"
                                                     fill="#4B5563" />
                                             </svg>
-
-
                                         </a>
                                     </div>
                                 </div>
@@ -122,7 +120,7 @@
                                             class="form-control ng-untouched ng-pristine ng-valid" ng-reflect-model=""
                                             ng-reflect-options="[object Object]"></textarea>
                                         <div class="ct_right_side_send_chat_btns"><i
-                                                class="fa fa-paper-plane ct_cursor_pointer "></i><!--container--><!--container-->
+                                                class="fa fa-paper-plane ct_cursor_pointer"></i>
                                         </div>
                                     </form>
                                 </div>
@@ -136,42 +134,60 @@
 </div>
 
 
-
-
 <!-- New Group chat S -->
 <div class="modal fade" id="ct_new_group_chat" tabindex="-1" aria-labelledby="ct_new_group_chatLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header border-0">
-                <h5 class="modal-title ct_fs_24 ct_fw_600 mb-0" id="ct_new_group_chatLabel">Create New Group Chat</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="">
+            <form [formGroup]="Form">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title ct_fs_24 ct_fw_600 mb-0" id="ct_new_group_chatLabel">Create New Group Chat
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
                     <div class="form-group mb-3">
                         <label for="" class=" mb-2 ct_fs_16">Group Name</label>
                         <input type="text" class="form-control ct_input bg-white ct_border_radius_10"
-                            placeholder="Enter group name">
+                            placeholder="Enter group name" formControlName="chatName">
+                        <div *ngIf="Form.get('chatName')?.hasError('required') && Form.get('chatName')?.touched"
+                            class="text-danger">
+                            <small>Group name is required</small>
+                        </div>
                     </div>
-                    <div class="form-group mb-3">
+                    <!-- <div class="form-group mb-3">
                         <label for="" class=" mb-2 ct_fs_16">Description</label>
                         <textarea type="text" class="form-control ct_input bg-white ct_border_radius_10 h-auto" rows="4"
                             placeholder="Enter Description"></textarea>
-                    </div>
+                    </div> -->
                     <div class="form-group mb-3">
-                        <label for="" class=" mb-2 ct_fs_16">Add Authors</label>
-                        <div class="position-relative">
+                        <label for="" class=" mb-2 ct_fs_16">Add Members</label>
+                        <!-- <div class="position-relative">
                             <input type="text" class="form-control ct_input bg-white ct_border_radius_10"
                                 style="padding-left: 35px;" placeholder="Search User name">
                             <i class="fa-solid fa-search ct_search_icon_left"></i>
+                        </div> -->
+                        <nz-select class="form-control et_genre_multiselect_1" nzMode="tags"
+                            nzPlaceHolder="Select Members" [(ngModel)]="selectedReaders"
+                            [nzNotFoundContent]="'No Data Found'" formControlName="receiverIds">
+                            @for (option of readers; track option) {
+                            <nz-option [nzLabel]="option.fullName" [nzValue]="option.id"></nz-option>
+                            }
+                        </nz-select>
+                        <div *ngIf="Form.get('receiverIds')?.hasError('required') && Form.get('receiverIds')?.touched"
+                            class="text-danger">
+                            <small>Members are required</small>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer border-0 pt-0">
-                <button type="button" class="ct_purple_btn">Create Group</button>
-            </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button #submitModalClose type="button" data-bs-dismiss="modal" class="d-none"></button>
+
+                    <button type=" submit" class="ct_purple_btn" (click)="onSubmit()">Create
+                        Group</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

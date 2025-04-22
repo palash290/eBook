@@ -79,13 +79,28 @@ export class ChatComponent {
         }
       });
     } else {
-      this.getAllChatList()
+      this.getAllChatList2()
     }
   }
 
   activeChatId: any
 
   getAllChatList() {
+    this.loading = true
+    this.apiService.get(`chat/getAllChats`).subscribe({
+      next: (resp: any) => {
+        this.loading = false
+        this.originalChatList = resp.data
+        this.chatList = [...this.originalChatList]
+        // this.activeChatId = this.originalChatList[0]?.id
+        // this.getAllmessages(this.originalChatList[0]?.id)
+      },
+      error: error => {
+        this.loading = false
+      }
+    });
+  }
+  getAllChatList2() {
     this.loading = true
     this.apiService.get(`chat/getAllChats`).subscribe({
       next: (resp: any) => {
@@ -107,7 +122,7 @@ export class ChatComponent {
         this.allMessages = resp.messages.reverse()
         this.activeChatId = chatId
         this.chatList.map((c: any) => c.id == chatId ? c.unreadCount = 0 : c.unreadCount)
-        this.authorDetail = this.chatList.find((c: any) => c.id == chatId)?.participants[0].Author
+        this.authorDetail = this.chatList.find((c: any) => c.id == chatId)?.isGroupChat ? this.chatList.find((c: any) => c.id == chatId) : this.chatList.find((c: any) => c.id == chatId)?.participants[0].Author
       },
       error: error => {
         this.loading = false
@@ -239,7 +254,7 @@ export class ChatComponent {
 
     if (searchValue) {
       this.chatList = this.originalChatList.filter(list =>
-        list.participants[0].Author.fullName.toLowerCase().includes(searchValue)
+        list.participants[0].Author.fullName.toLowerCase().includes(searchValue) || list.name.toLowerCase().includes(searchValue)
       );
     } else {
       this.chatList = [...this.originalChatList];

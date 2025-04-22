@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SocketService } from '../../../services/socket.service';
 import { SharedService } from '../../../services/shared.service';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'app-auther-chatrooms',
   standalone: true,
-  imports: [CommonModule, FormsModule, NzImageModule],
+  imports: [CommonModule, FormsModule, NzImageModule, ReactiveFormsModule, NzSelectModule],
   templateUrl: './auther-chatrooms.component.html',
   styleUrl: './auther-chatrooms.component.css',
   providers: [DatePipe]
@@ -24,9 +25,17 @@ export class AutherChatroomsComponent {
   allMessages: any[] = [];
   userDetail: any;
   userInfo: any;
-
-  constructor(private socketService: SocketService, private apiService: SharedService, private datePipe: DatePipe, private toastService: NzMessageService) {
-
+  @ViewChild('submitModalClose') submitModalClose!: ElementRef<HTMLButtonElement>;
+  readers: any[] = [];
+  AllReaders: any[] = [];
+  Form: FormGroup;
+  selectedReaders: any[] = [];
+  constructor(private socketService: SocketService, private apiService: SharedService, private datePipe: DatePipe, private toastService: NzMessageService, private fb: FormBuilder) {
+    this.Form = this.fb.group({
+      chatName: ['', [Validators.required, NoWhitespaceDirective.validate]],
+      description: ['', [Validators.required, NoWhitespaceDirective.validate]],
+      receiverIds: [[], [Validators.required, NoWhitespaceDirective.validate]],
+    });
   }
 
   ngOnInit() {
@@ -55,6 +64,7 @@ export class AutherChatroomsComponent {
         this.userInfo = data;
       }
     });
+    this.getReaders();
   }
 
   activeChatId: any
@@ -66,7 +76,7 @@ export class AutherChatroomsComponent {
         this.loading = false
         this.originalChatList = resp.data
         this.participantList = [...this.originalChatList];
-        // this.getAllmessages(this.originalChatList[0]?.participants[0]?.chatId, this.originalChatList[0]?.participants[0])
+        this.getAllmessages(this.originalChatList[0]?.participants[0]?.chatId, this.originalChatList[0]?.isGroupChat ? this.originalChatList[0] : this.originalChatList[0]?.participants[0])
         //this.activeChatId = this.chatList[0].id
         //this.getAllmessages(this.chatList[0].id)
       },
@@ -84,7 +94,7 @@ export class AutherChatroomsComponent {
         this.allMessages = resp.messages.reverse();
         this.activeChatId = userId;
         this.userDet = userDetail.User ? userDetail.User : userDetail;
-        this.getAllChatList();
+        // this.getAllChatList();
         const chatBox = document.querySelector('.chatbox');
         if (chatBox) {
           chatBox.classList.add('showbox');
@@ -264,11 +274,82 @@ export class AutherChatroomsComponent {
 
     if (searchValue) {
       this.participantList = this.originalChatList.filter(list =>
-        list.participants[0].User.fullName.toLowerCase().includes(searchValue)
+        list.participants[0].User.fullName.toLowerCase().includes(searchValue) || list.name.toLowerCase().includes(searchValue)
       );
     } else {
       this.participantList = [...this.originalChatList];
     }
   }
+
+  searchMember(event: any) {
+    const searchValue = event.target.value.trim().toLowerCase();
+
+    if (searchValue) {
+      this.readers = this.AllReaders.filter(list =>
+        list.fullName.toLowerCase().includes(searchValue)
+      );
+    } else {
+      this.readers = [...this.AllReaders];
+    }
+  }
+
+  getReaders() {
+    this.apiService.get('author/getAllFollwedUser').subscribe({
+      next: (resp: any) => {
+        this.readers = resp.users;
+        this.AllReaders = resp.users;
+      },
+      error: error => {
+        console.log(error.message);
+      }
+    });
+  }
+
+  onSubmit(): void {
+    if (this.Form.invalid) {
+      this.Form.markAllAsTouched()
+      return
+    }
+
+    this.loading = true;
+
+    let formData = {
+      chatName: this.Form.value.chatName,
+      // description: this.Form.value.description,
+      receiverIds: this.Form.value.receiverIds
+    }
+
+    this.apiService.postAPI('author/createGroupChat', formData).subscribe({
+      next: (res: any) => {
+        if (res.success == true) {
+          this.toastService.success(res.message);
+          this.submitModalClose.nativeElement.click();
+        } else {
+          this.loading = false;
+          this.toastService.warning(res.message);
+        }
+      },
+      error: (error) => {
+        this.loading = false;
+        this.toastService.error(error);
+      }
+    });
+  }
+
+  isAdded(id: any) {
+    return this.userDet?.participants.find((p: any) => p.userId == id)
+  }
 }
+
+export class NoWhitespaceDirective {
+  static validate(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value || (typeof value === 'string' && value.trim() === '')) {
+      return { required: true };
+    }
+    return null;
+  }
+}
+
 

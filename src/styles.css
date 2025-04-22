@@ -56,3 +56,8 @@ cr-icon-button #download {
   backdrop-filter: brightness(0.5);
   padding: 3rem;
 }
+
+.cdk-overlay-container {
+  position: fixed;
+  z-index: 99999 !important;
+}

@@ -3,22 +3,27 @@
   padding: 20px;
   border-radius: 10px;
 }
+
 .chatlist {
-  width: 350px;
+  width: 365px;
   padding: 0px;
 }
+
 .chat-area .form-control {
   background-color: transparent;
 }
+
 .chat-list p {
   font-weight: 400;
   color: #8b8d97;
 }
+
 .ct_caht_msg_notify {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .ct_caht_msg_notify span {
   width: 25px;
   height: 25px;
@@ -33,15 +38,18 @@
   padding: 3px 6px;
   border-radius: 10px;
 }
+
 .ct_chat_text_overflow {
   white-space: nowrap;
   overflow: hidden;
   width: 114px;
   text-overflow: ellipsis;
 }
+
 .ct_chat_back_btn {
   color: #000;
 }
+
 .ct_input {
   border-color: #dfeaf2;
 }
@@ -51,6 +59,7 @@
   overflow-y: auto;
   max-height: 500px;
 }
+
 /* width */
 .chat-lists::-webkit-scrollbar {
   width: 4px;

@@ -70,3 +70,91 @@
     cursor: pointer;
     display: none;
 }
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.chatlist {
+    width: 365px;
+    padding: 0px;
+}
+
+.chat-area .form-control {
+    background-color: transparent;
+}
+
+.chat-list p {
+    font-weight: 400;
+    color: #8b8d97;
+}
+
+.ct_caht_msg_notify {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ct_caht_msg_notify span {
+    width: 25px;
+    height: 25px;
+    background-color: #ffcc91;
+    color: #000;
+    font-weight: 600;
+}
+
+.ct_new_time {
+    font-size: 12px;
+    background-color: #fef5ea;
+    padding: 3px 6px;
+    border-radius: 10px;
+}
+
+.ct_chat_text_overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 114px;
+    text-overflow: ellipsis;
+}
+
+.ct_chat_back_btn {
+    color: #000;
+}
+
+.ct_input {
+    border-color: #dfeaf2;
+}
+
+.chat-lists {
+    height: auto;
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+/* width */
+.chat-lists::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+.chat-lists::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.chat-lists::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+.chat-lists::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@media screen and (max-width: 767px) {
+    .ct_flex_direction_col {
+        flex-direction: column;
+    }
+}
