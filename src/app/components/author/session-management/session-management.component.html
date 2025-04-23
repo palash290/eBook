@@ -1,7 +1,7 @@
 <div class="ct_px_30 pb-5">
     <div class="container-fluid">
         <div class="d-flex align-items-center justify-content-between gap-3 mb-4 ">
-            <h4 class="ct_fs_26 ct_fw_700 mb-0  ct_nunito_font">Live Sessions</h4>
+            <h4 class="ct_fs_26 ct_fw_700 mb-0 ct_nunito_font">Live Sessions</h4>
             <button routerLink="/author/add-session" class="ct_purple_btn">+ New Session</button>
         </div>
         <div class="row">
@@ -11,9 +11,9 @@
                         <div class="ct_card_title">
                             <h6 class="ct_fs_16 ct_mb_16 ct_black_text ct_text_op_07 ct_fw_700 mb-3">Total Sessions
                             </h6>
-                            <h4 class="mb-0  ct_fs_28 ct_fw_700">24</h4>
+                            <h4 class="mb-0 ct_fs_28 ct_fw_700">{{totalSessions}}</h4>
                         </div>
-                        <div class="ct_card_icon" style="  background-color: hsl(241deg 100% 75% / 21%);">
+                        <div class="ct_card_icon" style="background-color: hsl(241deg 100% 75% / 21%);">
                             <svg width="32" height="27" viewBox="0 0 32 27" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -52,9 +52,9 @@
                         <div class="ct_card_title">
                             <h6 class="ct_fs_16 ct_mb_16 ct_black_text ct_text_op_07 ct_fw_700 mb-3">Total Viewers
                             </h6>
-                            <h4 class="mb-0  ct_fs_28 ct_fw_700">1,234</h4>
+                            <h4 class="mb-0 ct_fs_28 ct_fw_700">{{totalViewers}}</h4>
                         </div>
-                        <div class="ct_card_icon" style="  background-color: hsl(241deg 100% 75% / 21%);">
+                        <div class="ct_card_icon" style="background-color: hsl(241deg 100% 75% / 21%);">
                             <div class="ct_card_icon" style="  background-color: rgb(255 243 214)">
                                 <svg width="32" height="31" viewBox="0 0 32 31" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -122,18 +122,15 @@
                             <h6 class="ct_fs_16 ct_mb_16 ct_black_text ct_text_op_07 ct_fw_700 mb-3">
                                 Upcoming Sessions
                             </h6>
-                            <h4 class="mb-0  ct_fs_28 ct_fw_700">4</h4>
+                            <h4 class="mb-0 ct_fs_28 ct_fw_700">{{upcomingSessionsCount}}</h4>
                         </div>
-                        <div class="ct_card_icon" style="  background-color: hsl(150deg 65% 57% / 21%)">
+                        <div class="ct_card_icon" style="background-color: hsl(150deg 65% 57% / 21%)">
                             <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M18.8225 26.25V25H22.98C23.1725 25 23.3492 24.92 23.51 24.76C23.6708 24.6 23.7508 24.4234 23.75 24.23V13.27H6.25V18.125H5V8.27002C5 7.69419 5.19292 7.21377 5.57875 6.82877C5.96458 6.44377 6.445 6.25086 7.02 6.25002H9.23125V3.46252H10.5775V6.25002H19.52V3.46252H20.77V6.25002H22.9813C23.5563 6.25002 24.0367 6.44294 24.4225 6.82877C24.8083 7.21461 25.0008 7.69502 25 8.27002V24.2313C25 24.8063 24.8075 25.2867 24.4225 25.6725C24.0375 26.0584 23.5567 26.2509 22.98 26.25H18.8225ZM10 29.11L9.13875 28.25L12.9587 24.375H1.875V23.125H12.9587L9.13875 19.25L10 18.39L15.3612 23.75L10 29.11ZM6.25 12.0188H23.75V8.26877C23.75 8.07711 23.67 7.90086 23.51 7.74002C23.35 7.57919 23.1733 7.49919 22.98 7.50002H7.02C6.8275 7.50002 6.65083 7.58002 6.49 7.74002C6.32917 7.90002 6.24917 8.07669 6.25 8.27002V12.0188Z"
                                     fill="#4AD991" />
                             </svg>
-
-
-
                         </div>
                     </div>
 
@@ -146,9 +143,9 @@
                         <div class="ct_card_title">
                             <h6 class="ct_fs_16 ct_mb_16 ct_black_text ct_text_op_07 ct_fw_700 mb-3">Completed sessions
                             </h6>
-                            <h4 class="mb-0  ct_fs_28 ct_fw_700">12</h4>
+                            <h4 class="mb-0 ct_fs_28 ct_fw_700">{{completedSessionsCount}}</h4>
                         </div>
-                        <div class="ct_card_icon" style="  background-color: hsl(16deg 100% 70% / 21%)">
+                        <div class="ct_card_icon" style="background-color: hsl(16deg 100% 70% / 21%)">
                             <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -168,11 +165,11 @@
                     <h4 class="ct_fs_18 ct_fw_600 pb-4">Upcoming Sessions</h4>
                     <div class="table-repsonsive">
                         <table class="table ct_upcomming_table">
-                            <tr>
+                            <tr *ngFor="let item of upcomingSessions let i = index">
                                 <td>
                                     <span class="ct_custom_badge ct_border_radius_30 px-3"
                                         style="background-color: #FEF3C7; color: #D97706;">UPCOMING</span>
-                                    <h5 class="ct_fs_18 ct_fw_600 mb-0 pb-0 mt-2">Writing Effective Dialogue</h5>
+                                    <h5 class="ct_fs_18 ct_fw_600 mb-0 pb-0 mt-2">{{item.title}}</h5>
                                     <p class="mb-0 d-flex align-items-center gap-2">
                                         <svg width="13" height="15" viewBox="0 0 13 15" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -194,12 +191,12 @@
                                             </defs>
                                         </svg>
 
-                                        March 15, 2025 • 2:00 PM
+                                        {{item.date | date:'dd-MMM-yyyy'}} • {{item.time}}
                                     </p>
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center gap-4 justify-content-end">
-                                        <a href="#">
+                                        <a (click)="edit(item.id)">
                                             <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <g clip-path="url(#clip0_729_11070)">
@@ -221,100 +218,22 @@
                                             </svg>
 
                                         </a>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#ct_delete_modal">
+                                        <a (click)="openDeleteModal(item)" data-bs-toggle="modal" data-bs-target="#ct_delete_modal">
                                             <svg width="15" height="16" viewBox="0 0 15 16" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path
                                                     d="M4.74062 0.553125L4.51562 1H1.51562C0.9625 1 0.515625 1.44687 0.515625 2C0.515625 2.55312 0.9625 3 1.51562 3H13.5156C14.0688 3 14.5156 2.55312 14.5156 2C14.5156 1.44687 14.0688 1 13.5156 1H10.5156L10.2906 0.553125C10.1219 0.2125 9.775 0 9.39688 0H5.63438C5.25625 0 4.90937 0.2125 4.74062 0.553125ZM13.5156 4H1.51562L2.17813 14.5938C2.22812 15.3844 2.88438 16 3.675 16H11.3562C12.1469 16 12.8031 15.3844 12.8531 14.5938L13.5156 4Z"
                                                     fill="#9CA3AF" />
                                             </svg>
-
-
                                         </a>
-
                                         <a routerLink="/author/live-session" class="ct_purple_btn">Start Live</a>
                                     </div>
                                 </td>
                             </tr>
-
-                            <tr>
-                                <td>
-                                    <span class="ct_custom_badge ct_border_radius_30 px-3"
-                                        style="background-color: #FEF3C7; color: #D97706;">UPCOMING</span>
-                                    <h5 class="ct_fs_18 ct_fw_600 mb-0 pb-0 mt-2">Writing Effective Dialogue</h5>
-                                    <p class="mb-0 d-flex align-items-center gap-2">
-                                        <svg width="13" height="15" viewBox="0 0 13 15" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <g clip-path="url(#clip0_729_11065)">
-                                                <g clip-path="url(#clip1_729_11065)">
-                                                    <path
-                                                        d="M4.15625 1.40625C4.15625 1.04258 3.86367 0.75 3.5 0.75C3.13633 0.75 2.84375 1.04258 2.84375 1.40625V2.5H1.75C0.784766 2.5 0 3.28477 0 4.25V4.6875V6V13C0 13.9652 0.784766 14.75 1.75 14.75H10.5C11.4652 14.75 12.25 13.9652 12.25 13V6V4.6875V4.25C12.25 3.28477 11.4652 2.5 10.5 2.5H9.40625V1.40625C9.40625 1.04258 9.11367 0.75 8.75 0.75C8.38633 0.75 8.09375 1.04258 8.09375 1.40625V2.5H4.15625V1.40625ZM1.3125 6H10.9375V13C10.9375 13.2406 10.7406 13.4375 10.5 13.4375H1.75C1.50937 13.4375 1.3125 13.2406 1.3125 13V6Z"
-                                                        fill="#6B7280" />
-                                                </g>
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_729_11065">
-                                                    <rect width="12.25" height="14" fill="white"
-                                                        transform="translate(0 0.75)" />
-                                                </clipPath>
-                                                <clipPath id="clip1_729_11065">
-                                                    <path d="M0 0.75H12.25V14.75H0V0.75Z" fill="white" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-
-                                        March 15, 2025 • 2:00 PM
-                                    </p>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center gap-4 justify-content-end">
-                                        <a href="#">
-                                            <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <g clip-path="url(#clip0_729_11070)">
-                                                    <g clip-path="url(#clip1_729_11070)">
-                                                        <path
-                                                            d="M11.85 0.603149L10.3375 2.11565L14.4 6.17815L15.9125 4.66565C16.6938 3.8844 16.6938 2.61877 15.9125 1.83752L14.6813 0.603149C13.9 -0.178101 12.6344 -0.178101 11.8532 0.603149H11.85ZM9.63128 2.8219L2.3469 10.1094C2.0219 10.4344 1.7844 10.8375 1.65315 11.2781L0.546903 15.0375C0.468778 15.3032 0.540653 15.5875 0.734403 15.7813C0.928153 15.975 1.21253 16.0469 1.47503 15.9719L5.2344 14.8657C5.67503 14.7344 6.07815 14.4969 6.40315 14.1719L13.6938 6.8844L9.63128 2.8219Z"
-                                                            fill="#9CA3AF" />
-                                                    </g>
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_729_11070">
-                                                        <rect width="16" height="16" fill="white"
-                                                            transform="translate(0.515625)" />
-                                                    </clipPath>
-                                                    <clipPath id="clip1_729_11070">
-                                                        <path d="M0.515625 0H16.5156V16H0.515625V0Z" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-
-                                        </a>
-                                        <a href="javascript:void(0)" data-bs-toggle="modal"
-                                            data-bs-target="#ct_delete_modal">
-                                            <svg width="15" height="16" viewBox="0 0 15 16" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M4.74062 0.553125L4.51562 1H1.51562C0.9625 1 0.515625 1.44687 0.515625 2C0.515625 2.55312 0.9625 3 1.51562 3H13.5156C14.0688 3 14.5156 2.55312 14.5156 2C14.5156 1.44687 14.0688 1 13.5156 1H10.5156L10.2906 0.553125C10.1219 0.2125 9.775 0 9.39688 0H5.63438C5.25625 0 4.90937 0.2125 4.74062 0.553125ZM13.5156 4H1.51562L2.17813 14.5938C2.22812 15.3844 2.88438 16 3.675 16H11.3562C12.1469 16 12.8031 15.3844 12.8531 14.5938L13.5156 4Z"
-                                                    fill="#9CA3AF" />
-                                            </svg>
-
-
-                                        </a>
-
-                                        <a routerLink="/author/live-session" class="ct_purple_btn">Start Live</a>
-                                    </div>
-                                </td>
-                            </tr>
-
                         </table>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
         <div class="row mt-4">
             <div class="col-md-12">
@@ -322,11 +241,11 @@
                     <h4 class="ct_fs_18 ct_fw_600 pb-4">Past Sessions</h4>
                     <div class="table-repsonsive">
                         <table class="table ct_upcomming_table">
-                            <tr>
+                            <tr *ngFor="let item of completedSessions let i = index">
                                 <td>
                                     <span class="ct_custom_badge ct_border_radius_30 px-3"
                                         style="background-color: #F3F4F6; color: #4B5563;">COMPLETED</span>
-                                    <h5 class="ct_fs_18 ct_fw_600 mb-0 pb-0 mt-2">Book Marketing Strategies</h5>
+                                    <h5 class="ct_fs_18 ct_fw_600 mb-0 pb-0 mt-2">{{item.title}}</h5>
                                     <p class="mb-0 d-flex align-items-center gap-2">
                                         <svg width="13" height="15" viewBox="0 0 13 15" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -348,7 +267,7 @@
                                             </defs>
                                         </svg>
 
-                                        March 10, 2025 • 1:00 PM
+                                        {{item.date | date:'dd-MMM-yyyy'}} • {{item.time}}
                                     </p>
                                 </td>
                                 <td>
@@ -356,55 +275,11 @@
                                             class="fa-solid fa-eye"></i>456 viewers</p>
                                 </td>
                             </tr>
-
-                            <tr>
-                                <td>
-                                    <span class="ct_custom_badge ct_border_radius_30 px-3"
-                                        style="background-color: #F3F4F6; color: #4B5563;">COMPLETED</span>
-                                    <h5 class="ct_fs_18 ct_fw_600 mb-0 pb-0 mt-2">Book Marketing Strategies</h5>
-                                    <p class="mb-0 d-flex align-items-center gap-2">
-                                        <svg width="13" height="15" viewBox="0 0 13 15" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <g clip-path="url(#clip0_729_11065)">
-                                                <g clip-path="url(#clip1_729_11065)">
-                                                    <path
-                                                        d="M4.15625 1.40625C4.15625 1.04258 3.86367 0.75 3.5 0.75C3.13633 0.75 2.84375 1.04258 2.84375 1.40625V2.5H1.75C0.784766 2.5 0 3.28477 0 4.25V4.6875V6V13C0 13.9652 0.784766 14.75 1.75 14.75H10.5C11.4652 14.75 12.25 13.9652 12.25 13V6V4.6875V4.25C12.25 3.28477 11.4652 2.5 10.5 2.5H9.40625V1.40625C9.40625 1.04258 9.11367 0.75 8.75 0.75C8.38633 0.75 8.09375 1.04258 8.09375 1.40625V2.5H4.15625V1.40625ZM1.3125 6H10.9375V13C10.9375 13.2406 10.7406 13.4375 10.5 13.4375H1.75C1.50937 13.4375 1.3125 13.2406 1.3125 13V6Z"
-                                                        fill="#6B7280" />
-                                                </g>
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_729_11065">
-                                                    <rect width="12.25" height="14" fill="white"
-                                                        transform="translate(0 0.75)" />
-                                                </clipPath>
-                                                <clipPath id="clip1_729_11065">
-                                                    <path d="M0 0.75H12.25V14.75H0V0.75Z" fill="white" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-
-                                        March 10, 2025 • 1:00 PM
-                                    </p>
-                                </td>
-                                <td>
-                                    <p class="d-flex align-items-center gap-2 justify-content-end "><i
-                                            class="fa-solid fa-eye"></i>456 viewers</p>
-                                </td>
-                            </tr>
-
                         </table>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
-
-
-
     </div>
 </div>
 
@@ -421,8 +296,12 @@
             </div>
             <div class="modal-footer border-0" style="flex-wrap: nowrap;">
                 <button type="button" class="ct_purple_outline_btn w-100" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="ct_purple_btn w-100">Delete</button>
+                <button type="button" class="ct_purple_btn w-100" (click)="deleteDriver()">Delete</button>
+                <button hidden type="button" class="btn btn-secondary" #closeModalDelete
+                data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
+
+<app-loader *ngIf="loading"></app-loader>
