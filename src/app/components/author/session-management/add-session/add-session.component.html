@@ -2,51 +2,52 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h4 class="ct_fs_26 ct_fw_700 mb-0  ct_nunito_font">Schedule Live Session</h4>
+                <h4 class="ct_fs_26 ct_fw_700 mb-0 ct_nunito_font">Schedule Live Session</h4>
 
-                <form action="" class="mt-4">
+                <form [formGroup]="sessionForm" class="mt-4">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group mb-4">
+                        <div class="col-md-12 mb-4">
+                            <div class="form-group ">
                                 <label for="" class="mb-2 ct_fw_600">Session Title</label>
                                 <input type="text" class="form-control ct_input bg-white ct_border_radius_10"
-                                    placeholder="Enter Session Title">
+                                    placeholder="Enter Session Title" formControlName="title">
+                            </div>
+                            <div *ngIf="sessionForm.controls['title'].invalid && sessionForm.controls['title'].touched"
+                                class="error-message">
+                                <div *ngIf="sessionForm.controls['title'].errors?.['required']">
+                                    Name is required.
+                                </div>
                             </div>
                         </div>
-                        <!-- <div class="col-md-12">
-                            <div class="form-group mb-4">
-                                <label for="" class="mb-2 ct_fw_600">Description</label>
-                                <textarea type="text" class="form-control ct_input bg-white ct_border_radius_10 h-auto"
-                                    rows="4" placeholder="Enter Description"></textarea>
-                            </div>
-                        </div> -->
-                        <!-- <div class="col-md-6">
-                            <div class="form-group mb-4">
-                                <label for="" class="mb-2 ct_fw_600">Category</label>
-                                <select class="form-control ct_input bg-white ct_border_radius_10">
-                                    <option value="">Select category</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-4">
-                                <label for="" class="mb-2 ct_fw_600">Tags</label>
-                                <input type="text" class="form-control ct_input bg-white ct_border_radius_10"
-                                    placeholder="Enter Tags">
-                            </div>
-                        </div> -->
-                        <div class="col-md-6">
-                            <div class="form-group mb-4">
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-group">
                                 <label for="" class="mb-2 ct_fw_600">Date</label>
-                                <input type="date" class="form-control ct_input bg-white ct_border_radius_10">
+                                <input type="date" class="form-control ct_input bg-white ct_border_radius_10"
+                                    formControlName="date" [min]="maxDate">
+                            </div>
+                            <div *ngIf="sessionForm.controls['date'].invalid && sessionForm.controls['date'].touched"
+                                class="error-message">
+                                <div *ngIf="sessionForm.controls['date'].errors?.['required']">
+                                    Date is required.
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-4">
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-group">
                                 <label for="" class="mb-2 ct_fw_600">Time</label>
-                                <input type="time" class="form-control ct_input bg-white ct_border_radius_10">
+                                <input type="time" class="form-control ct_input bg-white ct_border_radius_10"
+                                    formControlName="time">
+                            </div>
+                            <div *ngIf="sessionForm.controls['time'].invalid && sessionForm.controls['time'].touched"
+                                class="error-message">
+                                <div *ngIf="sessionForm.controls['time'].errors?.['required']">
+                                    Time is required.
+                                </div>
                             </div>
                         </div>
+
                         <div class="col-md-12">
                             <div class="form-group mb-4">
                                 <label for="" class="ct_fw_600 mb-2 ">Session Thumbnail</label>
@@ -73,7 +74,17 @@
 
                                         <p class="text-center ct_fs_18 ct_text_op_07 mb-0 mt-3">
                                             Drop your image here or <label for="ct_upload_product">
-                                                <input type="file" name="" id="ct_upload_product" class="d-none" />
+                                                <!-- <input type="file" name="" id="ct_upload_product" class="d-none" /> -->
+
+                                                <input type="file" (change)="onFileSelected($event, false)" />
+                                                <div *ngIf="previewImageAdd">
+                                                    <img [src]="previewImageAdd" width="100" height="100" />
+                                                </div>
+
+                                                <div *ngIf="previewImageEdit">
+                                                    <img [src]="previewImageEdit" width="100" height="100" />
+                                                </div>
+
                                                 <div>
                                                     <span class="ct_fw_600 text-dark">browse</span>
                                                 </div>
@@ -91,50 +102,18 @@
                                         <img src="assets/img/hunting_knee.png" alt="" class="ct_uploaded_img d-none">
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
-                        <!-- <div class="col-md-12 mt-4">
-                            <div class="form-group mb-4">
-                                <div class="form-check form-switch ct_switch">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                        id="flexSwitchCheckChecked" checked>
-                                    <label class="form-check-label" for="flexSwitchCheckChecked">
-                                        <p class="mb-0 ct_fw_600">Session
-                                            Visibility</p>
-                                        <small>Make this session visible to everyone</small>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group mb-4">
-                                <div class="form-check form-switch ct_switch">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                        id="flexSwitchCheckChecked" checked>
-                                    <label class="form-check-label" for="flexSwitchCheckChecked">
-                                        <p class="mb-0 ct_fw_600">Notify Followers</p>
-                                        <small>Send notification to your followers</small>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                        </div> -->
 
                     </div>
-
                     <div class="d-flex align-items-center justify-content-end gap-3">
-                        <button class=" ct_outline_blue ct_purple_btn ct_fw_600">Cancel</button>
-                        <button class="ct_purple_btn ct_fw_600">Schedule Session</button>
-
+                        <button class="ct_outline_blue ct_purple_btn ct_fw_600" (click)="goBack()">Cancel</button>
+                        <button (click)="submitForm()" class="ct_purple_btn ct_fw_600">Schedule Session</button>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
+
+<app-loader *ngIf="loading"></app-loader>
