@@ -51,8 +51,12 @@
                         <div class="col-md-12">
                             <div class="form-group mb-4">
                                 <label for="" class="ct_fw_600 mb-2 ">Session Thumbnail</label>
-                                <div class="position-relative">
+                                <div class="position-relative" (click)="ImageInput.click()">
+                                    <input #ImageInput type="file" (change)="onFileSelected($event, false)"
+                                        class="d-none" id="ct_upload_product" />
+
                                     <div class="ct_upload_product_main">
+                                        @if(!previewImageAdd && !previewImageEdit){
                                         <svg width="30" height="29" viewBox="0 0 30 29" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -73,24 +77,10 @@
                                         </svg>
 
                                         <p class="text-center ct_fs_18 ct_text_op_07 mb-0 mt-3">
-                                            Drop your image here or <label for="ct_upload_product">
-                                                <!-- <input type="file" name="" id="ct_upload_product" class="d-none" /> -->
-
-                                                <input type="file" (change)="onFileSelected($event, false)" />
-                                                <div *ngIf="previewImageAdd">
-                                                    <img [src]="previewImageAdd" width="100" height="100" />
-                                                </div>
-
-                                                <div *ngIf="previewImageEdit">
-                                                    <img [src]="previewImageEdit" width="100" height="100" />
-                                                </div>
-
-                                                <div>
-                                                    <span class="ct_fw_600 text-dark">browse</span>
-                                                </div>
-                                            </label>
-                                        </p>
-
+                                            Drop your image here or </p>
+                                        <div>
+                                            <span class="ct_fw_600 text-dark">browse</span>
+                                        </div>
                                         <!-- <label for="ct_upload_product">
                                             <input type="file" name="" id="ct_upload_product" class="d-none" />
                                             <div>
@@ -98,8 +88,18 @@
                                             </div>
                                         </label> -->
                                         <p class="mb-0 mt-2">Supported formats: JPG, PNG, GIF (Max 5MB)</p>
-
                                         <img src="assets/img/hunting_knee.png" alt="" class="ct_uploaded_img d-none">
+
+                                        }@else{
+                                        <div *ngIf="previewImageAdd">
+                                            <img [src]="previewImageAdd" width="100" height="100" />
+                                        </div>
+
+                                        <div *ngIf="previewImageEdit">
+                                            <img [src]="previewImageEdit" width="100" height="100" />
+                                        </div>
+                                        }
+
                                     </div>
                                 </div>
                             </div>

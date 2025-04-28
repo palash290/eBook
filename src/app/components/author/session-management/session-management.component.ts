@@ -4,6 +4,7 @@ import { SharedService } from '../../../services/shared.service';
 import { CommonModule } from '@angular/common';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { LoaderComponent } from '../../reader/shared/loader/loader.component';
+import { JitsiService } from '../../../services/jitsi.service';
 
 @Component({
   selector: 'app-session-management',
@@ -23,8 +24,9 @@ export class SessionManagementComponent {
   completedSessionsCount: any;
   sessionId: any;
   @ViewChild('closeModalDelete') closeModalDelete!: ElementRef;
+  roomName = 'stream-' + Math.random().toString(36).substring(2, 10);
 
-  constructor(private service: SharedService, private router: Router, private toastr: NzMessageService) { }
+  constructor(private service: SharedService, private router: Router, private toastr: NzMessageService, private jitsiService: JitsiService,) { }
 
 
   ngOnInit(): void {
@@ -67,11 +69,8 @@ export class SessionManagementComponent {
           this.toastr.warning('Something went wrong!');
           this.getData();
           this.loading = false;
-          
         }
       },
     });
   }
-
-
 }

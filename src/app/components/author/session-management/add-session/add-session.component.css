@@ -27,3 +27,7 @@
   background-color: transparent;
   color: var(--purple);
 }
+.ct_upload_product_main img{
+  height: 200px;
+  width: 200px;
+}

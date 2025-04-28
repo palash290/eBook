@@ -462,13 +462,13 @@
                         @for (item of authorDetail?.participants; track item) {
                         <a class="d-flex align-items-center">
                             <div class="flex-shrink-0 position-relative"><img alt="user img"
-                                    [src]="item.Author.avatar_url" class="img-fluid ct_img_w_50">
-                                @if(item.Author.isOnline === 1){
+                                    [src]="item.Author?.avatar_url" class="img-fluid ct_img_w_50">
+                                @if(item.Author?.isOnline === 1){
                                 <span class="active"></span>
                                 }
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <h3 class="ct_fs_16 ct_fw_600 ct_chat_text_overflow">{{item.Author.fullName}}</h3>
+                                <h3 class="ct_fs_16 ct_fw_600 ct_chat_text_overflow">{{item.Author?.fullName}}</h3>
                                 <!-- <p class="ct_fs_14 ct_chat_text_overflow">12:55 PM</p> -->
                             </div>
                             <!-- <a href="#" class="text-danger ct_fw_600" data-bs-toggle="modal"

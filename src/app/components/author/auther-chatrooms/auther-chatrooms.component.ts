@@ -30,6 +30,9 @@ export class AutherChatroomsComponent {
   AllReaders: any[] = [];
   Form: FormGroup;
   selectedReaders: any[] = [];
+  profilePreview: string | undefined
+  profileImage: any
+  groupChatId: any
   constructor(private socketService: SocketService, private apiService: SharedService, private datePipe: DatePipe, private toastService: NzMessageService, private fb: FormBuilder) {
     this.Form = this.fb.group({
       chatName: ['', [Validators.required, NoWhitespaceDirective.validate]],
@@ -95,6 +98,7 @@ export class AutherChatroomsComponent {
         this.activeChatId = userId;
         this.userDet = userDetail.User ? userDetail.User : userDetail;
         // this.getAllChatList();
+        this.participantList.map((c: any) => c.id == userId ? c.unreadCount = 0 : c.unreadCount)
         const chatBox = document.querySelector('.chatbox');
         if (chatBox) {
           chatBox.classList.add('showbox');
@@ -114,6 +118,17 @@ export class AutherChatroomsComponent {
     }
   }
 
+  onProfileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.profilePreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      this.profileImage = file
+    }
+  }
 
   // sendMessage() {
   //   if (this.files.length > 0) {
@@ -313,17 +328,26 @@ export class AutherChatroomsComponent {
 
     this.loading = true;
 
-    let formData = {
-      chatName: this.Form.value.chatName,
-      // description: this.Form.value.description,
-      receiverIds: this.Form.value.receiverIds
-    }
+    let formData = new FormData();
+
+    formData.append('chatName', this.Form.value.chatName);
+    formData.append('description', this.Form.value.description);
+    formData.append('receiverIds', JSON.stringify(this.Form.value.receiverIds));
+    formData.append('profilePic', this.profileImage);
+
+    // let formData = {
+    //   chatName: this.Form.value.chatName,
+    //   description: this.Form.value.description,
+    //   receiverIds: this.Form.value.receiverIds,
+    //   profilePic: this.profileImage
+    // }
 
     this.apiService.postAPI('author/createGroupChat', formData).subscribe({
       next: (res: any) => {
         if (res.success == true) {
           this.toastService.success(res.message);
           this.submitModalClose.nativeElement.click();
+          this.Form.reset();
         } else {
           this.loading = false;
           this.toastService.warning(res.message);
@@ -339,6 +363,16 @@ export class AutherChatroomsComponent {
   isAdded(id: any) {
     return this.userDet?.participants.find((p: any) => p.userId == id)
   }
+
+  editGroupChat(data: any) {
+    console.log(359, data)
+    this.groupChatId = data.id
+    this.Form.patchValue({
+      chatName: data.name,
+      description: data.description,
+      receiverIds: data.participants.map((p: any) => p.userId)
+    })
+  }
 }
 
 export class NoWhitespaceDirective {
@@ -350,6 +384,8 @@ export class NoWhitespaceDirective {
     }
     return null;
   }
+
+
 }
 
 

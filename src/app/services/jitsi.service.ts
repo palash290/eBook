@@ -7,7 +7,7 @@ declare var JitsiMeetExternalAPI: any;
 export class JitsiService {
       domain: string = 'meet.jit.si';
       api: any;
-
+      private isMeetingJoined = false;
       startMeeting(room: string, displayName: string, containerId: string = 'jitsi-container') {
             const options = {
                   roomName: room,
@@ -20,7 +20,7 @@ export class JitsiService {
                   interfaceConfigOverwrite: {
                         SHOW_JITSI_WATERMARK: false,
                         SHOW_BRAND_WATERMARK: false,
-                        TOOLBAR_BUTTONS: ['microphone', 'camera', 'hangup'],
+                        // TOOLBAR_BUTTONS: [],
                         SHOW_CHROME_EXTENSION_BANNER: false,
                   },
                   configOverwrite: {
@@ -30,16 +30,30 @@ export class JitsiService {
             };
             this.api = new JitsiMeetExternalAPI(this.domain, options);
 
-            this.api.addEventListeners({
-                  readyToClose: this.handleVideoConferenceLeft,
-            });
+            
+
+            this.api.on('videoConferenceJoined', () => {
+                  console.log(36666666666666666666,'Successfully joined meeting');
+                  this.isMeetingJoined = true; // Mark as joined
+                });
+              
+                this.api.on('videoConferenceLeft', () => {
+                  if (this.isMeetingJoined) { // Critical check!
+                    console.log(4222222222222222222222,'User intentionally left meeting');
+                    this.handleMeetingEnd();
+                  }
+                });
       }
-      handleVideoConferenceLeft = () => {
-            console.log('handleVideoConferenceLeft hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
-      };
+
+      handleMeetingEnd = () => {
+            console.log('Meeting ended - navigating away');
+            // Add your navigation logic here
+            // this.router.navigate(['/post-meeting-route']);
+      }
       endMeeting() {
             if (this.api) {
                   this.api.dispose();
             }
       }
+
 }

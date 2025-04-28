@@ -38,12 +38,8 @@
                                     d="M28.2606 6.70359H21.9449C21.6291 6.70359 21.3737 6.44844 21.3737 6.13298C21.3737 5.81753 21.6291 5.56238 21.9449 5.56238H28.2606C28.5764 5.56238 28.8318 5.81753 28.8318 6.13298C28.8334 6.44844 28.5764 6.70359 28.2606 6.70359Z"
                                     fill="#8280FF" />
                             </svg>
-
-
-
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class=" col-xxl-3 col-lg-6 col-md-6 mb-4">
@@ -218,7 +214,8 @@
                                             </svg>
 
                                         </a>
-                                        <a (click)="openDeleteModal(item)" data-bs-toggle="modal" data-bs-target="#ct_delete_modal">
+                                        <a (click)="openDeleteModal(item)" data-bs-toggle="modal"
+                                            data-bs-target="#ct_delete_modal">
                                             <svg width="15" height="16" viewBox="0 0 15 16" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path
@@ -226,7 +223,8 @@
                                                     fill="#9CA3AF" />
                                             </svg>
                                         </a>
-                                        <a routerLink="/author/live-session" class="ct_purple_btn">Start Live</a>
+                                        <a routerLink="/author/live-session" [queryParams]="{sessionId : item.id}"
+                                            class="ct_purple_btn">Start Live</a>
                                     </div>
                                 </td>
                             </tr>
@@ -298,7 +296,7 @@
                 <button type="button" class="ct_purple_outline_btn w-100" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="ct_purple_btn w-100" (click)="deleteDriver()">Delete</button>
                 <button hidden type="button" class="btn btn-secondary" #closeModalDelete
-                data-bs-dismiss="modal">Close</button>
+                    data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

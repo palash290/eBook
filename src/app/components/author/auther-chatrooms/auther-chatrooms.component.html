@@ -139,17 +139,28 @@
                                                 </svg>
 
                                             </a>
-                                            <!-- <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                data-bs-target="#ct_delete_modal">
-                                                <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M0 3H16V19H0V3Z" stroke="#E5E7EB" />
-                                                    <path d="M0 0H17V17H0V0Z" stroke="#E5E7EB" />
-                                                    <path
-                                                        d="M1.0625 1.0625H15.9375C16.5252 1.0625 17 1.5373 17 2.125V3.1875C17 3.7752 16.5252 4.25 15.9375 4.25H1.0625C0.474805 4.25 0 3.7752 0 3.1875V2.125C0 1.5373 0.474805 1.0625 1.0625 1.0625ZM1.0625 5.3125H15.9375V13.8125C15.9375 14.9846 14.9846 15.9375 13.8125 15.9375H3.1875C2.01543 15.9375 1.0625 14.9846 1.0625 13.8125V5.3125ZM5.3125 7.96875C5.3125 8.26094 5.55156 8.5 5.84375 8.5H11.1562C11.4484 8.5 11.6875 8.26094 11.6875 7.96875C11.6875 7.67656 11.4484 7.4375 11.1562 7.4375H5.84375C5.55156 7.4375 5.3125 7.67656 5.3125 7.96875Z"
-                                                        fill="#4B5563" />
+                                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                data-bs-target="#ct_new_group_chat" (click)="editGroupChat(userDet)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24">
+                                                    <g fill="none" stroke="#4b5562" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2">
+                                                        <path stroke-dasharray="20" stroke-dashoffset="20" d="M3 21h18">
+                                                            <animate fill="freeze" attributeName="stroke-dashoffset"
+                                                                dur="0.2s" values="20;0" />
+                                                        </path>
+                                                        <path stroke-dasharray="48" stroke-dashoffset="48"
+                                                            d="M7 17v-4l10 -10l4 4l-10 10h-4">
+                                                            <animate fill="freeze" attributeName="stroke-dashoffset"
+                                                                begin="0.2s" dur="0.6s" values="48;0" />
+                                                        </path>
+                                                        <path stroke-dasharray="8" stroke-dashoffset="8" d="M14 6l4 4">
+                                                            <animate fill="freeze" attributeName="stroke-dashoffset"
+                                                                begin="0.8s" dur="0.2s" values="8;0" />
+                                                        </path>
+                                                    </g>
                                                 </svg>
-                                            </a> -->
+                                            </a>
                                         </div>
                                         }
                                     </div>
@@ -394,6 +405,20 @@
                 </div>
                 <div class="modal-body">
 
+                    <div class="d-flex justify-content-center">
+                        <div class="ct_upload_user_profile_img">
+                            <img [src]="profilePreview ? profilePreview : 'assets/img/profile_logo.jpg'" alt="">
+                            <label for="ct_upload_user_profile2" class="position-relative d-block">
+                                <input type="file" class="d-none" id="ct_upload_user_profile2"
+                                    (change)="onProfileChange($event)">
+                                <div class="ct_authore_banner_upload_icon_12">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </div>
+
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="form-group mb-3">
                         <label for="" class=" mb-2 ct_fs_16">Group Name</label>
                         <input type="text" class="form-control ct_input bg-white ct_border_radius_10"
@@ -435,7 +460,8 @@
                 <div class="modal-footer border-0 pt-0">
                     <button #submitModalClose type="button" data-bs-dismiss="modal" class="d-none"></button>
 
-                    <button type=" submit" class="ct_purple_btn" (click)="onSubmit()">Create
+                    <button type=" submit" class="ct_purple_btn"
+                        (click)="onSubmit()">{{groupChatId ? 'Update' : 'Create'}}
                         Group</button>
                 </div>
             </form>

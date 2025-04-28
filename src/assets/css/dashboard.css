@@ -94,7 +94,7 @@ body {
   transform: scaleY(1);
 }
 
-.ct_side_bar ul li + li {
+.ct_side_bar ul li+li {
   margin-top: 10px;
 }
 
@@ -191,10 +191,12 @@ body {
 .ct_switch .form-check-input:focus {
   box-shadow: unset;
 }
+
 .ct_switch .form-check-input:checked {
   background-color: #000;
   border-color: #000;
 }
+
 .ct_custom_table tr th,
 .ct_custom_table tr td {
   background-color: transparent;
@@ -735,6 +737,7 @@ small.ct_dot_online {
   gap: 15px;
   align-items: center;
   padding-block: 5px;
+  padding-right: 10px;
 }
 
 .ct_notification_custom_dropdown {
@@ -753,7 +756,7 @@ small.ct_dot_online {
   right: 0px;
 }
 
-.ct_notification_custom_dropdown li + li {
+.ct_notification_custom_dropdown li+li {
   border-top: 1px solid #f5f5f5;
 }
 
