@@ -20,7 +20,6 @@ export class AddSessionComponent {
   loading: boolean = false;
   selectedFile!: File;
   previewImageAdd: string | ArrayBuffer | null = null;
-  previewImageEdit: string | ArrayBuffer | null = null;
   isEdit: boolean = false;
   sessionId: any = null;
   maxDate: any;
@@ -62,11 +61,7 @@ export class AddSessionComponent {
 
       const reader = new FileReader();
       reader.onload = () => {
-        if (isEdit) {
-          this.previewImageEdit = reader.result;
-        } else {
-          this.previewImageAdd = reader.result;
-        }
+        this.previewImageAdd = reader.result;
       };
       reader.readAsDataURL(this.selectedFile);
     }
@@ -130,7 +125,7 @@ export class AddSessionComponent {
         });
 
         // Set existing image preview for edit modal
-        this.previewImageEdit = this.seddiondata.thumbnail;
+        this.previewImageAdd = this.seddiondata.thumbnail;
       },
       error: error => {
         console.log(error.message);

@@ -36,7 +36,7 @@ export class AutherChatroomsComponent {
   constructor(private socketService: SocketService, private apiService: SharedService, private datePipe: DatePipe, private toastService: NzMessageService, private fb: FormBuilder) {
     this.Form = this.fb.group({
       chatName: ['', [Validators.required, NoWhitespaceDirective.validate]],
-      description: ['', [Validators.required, NoWhitespaceDirective.validate]],
+      description: ['', [Validators.required, NoWhitespaceDirective.validate, Validators.maxLength(160)]],
       receiverIds: [[], [Validators.required, NoWhitespaceDirective.validate]],
     });
   }
@@ -330,10 +330,11 @@ export class AutherChatroomsComponent {
 
     let formData = new FormData();
 
-    formData.append('chatName', this.Form.value.chatName);
+    formData.append('name', this.Form.value.chatName);
     formData.append('description', this.Form.value.description);
-    formData.append('receiverIds', JSON.stringify(this.Form.value.receiverIds));
-    formData.append('profilePic', this.profileImage);
+    if (this.profileImage) {
+      formData.append('profilePic', this.profileImage);
+    }
 
     // let formData = {
     //   chatName: this.Form.value.chatName,
@@ -342,12 +343,73 @@ export class AutherChatroomsComponent {
     //   profilePic: this.profileImage
     // }
 
-    this.apiService.postAPI('author/createGroupChat', formData).subscribe({
+    if (this.groupChatId) {
+      this.apiService.update(`author/editGroupChat/${this.groupChatId}`, formData).subscribe({
+        next: (res: any) => {
+          if (res.success == true) {
+            this.toastService.success(res.message);
+            this.submitModalClose.nativeElement.click();
+            this.Form.reset();
+            this.groupChatId = null;
+            this.profilePreview = undefined
+            this.getAllChatList();
+          } else {
+            this.loading = false;
+            this.toastService.warning(res.message);
+          }
+        },
+        error: (error) => {
+          this.loading = false;
+          this.toastService.error(error);
+        }
+      });
+    } else {
+      formData.append('receiverIds', this.Form.value.receiverIds);
+
+      this.apiService.postAPI('author/createGroupChat', formData).subscribe({
+        next: (res: any) => {
+          if (res.success == true) {
+            this.toastService.success(res.message);
+            this.submitModalClose.nativeElement.click();
+            this.Form.reset();
+            this.getAllChatList();
+          } else {
+            this.loading = false;
+            this.toastService.warning(res.message);
+          }
+        },
+        error: (error) => {
+          this.loading = false;
+          this.toastService.error(error);
+        }
+      });
+    }
+  }
+
+  isAdded(id: any) {
+    return this.userDet?.participants?.find((p: any) => p.userId == id)
+  }
+
+  editGroupChat(data: any) {
+    this.groupChatId = data.id
+    this.profilePreview = data.profilePic
+    this.Form.patchValue({
+      chatName: data.name,
+      description: data.description,
+      receiverIds: data.participants.map((p: any) => p.userId)
+    })
+  }
+
+  removeMember(item: any) {
+    this.apiService.delete(`author/members/${this.activeChatId}/${item.id}`).subscribe({
       next: (res: any) => {
         if (res.success == true) {
           this.toastService.success(res.message);
-          this.submitModalClose.nativeElement.click();
-          this.Form.reset();
+          const exist = this.readers.find((p: any) => p.id == item.id);
+          if (!exist) {
+            this.readers.push(item);
+          }
+          this.userDet!.participants = this.userDet!.participants.filter((p: any) => p.User.id != item.id);
         } else {
           this.loading = false;
           this.toastService.warning(res.message);
@@ -360,18 +422,32 @@ export class AutherChatroomsComponent {
     });
   }
 
-  isAdded(id: any) {
-    return this.userDet?.participants.find((p: any) => p.userId == id)
-  }
 
-  editGroupChat(data: any) {
-    console.log(359, data)
-    this.groupChatId = data.id
-    this.Form.patchValue({
-      chatName: data.name,
-      description: data.description,
-      receiverIds: data.participants.map((p: any) => p.userId)
-    })
+  AddMember(item: any) {
+    let formData = {
+      receiverIds: [item.id],
+      chatId: this.activeChatId
+    }
+
+    this.apiService.postAPI(`author/members`, formData).subscribe({
+      next: (res: any) => {
+        if (res.success == true) {
+          this.toastService.success(res.message);
+          this.readers = this.readers.filter((p: any) => p.id != item.id);
+          const newParticipant = {
+            User: item
+          };
+          return this.userDet?.participants.push(newParticipant)
+        } else {
+          this.loading = false;
+          this.toastService.warning(res.message);
+        }
+      },
+      error: (error) => {
+        this.loading = false;
+        this.toastService.error(error);
+      }
+    });
   }
 }
 

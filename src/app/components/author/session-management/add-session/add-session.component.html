@@ -2,7 +2,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h4 class="ct_fs_26 ct_fw_700 mb-0 ct_nunito_font">Schedule Live Session</h4>
+                <h4 class="ct_fs_26 ct_fw_700 mb-0 ct_nunito_font">
+                    {{ (isEdit && sessionId) ? 'Update Scheduled Session' : 'Schedule Live Session' }}
+                </h4>
 
                 <form [formGroup]="sessionForm" class="mt-4">
                     <div class="row">
@@ -56,7 +58,7 @@
                                         class="d-none" id="ct_upload_product" />
 
                                     <div class="ct_upload_product_main">
-                                        @if(!previewImageAdd && !previewImageEdit){
+                                        @if(!previewImageAdd){
                                         <svg width="30" height="29" viewBox="0 0 30 29" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -95,9 +97,9 @@
                                             <img [src]="previewImageAdd" width="100" height="100" />
                                         </div>
 
-                                        <div *ngIf="previewImageEdit">
+                                        <!-- <div *ngIf="previewImageEdit">
                                             <img [src]="previewImageEdit" width="100" height="100" />
-                                        </div>
+                                        </div> -->
                                         }
 
                                     </div>
@@ -108,7 +110,9 @@
                     </div>
                     <div class="d-flex align-items-center justify-content-end gap-3">
                         <button class="ct_outline_blue ct_purple_btn ct_fw_600" (click)="goBack()">Cancel</button>
-                        <button (click)="submitForm()" class="ct_purple_btn ct_fw_600">Schedule Session</button>
+                        <button (click)="submitForm()"
+                            class="ct_purple_btn ct_fw_600">{{isEdit && sessionId ? 'Update Session' : 'Schedule New Session'}}
+                        </button>
                     </div>
                 </form>
             </div>

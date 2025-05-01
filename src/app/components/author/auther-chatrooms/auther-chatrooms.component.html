@@ -34,7 +34,7 @@
                                                 <div class="ct_chat_list_grid">
                                                     <div class="position-relative">
                                                         <img class="img-fluid ct_img_w_50"
-                                                            [src]="item.isGroupChat ? 'assets/img/np_pro.png' : item.participants[0]?.User?.avatar_url || 'assets/img/np_pro.png'"
+                                                            [src]="item.isGroupChat ? item.profilePic : item.participants[0]?.User?.avatar_url || 'assets/img/np_pro.png'"
                                                             alt="user img">
                                                         @if(item.participants[0]?.User?.isOnline && !item.isGroupChat){
                                                         <span class="active"></span>
@@ -105,7 +105,7 @@
                                             <i class="fa-solid fa-arrow-left text-dark"></i>
                                         </a>
                                         <div class="ct_grid_56_auto">
-                                            <img [src]="userDet?.avatar_url ? userDet?.avatar_url : 'assets/img/np_pro.png'"
+                                            <img [src]="userDet?.avatar_url ? userDet?.avatar_url : userDet?.profilePic || 'assets/img/np_pro.png'"
                                                 alt="">
                                             <div>
                                                 <h4 class="ct_fs_24 ct_fw_700 mb-0 text-capitalize ">
@@ -399,7 +399,8 @@
         <div class="modal-content">
             <form [formGroup]="Form">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title ct_fs_24 ct_fw_600 mb-0" id="ct_new_group_chatLabel">Create New Group Chat
+                    <h5 class="modal-title ct_fs_24 ct_fw_600 mb-0" id="ct_new_group_chatLabel">
+                        {{groupChatId ? 'Update' : 'Create New'}} Group Chat
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -436,7 +437,12 @@
                             class="text-danger">
                             <small>Description is required</small>
                         </div>
+                        <div *ngIf="Form.get('description')?.hasError('maxlength') && Form.get('description')?.touched"
+                            class="text-danger">
+                            <small>Maximum 160 characters are allowed</small>
+                        </div>
                     </div>
+                    @if(!groupChatId){
                     <div class="form-group mb-3">
                         <label for="" class=" mb-2 ct_fs_16">Add Members</label>
                         <!-- <div class="position-relative">
@@ -456,6 +462,7 @@
                             <small>Members are required</small>
                         </div>
                     </div>
+                    }
                 </div>
                 <div class="modal-footer border-0 pt-0">
                     <button #submitModalClose type="button" data-bs-dismiss="modal" class="d-none"></button>
@@ -485,7 +492,8 @@
                         @for (item of userDet?.participants; track item) {
                         <a class="d-flex align-items-center">
                             <div class="flex-shrink-0 position-relative"><img alt="user img"
-                                    [src]="item.User.avatar_url" class="img-fluid ct_img_w_50">
+                                    [src]="item.User.avatar_url ? item.User.avatar_url : 'assets/img/profile_logo.jpg'"
+                                    class="img-fluid ct_img_w_50">
                                 @if(item.User.isOnline === 1){
                                 <span class="active"></span>
                                 }
@@ -494,8 +502,7 @@
                                 <h3 class="ct_fs_16 ct_fw_600 ct_chat_text_overflow">{{item.User.fullName}}</h3>
                                 <p class="ct_fs_14 ct_chat_text_overflow">12:55 PM</p>
                             </div>
-                            <a href="#" class="text-danger ct_fw_600" data-bs-toggle="modal"
-                                data-bs-target="#ct_remove_modal">Remove</a>
+                            <a (click)="removeMember(item.User)" class="text-danger ct_fw_600">Remove</a>
                         </a>
                         }
                     </div>
@@ -545,7 +552,7 @@
                                     </div>
                                 </div>
                                 <div class="ct_caht_msg_notify">
-                                    <p class="mb-0">Add</p>
+                                    <p class="mb-0" (click)="AddMember(item)">Add</p>
                                 </div>
                             </a>
                             }

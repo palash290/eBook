@@ -130,17 +130,16 @@ function updateProgress(step) {
 //   }
 // }, 2000);
 
-$(window).scroll(function () {
-  var scroll = $(window).scrollTop();
+// $(window).scroll(function () {
+//   var scroll = $(window).scrollTop();
 
-  //>=, not <=
-  if (scroll >= 50) {
-    //clearHeader, not clearheader - caps H
-    $("header").addClass("ct_sticky_menu");
-  } else {
-    $("header").removeClass("ct_sticky_menu");
-  }
-}); //missing );
+//>=, not <=
+//   if (scroll >= 5) {
+//     $("header").addClass("ct_sticky_menu");
+//   } else {
+//     $("header").removeClass("ct_sticky_menu");
+//   }
+// }); 
 
 $(window).on("load", function () {
   $(".ct_loader_main").fadeOut();

@@ -55,7 +55,8 @@
                                           }
                                     </div>
                                     <div class="ct_notification_custom_dropdown">
-                                          <div class="d-flex align-items-center justify-content-between gap-2 p-2 border-bottom">
+                                          <div
+                                                class="d-flex align-items-center justify-content-between gap-2 p-2 border-bottom">
                                                 <p class="mb-0 ct_fw_600">All Notifications</p>
                                                 @if(notifications.length > 0){
                                                 <div class="ct_dlt_all_12" (click)="clearNotification()">
@@ -106,7 +107,6 @@
 
                               </div>
                               <div class="ct_right_menu_items">
-
                                     <ul>
                                           <li class="ct_wishlist_icon">
                                                 <div class="position-relative">
@@ -146,8 +146,6 @@
                                                                   <h5 class="mb-0">{{ cartCount() }}</h5>
                                                             </div>
                                                             }
-
-
                                                       </div>
                                                 </a>
                                           </li>
@@ -160,9 +158,6 @@
                                                 </a>
                                                 <ul class="dropdown-menu ct_custom_dropdown"
                                                       aria-labelledby="dropdownMenuButton1">
-
-
-
                                                       <li routerLink="/edit-reader"><a class="dropdown-item">
 
                                                                   Edit Profile</a></li>
@@ -170,9 +165,6 @@
                                                       <li routerLink="/reader-order-history"><a class="dropdown-item">
 
                                                                   Order History</a></li>
-
-
-
                                                       <li routerLink="/purchased-books"><a class="dropdown-item">
 
                                                                   Purchased Books</a></li>

@@ -206,16 +206,16 @@
                                                 (click)="getAllmessages(item.id) ; show()">
                                                 <div class="flex-shrink-0 position-relative">
                                                     <img class="img-fluid ct_img_w_50"
-                                                        [src]="item.isGroupChat ? 'assets/img/np_pro.png' : item.participants[0].Author.avatar_url ? item.participants[0].Author.avatar_url : 'assets/img/profile_logo.jpg'"
+                                                        [src]="item.isGroupChat ? item.profilePic : item.participants[0]?.Author.avatar_url ? item.participants[0].Author.avatar_url : 'assets/img/profile_logo.jpg'"
                                                         alt="user img">
-                                                    @if(item.participants[0].Author.isOnline){
+                                                    @if(item.participants[0]?.Author.isOnline){
                                                     <span class="active"></span>
                                                     }
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
                                                     <h3 class="ct_fs_16 ct_fw_600">
                                                         {{item.isGroupChat ? item.name :
-                                                                item.participants[0].Author.fullName}}
+                                                                item.participants[0]?.Author.fullName}}
                                                     </h3>
                                                     <p class="ct_fs_14 ct_purple_text">
                                                         {{ item.lastMessage?.content || 'No messages yet' }}
@@ -275,7 +275,7 @@
                     <div class="chatbox">
                         <div class="modal-dialog-scrollable">
                             <div class="modal-content">
-                                <div class="msg-head d-flex  gap-3">
+                                <div class="msg-head d-flex gap-3">
                                     <a (click)="closeChatBox()" class="ct_chat_back_btn"><i
                                             class="fa-solid fa-arrow-left"></i></a>
                                     <div>
@@ -295,6 +295,12 @@
                                         </p>
                                         }
                                     </div>
+
+                                    @if(authorDetail?.isGroupChat){
+                                    <i data-bs-toggle="modal" data-bs-target="#ct_delete_modal"
+                                        class="fa-solid fa-arrow-right-from-bracket ms-auto ct_fs_18"
+                                        style="cursor: pointer;"></i>
+                                    }
                                 </div>
                                 <!-- #scrollMe [scrollTop]="scrollMe.scrollHeight -->
                                 <div class="modal-body" #scrollMe [scrollTop]=" scrollMe.scrollHeight">
@@ -479,6 +485,25 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ct_delete_modal" tabindex="-1" aria-labelledby="ct_delete_modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <h4 class="ct_fs_18 ct_fw_18">Exit Group</h4>
+                <p class="ct_text_op_07 mb-0">Are you sure you want to exit this group chat?</p>
+            </div>
+            <div class="modal-footer border-0" style="flex-wrap: nowrap;">
+                <button type="button" class="ct_purple_outline_btn w-100" data-bs-dismiss="modal">Cancel</button>
+                <button (click)="exitGroup()" type="button" class="bg-danger ct_purple_btn w-100"
+                    style="border-color: rgb(220, 53, 69)" data-bs-dismiss="modal">Exit</button>
+            </div>
         </div>
     </div>
 </div>

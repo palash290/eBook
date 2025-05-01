@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ChatComponent } from "../chat/chat.component";
 import { SharedService } from '../../../services/shared.service';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-community',
@@ -14,16 +15,25 @@ export class CommunityComponent {
   sessions: any
   loading: boolean = false
   originalChatList: any[] = []
-  constructor(private service: SharedService) { }
+  constructor(private service: SharedService, private modalService: ModalService) {
+    if (!this.service.isLogedIn('user')) {
+      this.modalService.openModal()
+      return
+    }
+  }
 
   ngOnInit(): void {
-    this.getSessions()
-    this.getAllChatList()
+    if (this.service.isLogedIn('user')) {
+      this.getSessions()
+      this.getAllChatList()
+      return
+    }
+
   }
 
   getAllChatList() {
     this.loading = true
-    this.service.get(`chat/getAllChats`).subscribe({
+    this.service.get(`chat/getAllGroupChats`).subscribe({
       next: (resp: any) => {
         this.loading = false
         this.originalChatList = resp.data

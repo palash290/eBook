@@ -581,11 +581,9 @@ nav.ct_navbar.ct_sticky_menu .ct_logo_img img {
 }
 
 .ct_story_card {
-  background: linear-gradient(
-    90deg,
-    rgba(97, 97, 97, 0.45) 0%,
-    rgba(77, 75, 75, 0.6) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(97, 97, 97, 0.45) 0%,
+      rgba(77, 75, 75, 0.6) 100%);
   backdrop-filter: blur(14px);
   transition: 0.4s ease all;
   border-radius: 12px;
@@ -773,7 +771,7 @@ footer {
   padding-top: 100px;
 }
 
-.ct_footer_menu li + li {
+.ct_footer_menu li+li {
   margin-top: 10px;
 }
 
@@ -799,7 +797,7 @@ footer {
   gap: 20px;
 }
 
-.ct_social_media_list li + li {
+.ct_social_media_list li+li {
   margin-top: 0px;
 }
 
@@ -992,14 +990,14 @@ footer {
 }
 
 /* Input field:focus styles */
-.ct_input-field:focus + .ct_input-label {
+.ct_input-field:focus+.ct_input-label {
   top: 0px;
   font-size: 15px;
   color: var(--purple_light);
   font-weight: 500;
 }
 
-.ct_input-field:focus + .ct_input-label + .ct_input-highlight {
+.ct_input-field:focus+.ct_input-label+.ct_input-highlight {
   width: 100%;
 }
 
@@ -1028,7 +1026,7 @@ footer {
 }
 
 /* Input */
-.cl-checkbox > input {
+.cl-checkbox>input {
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -1051,7 +1049,7 @@ footer {
 }
 
 /* Span */
-.cl-checkbox > span {
+.cl-checkbox>span {
   display: inline-block;
   width: 100%;
   font-size: 15px;
@@ -1060,7 +1058,7 @@ footer {
 }
 
 /* Box */
-.cl-checkbox > span::before {
+.cl-checkbox>span::before {
   content: "";
   display: inline-block;
   box-sizing: border-box;
@@ -1075,7 +1073,7 @@ footer {
   transition: border-color 0.2s, background-color 0.2s;
 }
 
-.ct_checkbox_w_h_15 > span::before {
+.ct_checkbox_w_h_15>span::before {
   width: 15px;
   height: 15px;
   border-radius: 4px;
@@ -1083,7 +1081,7 @@ footer {
 }
 
 /* Checkmark */
-.cl-checkbox > span::after {
+.cl-checkbox>span::after {
   content: "";
   display: block;
   position: absolute;
@@ -1097,7 +1095,7 @@ footer {
   transform: translate(3px, 4px) rotate(-45deg);
 }
 
-.ct_checkbox_w_h_15 > span::after {
+.ct_checkbox_w_h_15>span::after {
   content: "";
   display: block;
   position: absolute;
@@ -1112,72 +1110,72 @@ footer {
 }
 
 /* Checked, Indeterminate */
-.cl-checkbox > input:checked,
-.cl-checkbox > input:indeterminate {
+.cl-checkbox>input:checked,
+.cl-checkbox>input:indeterminate {
   background-color: var(--purple_light);
 }
 
-.cl-checkbox > input:checked + span::before,
-.cl-checkbox > input:indeterminate + span::before {
+.cl-checkbox>input:checked+span::before,
+.cl-checkbox>input:indeterminate+span::before {
   border-color: var(--purple_light);
   background-color: var(--purple_light);
 }
 
-.cl-checkbox > input:checked + span::after,
-.cl-checkbox > input:indeterminate + span::after {
+.cl-checkbox>input:checked+span::after,
+.cl-checkbox>input:indeterminate+span::after {
   border-color: #fff;
 }
 
-.cl-checkbox > input:indeterminate + span::after {
+.cl-checkbox>input:indeterminate+span::after {
   border-left: none;
   transform: translate(4px, 3px);
 }
 
 /* Hover, Focus */
-.cl-checkbox:hover > input {
+.cl-checkbox:hover>input {
   opacity: 0.04;
 }
 
-.cl-checkbox > input:focus {
+.cl-checkbox>input:focus {
   opacity: 0.12;
 }
 
-.cl-checkbox:hover > input:focus {
+.cl-checkbox:hover>input:focus {
   opacity: 0.16;
 }
 
 /* Active */
-.cl-checkbox > input:active {
+.cl-checkbox>input:active {
   opacity: 1;
   transform: scale(0);
   transition: transform 0s, opacity 0s;
 }
 
-.cl-checkbox > input:active + span::before {
+.cl-checkbox>input:active+span::before {
   border-color: #85b8b7;
 }
 
-.cl-checkbox > input:checked:active + span::before {
+.cl-checkbox>input:checked:active+span::before {
   border-color: transparent;
   background-color: rgba(0, 0, 0, 0.6);
 }
 
 /* Disabled */
-.cl-checkbox > input:disabled {
+.cl-checkbox>input:disabled {
   opacity: 0;
 }
 
-.cl-checkbox > input:disabled + span {
+.cl-checkbox>input:disabled+span {
   color: rgba(0, 0, 0, 0.38);
   cursor: initial;
 }
 
-.cl-checkbox > input:disabled + span::before {
+.cl-checkbox>input:disabled+span::before {
   border-color: currentColor;
 }
 
-.cl-checkbox > input:checked:disabled + span::before,
-.cl-checkbox > input:indeterminate:disabled + span::before {
+.cl-checkbox>input:checked:disabled+span::before,
+.cl-checkbox>input:indeterminate:disabled+span::before {
   border-color: transparent;
   background-color: currentColor;
 }
@@ -1222,7 +1220,7 @@ footer {
   fill: #fff;
 }
 
-.ct_custom_dropdown li + li {
+.ct_custom_dropdown li+li {
   margin-top: 6px;
 }
 
@@ -1429,12 +1427,12 @@ button.btn-close.ct_cloose_btn i {
   opacity: 0;
 }
 
-.ct_radio-input:checked + .ct_radio-label {
+.ct_radio-input:checked+.ct_radio-label {
   background-color: #f3f5f7;
   border-color: #141718;
 }
 
-.ct_radio-input:focus + .ct_radio-label {
+.ct_radio-input:focus+.ct_radio-label {
   background-color: #f3f5f7;
 }
 
@@ -1453,11 +1451,11 @@ button.btn-close.ct_cloose_btn i {
   border-color: #555;
 }
 
-.ct_radio-input:checked + .ct_radio-label .ct_radio-inner-circle {
+.ct_radio-input:checked+.ct_radio-label .ct_radio-inner-circle {
   border-color: #121212;
 }
 
-.ct_radio-input:checked + .ct_radio-label .ct_radio-inner-circle::after {
+.ct_radio-input:checked+.ct_radio-label .ct_radio-inner-circle::after {
   content: "";
   display: block;
   width: 0.5em;
@@ -1564,7 +1562,7 @@ button.btn-close.ct_cloose_btn i {
   cursor: pointer;
 }
 
-.ct_custom-dots .ct_dot + .ct_dot {
+.ct_custom-dots .ct_dot+.ct_dot {
   margin-top: 15px;
 }
 
@@ -1804,7 +1802,7 @@ a.ct_purple_outline_btn.ct_outline_btn_w_icon {
   padding: 16px 0px;
 }
 
-.ct_author_about_box ul li + li {
+.ct_author_about_box ul li+li {
   border-top: 1px solid hsl(242deg 91% 8% / 30%);
 }
 
@@ -2081,7 +2079,7 @@ a.ct_purple_outline_btn.ct_outline_btn_w_icon {
 }
 
 .ct_comminity_tab.nav-pills .nav-link.active,
-.ct_comminity_tab.nav-pills .show > .nav-link {
+.ct_comminity_tab.nav-pills .show>.nav-link {
   color: #000;
   background-color: transparent;
   border-bottom: 2px solid #000;
@@ -2405,6 +2403,11 @@ a.add img {
   font-weight: 500;
 }
 
+.msg-body ul .sender p {
+  margin-bottom: 3px;
+
+}
+
 .msg-body ul .repaly {
   display: block;
   width: 100%;
@@ -2433,6 +2436,7 @@ a.add img {
 
 .msg-body ul .repaly p {
   text-align: left;
+  margin-bottom: 3px;
 }
 
 .msg-body ul .repaly {
@@ -3018,7 +3022,7 @@ button:focus {
   }
 
   .chatlist {
-    width: 100%;
+    width: 100% !important;
   }
 
   .chatbox {
@@ -3098,6 +3102,7 @@ button:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+  left: 0;
 }
 
 .ct_loader_main svg {

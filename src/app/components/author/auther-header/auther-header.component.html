@@ -18,7 +18,7 @@
                 }
             </div>
             <div class="ct_notification_custom_dropdown">
-                <div class="d-flex align-items-center justify-content-between gap-2">
+                <div class="d-flex align-items-center justify-content-between gap-2 p-2 border-bottom">
                     <p class="mb-0 ct_fw_600">All Notifications</p>
                     @if(notifications.length > 0){
                     <div class="ct_dlt_all_12" (click)="clearNotification()">
@@ -26,7 +26,7 @@
                     </div>
                     }
                 </div>
-                <ul>
+                <ul class="ct_notification_list_scroll">
                     @if(notifications.length > 0){
                     @for (item of notifications; track $index) {
                     <li>

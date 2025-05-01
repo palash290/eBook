@@ -80,7 +80,11 @@ export const readerRoutes: Routes = [
                         path: 'author-detail',
                         loadComponent: () => import('./author-detail/author-detail.component').then(m => m.AuthorDetailComponent)
                   },
+                  {
+                        path: 'live-session',
+                        loadComponent: () => import('./live-session/live-session.component').then(m => m.LiveSessionComponent)
+                  },
             ]
-      },
-
+      }
+ 
 ];

@@ -274,4 +274,24 @@ export class ChatComponent {
       chatBox.classList.remove('showbox');
     }
   }
+
+  exitGroup() {
+
+    let formData = {
+      chatId: this.activeChatId,
+      userId: this.userInfo.id
+    }
+
+    this.loading = true
+    this.apiService.postAPI('chat/leaveGroup', formData).subscribe({
+      next: (resp: any) => {
+        this.loading = false
+        this.getAllChatList2()
+        this.toastService.success(resp.message)
+      },
+      error: error => {
+        this.loading = false
+      }
+    });
+  }
 }

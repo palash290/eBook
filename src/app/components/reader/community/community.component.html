@@ -1,4 +1,4 @@
-<section class="ct_px_40 ct_pt_80 ct_mb_40">
+<section class="ct_px_40  pt-4 ct_mb_40">
       <div class="container-fluid">
             <div class="row">
                   <div class="col-md-12">
@@ -67,14 +67,14 @@
                                           </button>
                                     </li>
                               </ul>
-                              <div class="tab-content ct_mt_60" id="pills-tabContent">
+                              <div class="tab-content mt-5" id="pills-tabContent">
                                     <div class="tab-pane fade show active" id="pills-Discussions" role="tabpanel"
                                           aria-labelledby="pills-Discussions-tab">
                                           <div>
                                                 <h4 class="ct_fs_24 ct_fw_600 ct_mb_30">Trending Discussions</h4>
                                                 <div class="row">
                                                       @for (item of originalChatList; track $index) {
-                                                      @if(item.isGroupChat){
+
                                                       <div class=" col-md-6">
                                                             <div
                                                                   class="ct_outline_box ct_p_19_23 ct_border_radius_4 d-block ct_dark_outline_border">
@@ -109,7 +109,7 @@
                                                             </div>
                                                       </div>
                                                       }
-                                                      }
+
                                                 </div>
                                           </div>
                                     </div>
@@ -122,11 +122,12 @@
                                           <section class="">
                                                 <div class=" container-fluid">
                                                       <div class="row">
+                                                            @for (item of sessions; track $index) {
                                                             <div class="col-lg-4 mb-4 col-md-6">
                                                                   <div class="ct_live__qa_box">
                                                                         <figure>
                                                                               <div class="ct_live_qa_img">
-                                                                                    <img src="assets/img/live_qa_img1.png"
+                                                                                    <img [src]="item.thumbnail ? item.thumbnail : 'assets/img/dummy-image-landscape-1024x585.jpg'"
                                                                                           alt="">
                                                                                     <div class="ct_active_badge ct_live_badge"
                                                                                           style="color: #991B1B;">
@@ -137,136 +138,44 @@
                                                                               </div>
                                                                               <figcaption>
                                                                                     <h4 class="ct_fs_18 ct_fw_700 mb-1">
-                                                                                          Deep Dive into Fantasy
-                                                                                          Writing</h4>
-                                                                                    <p class="ct_text_6B7280">by J.K.
-                                                                                          Author</p>
+                                                                                          {{item.title}}
+                                                                                    </h4>
+                                                                                    <p class="ct_text_6B7280">by
+                                                                                          {{item.author.fullName}}
+                                                                                    </p>
 
                                                                                     <div
                                                                                           class="d-flex align-items-center justify-content-between gap-3 flex-wrap w-100 ct_mb_20">
-                                                                                          <h4
+                                                                                          <!-- <h4
                                                                                                 class="ct_fs_16 ct_fw_600 mb-0 ct_text_6B7280">
                                                                                                 <i
                                                                                                       class="fa-solid fa-users me-2"></i>234
                                                                                                 members
-                                                                                          </h4>
-                                                                                          <h4
+                                                                                          </h4> -->
+                                                                                          <!-- <h4
                                                                                                 class="ct_fs_16 ct_fw_600 mb-0 ct_text_6B7280">
                                                                                                 <i
                                                                                                       class="fa-regular fa-clock me-2"></i>30
                                                                                                 min left
-                                                                                          </h4>
+                                                                                          </h4> -->
 
                                                                                     </div>
 
                                                                                     <div class="mt-5">
                                                                                           <button
+                                                                                                routerLink="/live-session"
+                                                                                                [queryParams]="{session: item.roomId}"
                                                                                                 class="ct_purple_outline_btn ct_fw_600 ct_border_radius_4 w-100">Join
                                                                                                 now</button>
                                                                                     </div>
                                                                               </figcaption>
                                                                         </figure>
-
                                                                   </div>
                                                             </div>
-                                                            <div class="col-lg-4 mb-4 col-md-6">
-                                                                  <div class="ct_live__qa_box">
-                                                                        <figure>
-                                                                              <div class="ct_live_qa_img">
-                                                                                    <img src="assets/img/live_qa_img1.png"
-                                                                                          alt="">
-                                                                                    <div class="ct_active_badge ct_live_badge"
-                                                                                          style="color: #991B1B;">
-                                                                                          <span
-                                                                                                style="background-color: #DC2626;"></span>
-                                                                                          <h6>LIVE</h6>
-                                                                                    </div>
-                                                                              </div>
-                                                                              <figcaption>
-                                                                                    <h4 class="ct_fs_18 ct_fw_700 mb-1">
-                                                                                          Deep Dive into Fantasy
-                                                                                          Writing</h4>
-                                                                                    <p class="ct_text_6B7280">by J.K.
-                                                                                          Author</p>
-
-                                                                                    <div
-                                                                                          class="d-flex align-items-center justify-content-between gap-3 flex-wrap w-100 ct_mb_20">
-                                                                                          <h4
-                                                                                                class="ct_fs_16 ct_fw_600 mb-0 ct_text_6B7280">
-                                                                                                <i
-                                                                                                      class="fa-solid fa-users me-2"></i>234
-                                                                                                members
-                                                                                          </h4>
-                                                                                          <h4
-                                                                                                class="ct_fs_16 ct_fw_600 mb-0 ct_text_6B7280">
-                                                                                                <i
-                                                                                                      class="fa-regular fa-clock me-2"></i>30
-                                                                                                min left
-                                                                                          </h4>
-
-                                                                                    </div>
-
-                                                                                    <div class="mt-5">
-                                                                                          <button
-                                                                                                class="ct_purple_outline_btn ct_fw_600 ct_border_radius_4 w-100">Join
-                                                                                                now</button>
-                                                                                    </div>
-                                                                              </figcaption>
-                                                                        </figure>
-
-                                                                  </div>
-                                                            </div>
-                                                            <div class="col-lg-4 mb-4 col-md-6">
-                                                                  <div class="ct_live__qa_box">
-                                                                        <figure>
-                                                                              <div class="ct_live_qa_img">
-                                                                                    <img src="assets/img/live_qa_img1.png"
-                                                                                          alt="">
-                                                                                    <div class="ct_active_badge ct_live_badge"
-                                                                                          style="color: #991B1B;">
-                                                                                          <span
-                                                                                                style="background-color: #DC2626;"></span>
-                                                                                          <h6>LIVE</h6>
-                                                                                    </div>
-                                                                              </div>
-                                                                              <figcaption>
-                                                                                    <h4 class="ct_fs_18 ct_fw_700 mb-1">
-                                                                                          Deep Dive into Fantasy
-                                                                                          Writing</h4>
-                                                                                    <p class="ct_text_6B7280">by J.K.
-                                                                                          Author</p>
-
-                                                                                    <div
-                                                                                          class="d-flex align-items-center justify-content-between gap-3 flex-wrap w-100 ct_mb_20">
-                                                                                          <h4
-                                                                                                class="ct_fs_16 ct_fw_600 mb-0 ct_text_6B7280">
-                                                                                                <i
-                                                                                                      class="fa-solid fa-users me-2"></i>234
-                                                                                                members
-                                                                                          </h4>
-                                                                                          <h4
-                                                                                                class="ct_fs_16 ct_fw_600 mb-0 ct_text_6B7280">
-                                                                                                <i
-                                                                                                      class="fa-regular fa-clock me-2"></i>30
-                                                                                                min left
-                                                                                          </h4>
-
-                                                                                    </div>
-
-                                                                                    <div class="mt-5">
-                                                                                          <button
-                                                                                                class="ct_purple_outline_btn ct_fw_600 ct_border_radius_4 w-100">Join
-                                                                                                now</button>
-                                                                                    </div>
-                                                                              </figcaption>
-                                                                        </figure>
-
-                                                                  </div>
-                                                            </div>
-
+                                                            }
                                                       </div>
 
-                                                      <div class="row">
+                                                      <!-- <div class="row">
                                                             <div class="col-md-12">
                                                                   <div class="ct_outline_box ct_border_radius_10">
                                                                         <div
@@ -294,8 +203,8 @@
 
                                                             </div>
 
-                                                      </div>
-                                                      <div class="row">
+                                                      </div> -->
+                                                      <!-- <div class="row">
                                                             <div class="col-lg-8 mb-4">
                                                                   <div class="ct_live_window_screen">
                                                                         <img src="assets/img/live_screen_img.png"
@@ -392,7 +301,7 @@
                                                                   </div>
                                                             </div>
 
-                                                      </div>
+                                                      </div> -->
                                                 </div>
                                           </section>
                                     </div>
