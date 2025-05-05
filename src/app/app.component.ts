@@ -13,11 +13,7 @@ import { NotificationService } from './services/notification.service';
 export class AppComponent {
   title = 'e-book';
   constructor(private router: Router, private notificationService: NotificationService) {
-    if (localStorage.getItem('userRole') == 'author') {
-      // this.router.navigate(['/author/auther-dashboard']);
-    } else if (localStorage.getItem('userRole') == 'reader') {
-      // this.router.navigate(['/']);
-    }
+
   }
   ngOnInit() {
     Notification.requestPermission().then((permission) => {

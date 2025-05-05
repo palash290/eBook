@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { RoleGuard } from '../../guards/roleGuard';
+import { LoginGuard } from '../../guards/login.guard';
 
 export const readerRoutes: Routes = [
       {
@@ -9,7 +10,8 @@ export const readerRoutes: Routes = [
             children: [
                   {
                         path: '',
-                        loadComponent: () => import('./main/main.component').then(m => m.MainComponent)
+                        loadComponent: () => import('./main/main.component').then(m => m.MainComponent),
+                        pathMatch: 'full',
                   },
                   {
                         path: 'explore-books',
@@ -86,5 +88,5 @@ export const readerRoutes: Routes = [
                   },
             ]
       }
- 
+
 ];

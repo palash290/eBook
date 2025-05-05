@@ -31,9 +31,10 @@
                                                 <option value="">Select Book Category</option>
                                                 <option value="">Select Book Category</option>
                                             </select> -->
-                                            <nz-select class="form-control et_genre_multiselect_1" nzMode="tags"
-                                                nzPlaceHolder="Select Genre" [(ngModel)]="selectedCategories"
-                                                [nzNotFoundContent]="'No Data Found'" formControlName="categoryIds">
+                                            <nz-select class="form-control et_genre_multiselect_1 border-0"
+                                                nzMode="tags" nzPlaceHolder="Select Genre"
+                                                [(ngModel)]="selectedCategories" [nzNotFoundContent]="'No Data Found'"
+                                                formControlName="categoryIds">
                                                 @for (option of categories; track option) {
                                                 <nz-option [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
                                                 }

@@ -72,7 +72,7 @@ export const authorRoutes: Routes = [
                         loadComponent: () => import('./session-management/live-session/live-session.component').then(m => m.LiveSessionComponent),
                         canActivate: [RoleGuard], data: { roles: ['author'] }
                   },
-                  
+
             ],
             //canActivate: [RoleGuard], data: { roles: ['author'] }
       },

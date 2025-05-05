@@ -79,3 +79,15 @@ cr-icon-button #download {
 .ct_notification_list_scroll::-webkit-scrollbar-track {
   background-color: #f1f1f1;
 }
+
+.ant-select-show-search.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  cursor: text;
+  min-height: 45px;
+  outline: none;
+  background-color: #eff1f999;
+  border: 1px solid #eff1f999;
+}
+
+.ant-select-selection-placeholder {
+  color: #565a5e !important;
+}
