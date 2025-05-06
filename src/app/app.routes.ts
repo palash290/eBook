@@ -22,7 +22,7 @@ export const routes: Routes = [
       {
             path: '',
             loadChildren: () => import('./components/reader/reader.routes').then(m => m.readerRoutes),
-            pathMatch: 'full',
+            // pathMatch: 'full',
       },
       {
             path: 'author-login',

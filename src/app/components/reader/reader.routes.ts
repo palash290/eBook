@@ -86,6 +86,10 @@ export const readerRoutes: Routes = [
                         path: 'live-session',
                         loadComponent: () => import('./live-session/live-session.component').then(m => m.LiveSessionComponent)
                   },
+                  {
+                        path: 'contact-us',
+                        loadComponent: () => import('./contact-us/contact-us.component').then(m => m.ContactUsComponent)
+                  },
             ]
       }
 
