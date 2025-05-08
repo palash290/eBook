@@ -18,13 +18,22 @@
     height: calc(100dvh - 238px);
 }
 
-.modal-dialog-scrollable .modal-body {
+.modal-dialog-scrollable .modal-body ul {
     overflow-y: auto;
     height: calc(100vh - 347px) !important;
 }
 
+.modal-dialog-scrollable .modal-body {
+    overflow-y: auto;
+    height: calc(100vh - 331px) !important;
+}
+
+.modal-dialog-scrollable .ct_chatroom_modal_content .modal-body.et_preview_img_size_scroll {
+    height: calc(100vh - 414px) !important;
+}
+
 .preview-container {
-    position: absolute;
+    /* position: absolute; */
     bottom: 0px;
 }
 
@@ -157,4 +166,12 @@
     .ct_flex_direction_col {
         flex-direction: column;
     }
+}
+
+.add_btn {
+    cursor: pointer;
+    color: #9f47f8 !important;
+    background-color: #8a2be229;
+    padding: 5px 15px;
+    border-radius: 50px;
 }

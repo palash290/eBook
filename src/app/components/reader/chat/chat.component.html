@@ -206,9 +206,9 @@
                                                 (click)="getAllmessages(item.id) ; show()">
                                                 <div class="flex-shrink-0 position-relative">
                                                     <img class="img-fluid ct_img_w_50"
-                                                        [src]="item.isGroupChat ? item.profilePic : item.participants[0]?.Author.avatar_url ? item.participants[0].Author.avatar_url : 'assets/img/profile_logo.jpg'"
+                                                        [src]="item.isGroupChat ? (item.profilePic || 'assets/img/profile_logo.jpg') : (item.participants[0]?.Author.avatar_url || 'assets/img/profile_logo.jpg')"
                                                         alt="user img">
-                                                    @if(item.participants[0]?.Author.isOnline){
+                                                    @if(item.participants[0]?.Author.isOnline && !item.isGroupChat){
                                                     <span class="active"></span>
                                                     }
                                                 </div>
@@ -218,7 +218,7 @@
                                                                 item.participants[0]?.Author.fullName}}
                                                     </h3>
                                                     <p class="ct_fs_14 ct_purple_text">
-                                                        {{ item.lastMessage?.content || 'No messages yet' }}
+                                                        {{ !item.lastMessage ? 'No messages yet' : item.lastMessage?.content == '' ? 'Sent an attachment' : item.lastMessage?.content }}
                                                     </p>
                                                 </div>
                                                 <div class="ct_caht_msg_notify">
@@ -239,7 +239,7 @@
                                             <!-- <a class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <img class="img-fluid ct_img_w_50"
-                                                        [src]="newParticipant?.avatar_url ? newParticipant?.avatar_url : 'assets/img/np_pro.png'"
+                                                        [src]="newParticipant?.avatar_url ? newParticipant?.avatar_url : 'assets/img/profile_logo.jpg'"
                                                         alt="user img">
                                                    @if(newParticipant.participants[0].Author.isOnline){
                                                         <span class="active"></span>
@@ -278,22 +278,25 @@
                                 <div class="msg-head d-flex gap-3">
                                     <a (click)="closeChatBox()" class="ct_chat_back_btn"><i
                                             class="fa-solid fa-arrow-left"></i></a>
-                                    <div>
-                                        <h4 class="ct_fs_24 ct_fw_700 mb-0 text-capitalize">
-                                            {{authorDetail?.fullName ? authorDetail?.fullName : authorDetail?.name}}
-                                        </h4>
-                                        @if(authorDetail?.isOnline){
-                                        <p class="mb-0 mt-2 ct_fw_600 ct_text_898989">
-                                            online</p>
-                                        }
-
-                                        @if(authorDetail?.isGroupChat){
-                                        <p class="mb-0 ct_text_op_07" data-bs-toggle="modal"
-                                            data-bs-target="#ct_members_list_modal" style="cursor: pointer;">
-                                            {{authorDetail?.participants.length}}
-                                            members
-                                        </p>
-                                        }
+                                    <div class="ct_grid_56_auto">
+                                        <img [src]="authorDetail?.avatar_url ? authorDetail?.avatar_url : authorDetail?.profilePic || 'assets/img/profile_logo.jpg'"
+                                            alt="">
+                                        <div>
+                                            <h4 class="ct_fs_24 ct_fw_700 mb-0 text-capitalize">
+                                                {{authorDetail?.fullName ? authorDetail?.fullName : authorDetail?.name}}
+                                            </h4>
+                                            @if(authorDetail?.isOnline ){
+                                            <p class="mb-0 ct_fw_600 ct_text_op_07">
+                                                online</p>
+                                            }
+                                            @if(authorDetail?.isGroupChat){
+                                            <p class="mb-0 ct_text_op_07" data-bs-toggle="modal"
+                                                data-bs-target="#ct_members_list_modal" style="cursor: pointer;">
+                                                {{authorDetail?.participants.length}}
+                                                members
+                                            </p>
+                                            }
+                                        </div>
                                     </div>
 
                                     @if(authorDetail?.isGroupChat){
@@ -303,13 +306,15 @@
                                     }
                                 </div>
                                 <!-- #scrollMe [scrollTop]="scrollMe.scrollHeight -->
-                                <div class="modal-body" #scrollMe [scrollTop]=" scrollMe.scrollHeight">
+                                <div class="modal-body"
+                                    [ngClass]="{'et_preview_img_size_scroll' : previewFiles.length > 0}" #scrollMe
+                                    [scrollTop]="scrollMe.scrollHeight">
                                     <div class="msg-body">
                                         <ul>
                                             @for (item of allMessages; track $index) {
                                             @if(item.senderAuthorId || item.senderUserId !== userInfo.id){
                                             <li style="max-width: fit-content;">
-                                                <img [src]="item.senderAuthorId ? item.senderAuthor.avatar_url : item.senderUser.avatar_url ? item.senderUser.avatar_url : 'assets/img/profile_logo.jpg'"
+                                                <img [src]="(item.senderAuthorId ? item.senderAuthor : item.senderUser).avatar_url || 'assets/img/profile_logo.jpg'"
                                                     alt="">
                                                 <div class="sender">
                                                     @if(item.ChatMessageFiles?.length > 0){
@@ -352,19 +357,20 @@
                                             }
                                             }
                                         </ul>
-                                        <div *ngIf="previewFiles.length > 0" class="preview-container">
-                                            <div *ngFor="let file of previewFiles" class="preview">
-                                                <img *ngIf="file.type.startsWith('image/')" [src]="file.url"
-                                                    alt="File preview" />
-                                                <i (click)="removeFile(file)" class="fa fa-minus-circle remove"
-                                                    aria-hidden="true"></i>
-                                            </div>
-                                        </div>
+
                                     </div>
 
                                 </div>
 
-                                <div class="send-box px-0">
+                                <div class="send-box px-0 position-relative">
+                                    <div *ngIf="previewFiles.length > 0" class="preview-container">
+                                        <div *ngFor="let file of previewFiles" class="preview">
+                                            <img *ngIf="file.type.startsWith('image/')" [src]="file.url"
+                                                alt="File preview" />
+                                            <i (click)="removeFile(file)" class="fa fa-minus-circle remove"
+                                                aria-hidden="true"></i>
+                                        </div>
+                                    </div>
                                     <form action="" class="position-relative m-0">
                                         <label for="upload_chat_img_2" class="ct_upload_paper_click_img">
                                             <input type="file" accept="image/*" (change)="onFileChange($event)" multiple
@@ -459,26 +465,34 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="min-height: 70vh;">
             <div class="modal-header border-0 p-0">
-                <h4 class="ct_fs_24 ct_fw_600 mb-0">Members ({{authorDetail?.participants?.length}})</h4>
+                <h4 class="ct_fs_18 ct_fw_600 mb-2">Description</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body px-0">
+            <div class="modal-body px-0 pt-0">
+                <p>
+                    {{authorDetail.description}}
+                </p>
+                <h4 class="ct_fs_24 ct_fw_600 mt-2">Members ({{authorDetail?.participants?.length}})</h4>
                 <div class="chat-lists">
                     <div class="chat-list">
                         @for (item of authorDetail?.participants; track item) {
                         <a class="d-flex align-items-center">
                             <div class="flex-shrink-0 position-relative"><img alt="user img"
-                                    [src]="item.Author?.avatar_url" class="img-fluid ct_img_w_50">
+                                    [src]="item.Author?.avatar_url ? item.Author?.avatar_url : item.User?.avatar_url ? item.User?.avatar_url : 'assets/img/profile_logo.jpg'"
+                                    class="img-fluid ct_img_w_50">
                                 @if(item.Author?.isOnline === 1){
                                 <span class="active"></span>
                                 }
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <h3 class="ct_fs_16 ct_fw_600 ct_chat_text_overflow">{{item.Author?.fullName}}</h3>
+                                <h4 class="ct_fs_16 ct_fw_600">
+                                    {{item.Author?.fullName ? item.Author?.fullName : item.User?.fullName}}
+                                </h4>
                                 <!-- <p class="ct_fs_14 ct_chat_text_overflow">12:55 PM</p> -->
                             </div>
-                            <!-- <a href="#" class="text-danger ct_fw_600" data-bs-toggle="modal"
-                                data-bs-target="#ct_remove_modal">Remove</a> -->
+                            @if(item.authorId){
+                            <a href="#" class="text-success ct_fw_600">Admin</a>
+                            }
                         </a>
                         }
                     </div>

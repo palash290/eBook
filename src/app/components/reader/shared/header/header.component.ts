@@ -43,7 +43,7 @@ export class HeaderComponent {
     }
 
     this.notification.message$.subscribe((msg) => {
-      if (msg) {
+      if (msg && this.service.isLogedIn('user')) {
         this.getNotification()
       }
     });

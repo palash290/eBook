@@ -26,6 +26,7 @@ export class AutherChatroomsComponent {
   userDetail: any;
   userInfo: any;
   @ViewChild('submitModalClose') submitModalClose!: ElementRef<HTMLButtonElement>;
+  @ViewChild('closeDelete') closeDelete!: ElementRef<HTMLButtonElement>;
   readers: any[] = [];
   AllReaders: any[] = [];
   Form: FormGroup;
@@ -36,7 +37,7 @@ export class AutherChatroomsComponent {
   constructor(private socketService: SocketService, private apiService: SharedService, private datePipe: DatePipe, private toastService: NzMessageService, private fb: FormBuilder) {
     this.Form = this.fb.group({
       chatName: ['', [Validators.required, NoWhitespaceDirective.validate]],
-      description: ['', [Validators.required, NoWhitespaceDirective.validate, Validators.maxLength(160)]],
+      description: ['', [Validators.required, NoWhitespaceDirective.validate, Validators.maxLength(150)]],
       receiverIds: [[], [Validators.required, NoWhitespaceDirective.validate]],
     });
   }
@@ -51,7 +52,10 @@ export class AutherChatroomsComponent {
         this.participantList.unshift(lastChat[0])
         if (lastChat[0]) {
           lastChat[0].unreadCount += 1;
-          lastChat[0].lastMessage.content = message.content;
+          if (!lastChat[0].lastMessage) {
+            lastChat[0].lastMessage = {};
+          }
+          lastChat[0].lastMessage.content = message.content || 'Sent an attachment';
         }
       }
 
@@ -222,8 +226,8 @@ export class AutherChatroomsComponent {
   }
 
   onKeyDown(event: KeyboardEvent) {
-
-    if (event.key === 'Enter' && this.newMessage.trim()) {
+    if (event.key === 'Enter' && this.newMessage.trim() && !event.shiftKey) {
+      event.preventDefault();
       this.sendMessage();
     }
   }
@@ -289,7 +293,7 @@ export class AutherChatroomsComponent {
 
     if (searchValue) {
       this.participantList = this.originalChatList.filter(list =>
-        list.participants[0].User.fullName.toLowerCase().includes(searchValue) || list.name.toLowerCase().includes(searchValue)
+        list.participants[0].User?.fullName.toLowerCase().includes(searchValue) || list.name.toLowerCase().includes(searchValue)
       );
     } else {
       this.participantList = [...this.originalChatList];
@@ -330,8 +334,8 @@ export class AutherChatroomsComponent {
 
     let formData = new FormData();
 
-    formData.append('name', this.Form.value.chatName);
-    formData.append('description', this.Form.value.description);
+    formData.append('name', this.Form.value.chatName.trim());
+    formData.append('description', this.Form.value.description.trim());
     if (this.profileImage) {
       formData.append('profilePic', this.profileImage);
     }
@@ -409,7 +413,7 @@ export class AutherChatroomsComponent {
           if (!exist) {
             this.readers.push(item);
           }
-          this.userDet!.participants = this.userDet!.participants.filter((p: any) => p.User.id != item.id);
+          this.userDet!.participants = this.userDet!.participants.filter((p: any) => p.User?.id != item.id);
         } else {
           this.loading = false;
           this.toastService.warning(res.message);
@@ -438,6 +442,25 @@ export class AutherChatroomsComponent {
             User: item
           };
           return this.userDet?.participants.push(newParticipant)
+        } else {
+          this.loading = false;
+          this.toastService.warning(res.message);
+        }
+      },
+      error: (error) => {
+        this.loading = false;
+        this.toastService.error(error);
+      }
+    });
+  }
+
+  deleteGroupChat() {
+    this.apiService.delete(`author/deleteGroupChat/${this.activeChatId}`).subscribe({
+      next: (res: any) => {
+        if (res.success == true) {
+          this.toastService.success(res.message);
+          this.getAllChatList();
+          this.closeDelete.nativeElement.click();
         } else {
           this.loading = false;
           this.toastService.warning(res.message);

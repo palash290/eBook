@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SharedService } from '../../../../services/shared.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderComponent } from '../../../reader/shared/loader/loader.component';
@@ -39,7 +39,7 @@ export class AddSessionComponent {
   inItForm() {
     this.sessionForm = this.fb.group({
       title: ['', Validators.required],
-      date: ['', Validators.required],
+      date: ['', [Validators.required, this.noPastDateValidator()]],
       time: ['', Validators.required],
       image: [null]
     });
@@ -55,6 +55,16 @@ export class AddSessionComponent {
     this.maxDate = today.toISOString().split('T')[0];
   }
 
+  noPastDateValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const inputDate = new Date(control.value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Remove time part
+  
+      return inputDate < today ? { pastDate: true } : null;
+    };
+  }
+  
   onFileSelected(event: any, isEdit: boolean) {
     if (event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
@@ -80,7 +90,7 @@ export class AddSessionComponent {
       formData.append('thumbnail', this.selectedFile);
     }
 
-    formData.append('title', this.sessionForm.value.title);
+    formData.append('title', this.sessionForm.value.title.trim());
     formData.append('date', this.sessionForm.value.date);
     formData.append('time', this.sessionForm.value.time);
     this.loading = true;
@@ -132,6 +142,4 @@ export class AddSessionComponent {
       }
     });
   }
-
-
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { SocketService } from '../../../services/socket.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,6 +17,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   providers: [DatePipe]
 })
 export class ChatComponent {
+  @Input() GroupId?: number;
   messages: string[] = [];
   newMessage: string = '';
   authorId: any;
@@ -42,7 +43,11 @@ export class ChatComponent {
         this.chatList.unshift(lastChat[0])
         if (lastChat[0]) {
           lastChat[0].unreadCount += 1;
-          lastChat[0].lastMessage.content = message.content;
+          if (!lastChat[0].lastMessage) {
+            lastChat[0].lastMessage = {};
+          }
+          lastChat[0].lastMessage.content = message.content || 'Sent an attachment';
+          // lastChat[0].lastMessage.content = message.content || 'Sent an attachment';
         }
       }
 
@@ -122,7 +127,7 @@ export class ChatComponent {
         this.allMessages = resp.messages.reverse()
         this.activeChatId = chatId
         this.chatList.map((c: any) => c.id == chatId ? c.unreadCount = 0 : c.unreadCount)
-        this.authorDetail = this.chatList.find((c: any) => c.id == chatId)?.isGroupChat ? this.chatList.find((c: any) => c.id == chatId) : this.chatList.find((c: any) => c.id == chatId)?.participants[0].Author
+        this.authorDetail = this.chatList.find((c: any) => c.id == chatId)?.isGroupChat ? this.chatList.find((c: any) => c.id == chatId) : this.chatList.find((c: any) => c.id == chatId)?.participants[0]?.Author
       },
       error: error => {
         this.loading = false
@@ -189,7 +194,8 @@ export class ChatComponent {
 
 
   onKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter' && this.newMessage.trim()) {
+    if (event.key === 'Enter' && this.newMessage.trim() && !event.shiftKey) {
+      event.preventDefault();
       this.sendMessage();
     }
   }
@@ -254,7 +260,7 @@ export class ChatComponent {
 
     if (searchValue) {
       this.chatList = this.originalChatList.filter(list =>
-        list.participants[0].Author.fullName.toLowerCase().includes(searchValue) || list.name.toLowerCase().includes(searchValue)
+        list.participants[0].Author?.fullName.toLowerCase().includes(searchValue) || list.name.toLowerCase().includes(searchValue)
       );
     } else {
       this.chatList = [...this.originalChatList];

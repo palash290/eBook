@@ -164,12 +164,12 @@ export class AddBookComponent {
     }
     this.loading = true;
     let formData = new FormData()
-    formData.append('title', this.authorForm.value.title)
+    formData.append('title', this.authorForm.value.title.trim())
     formData.append('categoryIds', this.authorForm.value.categoryIds)
     formData.append('price', this.authorForm.value.price)
     formData.append('costPrice', this.authorForm.value.costPrice)
     formData.append('stock', this.authorForm.value.stock)
-    formData.append('description', this.authorForm.value.description)
+    formData.append('description', this.authorForm.value.description.trim())
     formData.append('type', this.authorForm.value.type)
     if (this.coverImage && this.coverImage instanceof File) {
       formData.append('coverImage', this.coverImage)

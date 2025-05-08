@@ -103,7 +103,7 @@ export class MainComponent {
   topAuthors: User[] = [];
   categories: Category[] = [];
 
-  constructor(private router: Router, private service: SharedService) { }
+  constructor(private router: Router, public service: SharedService) { }
 
 
   ngOnInit(): void {

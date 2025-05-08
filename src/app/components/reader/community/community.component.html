@@ -21,20 +21,19 @@
                                                             </clipPath>
                                                       </defs>
                                                 </svg>
-
-                                                Public Discussions</button>
+                                                Public Discussions
+                                          </button>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                           <button class="nav-link" id="pills-Messages-tab" data-bs-toggle="pill"
                                                 data-bs-target="#pills-Messages" type="button" role="tab"
-                                                aria-controls="pills-Messages" aria-selected="false">
+                                                aria-controls="pills-Messages" aria-selected="false" #messageTab>
                                                 <svg width="18" height="15" viewBox="0 0 18 15" fill="none"
                                                       xmlns="http://www.w3.org/2000/svg">
                                                       <path d="M1.6875 0.636719C1.21875 0.660119 0.820312 0.824175 0.492187 1.12889C0.1875 1.45702 0.0234375 1.85546 0 2.32422C0.0234375 2.88672 0.246094 3.33203 0.667968 3.66015L8.33203 9.42578C8.77734 9.70703 9.22266 9.70703 9.66797 9.42578L17.3321 3.66015C17.754 3.33203 17.9766 2.88672 18 2.32422C17.9766 1.85546 17.8125 1.45702 17.5078 1.12889C17.1797 0.824175 16.7813 0.660119 16.3125 0.636719H1.6875ZM0 4.57422V11.8867C0.0234375 12.5195 0.246094 13.0469 0.667968 13.4688C1.08984 13.8906 1.61719 14.1133 2.25 14.1367H15.75C16.3828 14.1133 16.9102 13.8906 17.3321 13.4688C17.754 13.0469 17.9766 12.5195 18 11.8867V4.57422L10.3359 10.3047C9.9375 10.6094 9.49219 10.7617 9 10.7617C8.50781 10.7617 8.0625 10.6094 7.66407 10.3047L0 4.57422Z"
                                                             fill="#6B7280" />
                                                 </svg>
                                                 Private Messages
-
                                           </button>
                                     </li>
                                     <li class="nav-item" role="presentation">
@@ -62,7 +61,6 @@
                                                             </clipPath>
                                                       </defs>
                                                 </svg>
-
                                                 Live Q&A
                                           </button>
                                     </li>
@@ -74,7 +72,6 @@
                                                 <h4 class="ct_fs_24 ct_fw_600 ct_mb_30">Trending Discussions</h4>
                                                 <div class="row">
                                                       @for (item of originalChatList; track $index) {
-
                                                       <div class=" col-md-6">
                                                             <div
                                                                   class="ct_outline_box ct_p_19_23 ct_border_radius_4 d-block ct_dark_outline_border">
@@ -102,26 +99,41 @@
                                                                                     class="fa-solid fa-users me-2"></i>{{item.participants.length}}
                                                                               members
                                                                         </h4>
-                                                                        <!-- <a routerLink="/chat"
-                                                                              class="ct_purple_outline_btn  ct_border_radius_4 ct_fw_600">Join
-                                                                              chat</a> -->
+                                                                        @if(idAdded(item)){
+                                                                        <a (click)="viewChat(item.id)"
+                                                                              class="ct_purple_outline_btn  ct_border_radius_4 ct_fw_600">View
+                                                                              chat</a>
+                                                                        }
                                                                   </div>
                                                             </div>
                                                       </div>
                                                       }
-
                                                 </div>
                                           </div>
                                     </div>
                                     <div class="tab-pane fade" id="pills-Messages" role="tabpanel"
                                           aria-labelledby="pills-Messages-tab">
-                                          <app-chat></app-chat>
+                                          <app-chat #chatComponent [GroupId]="selectedChatId"></app-chat>
                                     </div>
                                     <div class="tab-pane fade" id="pills-Live_qa" role="tabpanel"
                                           aria-labelledby="pills-Live_qa-tab">
                                           <section class="">
                                                 <div class=" container-fluid">
                                                       <div class="row">
+                                                            @if(sessions?.length == 0) {
+                                                            <div class="col-12 text-center mt-5">
+                                                                  <svg xmlns="http://www.w3.org/2000/svg" width="150"
+                                                                        height="150" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor"
+                                                                              d="M0 4.75C0 3.784.784 3 1.75 3h20.5c.966 0 1.75.784 1.75 1.75v14.5A1.75 1.75 0 0 1 22.25 21H1.75A1.75 1.75 0 0 1 0 19.25Zm1.75-.25a.25.25 0 0 0-.25.25v14.5c0 .138.112.25.25.25h20.5a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25Z" />
+                                                                        <path fill="currentColor"
+                                                                              d="M9 15.584V8.416a.5.5 0 0 1 .77-.42l5.576 3.583a.5.5 0 0 1 0 .842L9.77 16.005a.5.5 0 0 1-.77-.42Z" />
+                                                                  </svg>
+                                                                  <h4 class="ct_fs_24 ct_fw_600 ct_mb_30 mt-3">
+                                                                        No live Q&A available
+                                                                  </h4>
+                                                            </div>
+                                                            }
                                                             @for (item of sessions; track $index) {
                                                             <div class="col-lg-4 mb-4 col-md-6">
                                                                   <div class="ct_live__qa_box">

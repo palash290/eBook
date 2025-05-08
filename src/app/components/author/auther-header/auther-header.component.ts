@@ -26,9 +26,11 @@ export class AutherHeaderComponent {
         this.userInfo = data;
       }
     });
-    this.getNotification()
+    if (this.service.isLogedIn('author')) {
+      this.getNotification()
+    }
     this.notification.message$.subscribe((msg) => {
-      if (msg) {
+      if (msg && this.service.isLogedIn('author')) {
         this.getNotification()
       }
     });

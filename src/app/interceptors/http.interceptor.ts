@@ -44,8 +44,8 @@ export class HttpInterceptorService implements HttpInterceptor {
       catchError(error => {
         let errorMessage = 'An unknown error occurred!';
         if (error.status === 401) {
-          this.toastr.error('Unauthorized! Please log in again.');
-          this.modalService.openModal();
+          errorMessage = error.error.message
+          // this.modalService.openModal();
         } else if (error.status === 403) {
           this.toastr.error('Unauthorized! Please log in again.');
           this.modalService.openModal();

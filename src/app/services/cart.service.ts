@@ -1,6 +1,7 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Injectable({
       providedIn: 'root'
@@ -9,7 +10,7 @@ export class CartService {
       cartItems = signal<any[]>([]);
       cartCount = computed(() => this.cartItems().length);
 
-      constructor(private http: HttpClient) {
+      constructor(private http: HttpClient, private toster: NzMessageService) {
             this.loadCartFromLocalStorage();
       }
 
@@ -20,8 +21,9 @@ export class CartService {
                   this.http.post(environment.baseUrl + 'users/addToCart', formData).subscribe({
                         next: (resp: any) => {
                               this.updateCartFromAPI();
+                              this.toster.success(resp.message);
                         },
-                        error: error => console.error('Error adding to cart:', error)
+                        error: error => this.toster.error(error)
                   });
             } else {
                   let cartData = [...this.cartItems()];
@@ -35,6 +37,7 @@ export class CartService {
 
                   localStorage.setItem('cart', JSON.stringify(cartData));
                   this.cartItems.set(cartData);
+                  this.toster.success('Book added to cart successfully');
             }
       }
 

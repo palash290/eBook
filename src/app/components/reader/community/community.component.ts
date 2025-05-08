@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ChatComponent } from "../chat/chat.component";
 import { SharedService } from '../../../services/shared.service';
@@ -14,7 +14,11 @@ import { ModalService } from '../../../services/modal.service';
 export class CommunityComponent {
   sessions: any
   loading: boolean = false
-  originalChatList: any[] = []
+  originalChatList: any[] = [];
+  userInfo: any
+  @ViewChild('messageTab') messageTab: any
+  @ViewChild('chatComponent') chatComponent!: ChatComponent;
+  selectedChatId?: number
   constructor(private service: SharedService, private modalService: ModalService) {
     if (!this.service.isLogedIn('user')) {
       this.modalService.openModal()
@@ -23,12 +27,16 @@ export class CommunityComponent {
   }
 
   ngOnInit(): void {
+    this.service.profileData$.subscribe((data) => {
+      if (data) {
+        this.userInfo = data;
+      }
+    });
     if (this.service.isLogedIn('user')) {
       this.getSessions()
       this.getAllChatList()
       return
     }
-
   }
 
   getAllChatList() {
@@ -53,5 +61,18 @@ export class CommunityComponent {
         console.log(error.message);
       }
     });
+  }
+
+  viewChat(id: number) {
+    this.selectedChatId = id;
+    this.messageTab.nativeElement.click();
+
+    setTimeout(() => {
+      this.chatComponent.getAllmessages(id);
+    });
+  }
+
+  idAdded(item: any) {
+    return item.participants.some((p: any) => p?.userId === this.userInfo.id);
   }
 }

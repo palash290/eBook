@@ -32,7 +32,10 @@ export class ReaderChangePasswordComponent {
       newPassword: new FormControl('', [Validators.required, strongPasswordValidator]),
       confPassword: new FormControl('', [Validators.required]),
     }, {
-      validators: passwordMatchValidator()
+      validators: [
+        passwordMatchValidator(),
+        passwordMismatchValidator()
+      ]
     })
   }
 
@@ -115,3 +118,14 @@ export function passwordMatchValidator(): ValidatorFn {
   };
 }
 
+export function passwordMismatchValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const currentPassword = control.get('oldPassword')?.value;
+    const newPassword = control.get('newPassword')?.value;
+    if (!currentPassword || !newPassword) return null;
+
+    return currentPassword === newPassword
+      ? { sameAsCurrent: true }
+      : null;
+  };
+}

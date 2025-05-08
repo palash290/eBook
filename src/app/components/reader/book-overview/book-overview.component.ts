@@ -160,7 +160,7 @@ export class BookOverviewComponent {
       stock: book.stock
     }
     this.cartService.addToCart(data, this.quantity, isLoggedIn);
-    this.toastr.success('Book added to cart successfully');
+    // this.toastr.success('Book added to cart successfully');
   }
 
   addToFav(bookId: number) {

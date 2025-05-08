@@ -494,7 +494,7 @@ nav.ct_navbar.ct_sticky_menu .ct_logo_img img {
   transition: 0.4s ease all;
   z-index: 1;
   border: 1px solid var(--purple_light);
-  color: #fff !important;
+  color: #fff ;
   text-align: center;
   display: inline-block;
   white-space: nowrap;

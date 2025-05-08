@@ -17,7 +17,7 @@
                             <div *ngIf="sessionForm.controls['title'].invalid && sessionForm.controls['title'].touched"
                                 class="error-message">
                                 <div *ngIf="sessionForm.controls['title'].errors?.['required']">
-                                    Name is required.
+                                    Title is required.
                                 </div>
                             </div>
                         </div>
@@ -33,6 +33,10 @@
                                 <div *ngIf="sessionForm.controls['date'].errors?.['required']">
                                     Date is required.
                                 </div>
+                            </div>
+                            <div *ngIf="sessionForm.get('date')?.errors?.['pastDate'] && sessionForm.get('date')?.touched"
+                                class="error-message">
+                                Date cannot be in the past.
                             </div>
                         </div>
 
@@ -55,7 +59,7 @@
                                 <label for="" class="ct_fw_600 mb-2 ">Session Thumbnail</label>
                                 <div class="position-relative" (click)="ImageInput.click()">
                                     <input #ImageInput type="file" (change)="onFileSelected($event, false)"
-                                        class="d-none" id="ct_upload_product" />
+                                        class="d-none" id="ct_upload_product" accept="image/*" />
 
                                     <div class="ct_upload_product_main">
                                         @if(!previewImageAdd){
