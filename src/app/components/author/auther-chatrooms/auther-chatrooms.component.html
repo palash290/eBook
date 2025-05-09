@@ -422,7 +422,7 @@
                         <div class="ct_upload_user_profile_img">
                             <img [src]="profilePreview ? profilePreview : 'assets/img/profile_logo.jpg'" alt="">
                             <label for="ct_upload_user_profile2" class="position-relative d-block">
-                                <input type="file" class="d-none" id="ct_upload_user_profile2"
+                                <input type="file" class="d-none" id="ct_upload_user_profile2" accept="image/*"
                                     (change)="onProfileChange($event)">
                                 <div class="ct_authore_banner_upload_icon_12">
                                     <i class="fa-solid fa-pencil"></i>

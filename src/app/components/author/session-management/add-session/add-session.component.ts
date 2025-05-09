@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SharedService } from '../../../../services/shared.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderComponent } from '../../../reader/shared/loader/loader.component';
@@ -38,7 +38,7 @@ export class AddSessionComponent {
 
   inItForm() {
     this.sessionForm = this.fb.group({
-      title: ['', Validators.required],
+      title: ['', [Validators.required, NoWhitespaceDirective.validate]],
       date: ['', [Validators.required, this.noPastDateValidator()]],
       time: ['', Validators.required],
       image: [null]
@@ -60,11 +60,11 @@ export class AddSessionComponent {
       const inputDate = new Date(control.value);
       const today = new Date();
       today.setHours(0, 0, 0, 0); // Remove time part
-  
+
       return inputDate < today ? { pastDate: true } : null;
     };
   }
-  
+
   onFileSelected(event: any, isEdit: boolean) {
     if (event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
@@ -104,6 +104,9 @@ export class AddSessionComponent {
           this.loading = false;
           this.toastr.warning(resp.message);
         }
+      }, error => {
+        this.loading = false;
+        this.toastr.error(error);
       });
     } else {
       this.service.postAPI('author/scheduleLiveSession', formData).subscribe((resp: any) => {
@@ -115,6 +118,9 @@ export class AddSessionComponent {
           this.loading = false;
           this.toastr.warning(resp.message);
         }
+      }, error => {
+        this.loading = false;
+        this.toastr.error(error);
       });
     }
   }
@@ -141,5 +147,16 @@ export class AddSessionComponent {
         console.log(error.message);
       }
     });
+  }
+}
+
+export class NoWhitespaceDirective {
+  static validate(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value || (typeof value === 'string' && value.trim() === '')) {
+      return { required: true };
+    }
+    return null;
   }
 }
