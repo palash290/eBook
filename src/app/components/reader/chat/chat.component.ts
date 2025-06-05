@@ -48,7 +48,7 @@ export class ChatComponent {
           }
           lastChat[0].lastMessage.content = message.content || 'Sent an attachment';
           // lastChat[0].lastMessage.content = message.content || 'Sent an attachment';
-        }
+        } 
       }
 
       if (this.activeChatId === message.chatId) {

@@ -20,6 +20,7 @@ export class LiveSessionComponent {
   constructor(public jitsiService: JitsiService, private router: Router, private service: SharedService, private toastr: NzMessageService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.roomName = params['session'];
+      this.sessionId = params['id'];
     })
   }
 
@@ -27,7 +28,7 @@ export class LiveSessionComponent {
   ngOnInit(): void {
     this.getProfile()
 
-    this.jitsiService.JoinMeeting(this.roomName, this.userInfo.fullName);
+    this.jitsiService.JoinMeeting(this.roomName, this.userInfo.fullName, this.sessionId);
 
   }
 

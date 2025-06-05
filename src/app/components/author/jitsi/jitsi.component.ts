@@ -52,8 +52,6 @@ export class JitsiComponent {
       }
     });
   }
-
-
   getProfile() {
     this.service.profileData$.subscribe((data) => {
       if (data) {

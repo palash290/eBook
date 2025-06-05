@@ -9,13 +9,13 @@ declare var JitsiMeetExternalAPI: any;
 export class JitsiService {
       domain: string = '8x8.vc';
       api: any;
-      appID = 'vpaas-magic-cookie-646cfb8847104798bde0488274ec44d9'; // Your AppID
+      appID = 'vpaas-magic-cookie-ac4bf583f094448683be178052e5faaa'; // Your AppID
 
       constructor(private router: Router, private service: SharedService) { }
       startMeeting(room: string, token: string, displayName: string, sessionId: string) {
             const options = {
                   roomName: `${this.appID}/${room}`,
-                  jwt: 'eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtNjQ2Y2ZiODg0NzEwNDc5OGJkZTA0ODgyNzRlYzQ0ZDkvMGE3NTc1LVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE3NDY3MDMwMzQsImV4cCI6MTc0NjcxMDIzNCwibmJmIjoxNzQ2NzAzMDI5LCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtNjQ2Y2ZiODg0NzEwNDc5OGJkZTA0ODgyNzRlYzQ0ZDkiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOnRydWUsIm91dGJvdW5kLWNhbGwiOnRydWUsInNpcC1vdXRib3VuZC1jYWxsIjpmYWxzZSwidHJhbnNjcmlwdGlvbiI6dHJ1ZSwicmVjb3JkaW5nIjp0cnVlfSwidXNlciI6eyJoaWRkZW4tZnJvbS1yZWNvcmRlciI6ZmFsc2UsIm1vZGVyYXRvciI6dHJ1ZSwibmFtZSI6ImdhZ2FuLmN0aW5mb3RlY2giLCJpZCI6Imdvb2dsZS1vYXV0aDJ8MTA0NjQ4MDI4MjUxNzc3OTQxODY0IiwiYXZhdGFyIjoiIiwiZW1haWwiOiJnYWdhbi5jdGluZm90ZWNoQGdtYWlsLmNvbSJ9fSwicm9vbSI6IioifQ.PrBECpdplLb1CR5AMmWhk_aR2gDUk4nwTIwftpWS_HxaNNw5qIbuWiMDu6Wep6JJwXusRHKVhpVoBieKuKQyFjnsNa3-Wcp3c_Q0GT1ytsVvD0SmUN_0yvp18uMm84_tGJ9AN3OqwL-u_0lmytpoRPwJm5DLDcanaoqj-ycVkqIp5rFMLALsW99RpWvb9Gb0mL8lTt0Hk7lIelLOc79MBOZtSsiBwtztXo4mdh-mOsK0lLAfkCYuZ2sPLgKOjoSyp9wSg1wpdJ_zg774kUxDFGT9i3QoqA4xknfJZjUR8ZtV_TBIzwGW643hpfd4d9hyZySUZRgY9nWQW-gRY99Lrg',
+                  jwt: token,
                   width: '100%',
                   height: '90vh',
                   parentNode: document.getElementById('jitsi-container'),
@@ -63,7 +63,7 @@ export class JitsiService {
 
 
 
-      JoinMeeting(room: string, displayName: string) {
+      JoinMeeting(room: string, displayName: string, sessionId: string) {
             const options = {
                   roomName: `${this.appID}/${room}`,
                   width: '100%',
@@ -96,6 +96,7 @@ export class JitsiService {
             });
 
             this.api.addEventListener('participantJoined', () => {
+                  this.service.postAPI('users/joinSession', { sessionId: sessionId }).subscribe()
                   this.pinModerator();
             });
 
