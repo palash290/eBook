@@ -72,6 +72,16 @@ export const authorRoutes: Routes = [
                         loadComponent: () => import('./session-management/live-session/live-session.component').then(m => m.LiveSessionComponent),
                         canActivate: [RoleGuard], data: { roles: ['author'] }
                   },
+                  {
+                        path: 'subscription-plan',
+                        loadComponent: () => import('./subscription-plan/subscription-plan.component').then(m => m.SubscriptionPlanComponent),
+                        canActivate: [RoleGuard], data: { roles: ['author'] }
+                  },
+                  {
+                        path: 'reviews',
+                        loadComponent: () => import('./rating-reviews/rating-reviews.component').then(m => m.RatingReviewsComponent),
+                        canActivate: [RoleGuard], data: { roles: ['author'] }
+                  },
 
             ],
             //canActivate: [RoleGuard], data: { roles: ['author'] }

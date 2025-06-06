@@ -94,7 +94,7 @@ body {
   transform: scaleY(1);
 }
 
-.ct_side_bar ul li+li {
+.ct_side_bar ul li + li {
   margin-top: 10px;
 }
 
@@ -756,7 +756,7 @@ small.ct_dot_online {
   right: 0px;
 }
 
-.ct_notification_custom_dropdown li+li {
+.ct_notification_custom_dropdown li + li {
   border-top: 1px solid #f5f5f5;
 }
 
@@ -766,4 +766,8 @@ small.ct_dot_online {
 
 .ct_notification_custom_dropdown.ct_notification_active {
   transform: scaleY(1);
+}
+
+.ct_border_grey_1 {
+  border: 1px solid #e6e6e6 !important;
 }

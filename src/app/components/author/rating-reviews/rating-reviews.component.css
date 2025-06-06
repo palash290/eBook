@@ -1,0 +1,10 @@
+.ct_chat_text_overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  max-width: 170px;
+  text-overflow: ellipsis;
+}
+.ct_star_color {
+  color: orange;
+}
