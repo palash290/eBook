@@ -1,0 +1,41 @@
+.ct_active_star {
+  color: #fbbf24;
+}
+
+.ct_custom_progress {
+  height: 10px;
+}
+
+.ct_flex_1 {
+  flex: 1;
+}
+
+.ct_custom_progress .progress-bar {
+  background-color: #fbbf24 !important;
+  position: relative;
+  top: 0px !important;
+  z-index: 1;
+  height: 10px;
+}
+.ct_img_40 {
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  object-fit: cover;
+}
+
+.ct_flex_shrink_1 {
+  flex-shrink: 1;
+}
+
+.ct_overflow_scroll_150 {
+  height: auto;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.ct_customer_review_scroll {
+  height: auto;
+  max-height: 480px;
+  overflow-y: auto;
+}
