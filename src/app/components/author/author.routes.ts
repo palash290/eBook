@@ -73,8 +73,8 @@ export const authorRoutes: Routes = [
                         canActivate: [RoleGuard], data: { roles: ['author'] }
                   },
                   {
-                        path: 'subscription-plan',
-                        loadComponent: () => import('./subscription-plan/subscription-plan.component').then(m => m.SubscriptionPlanComponent),
+                        path: 'my-plan',
+                        loadComponent: () => import('./my-plan/my-plan.component').then(m => m.MyPlanComponent),
                         canActivate: [RoleGuard], data: { roles: ['author'] }
                   },
                   {
@@ -82,7 +82,21 @@ export const authorRoutes: Routes = [
                         loadComponent: () => import('./rating-reviews/rating-reviews.component').then(m => m.RatingReviewsComponent),
                         canActivate: [RoleGuard], data: { roles: ['author'] }
                   },
-
+                  {
+                        path: 'subscription-plan',
+                        loadComponent: () => import('./subscription-plan/subscription-plan.component').then(m => m.SubscriptionPlanComponent),
+                        canActivate: [RoleGuard], data: { roles: ['author'] }
+                  },
+                  {
+                        path: 'payment-success',
+                        loadComponent: () => import('./payment-success/payment-success.component').then(m => m.PaymentSuccessComponent),
+                        canActivate: [RoleGuard], data: { roles: ['author'] }
+                  },
+                  {
+                        path: 'payment-failed',
+                        loadComponent: () => import('./payment-failed/payment-failed.component').then(m => m.PaymentFailedComponent),
+                        canActivate: [RoleGuard], data: { roles: ['author'] }
+                  },
             ],
             //canActivate: [RoleGuard], data: { roles: ['author'] }
       },
